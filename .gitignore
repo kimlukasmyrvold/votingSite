@@ -1,0 +1,5 @@
+Web.config
+node_modules
+obj
+.vs
+bin

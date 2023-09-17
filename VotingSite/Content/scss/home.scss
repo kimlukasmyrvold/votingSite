@@ -1,0 +1,103 @@
+@use "abstracts/index" as *;
+
+.partier {
+    &__container {
+        display: flex;
+        justify-content: center;
+        gap: $gap-2;
+        flex-wrap: wrap;
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        width: 40ch;
+        background: #{$clr-accent}2a;
+        isolation: isolate;
+        padding: $gap-4 $gap-3;
+        border-radius: $radius-6;
+    }
+
+    &__logo {
+        display: flex;
+        justify-content: center;
+        margin-block-start: $gap-9;
+        position: relative;
+        z-index: -1;
+
+        img {
+            width: 100px;
+            position: absolute;
+            top: calc(-#{$gap-9} * 1.1);
+        }
+    }
+
+    &__name {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        font-size: $fs-600;
+        font-weight: $fw-500;
+        margin-block-end: $gap-2;
+        text-shadow: 1px -1px 2px #000, 0 0 1em #000, 0 0 0.2em #000;
+
+        &::after {
+            content: '';
+            position: absolute;
+            display: block;
+            bottom: -$gap-1;
+            height: 3px;
+            width: 100%;
+            background: $clr-seperator;
+            border-radius: $radius-9;
+        }
+    }
+
+    &__description {
+        display: flex;
+        justify-content: center;
+        font-size: $fs-200;
+        margin-block-end: $gap-2;
+    }
+
+    &__vote {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        height: 100%;
+
+        .voteBtn {
+            display: flex;
+            background-color: $clr-primary;
+            padding: $gap-2;
+            font-size: $fs-300;
+            border-radius: $radius-4;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity .5s ease, visibility .5s ease, font-size 0.3s ease;
+
+            &:hover {
+                font-size: calc($fs-300 * 1.05);
+                transition: font-size 0.3s ease;
+            }
+
+        }
+
+        .voted {
+            cursor: not-allowed;
+
+            &:hover {
+                opacity: .6;
+            }
+        }
+    }
+
+    #frp {
+        img {
+            width: 300px;
+        }
+    }
+}

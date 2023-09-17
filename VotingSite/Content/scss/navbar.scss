@@ -129,8 +129,7 @@
         transition: scale 300ms ease;
     }
 
-    .navbar-links a.active::after,
-    .navbar-links a:hover::after {
+    .navbar-links a.active::after {
         scale: 1;
     }
 

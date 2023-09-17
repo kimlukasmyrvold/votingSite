@@ -58,6 +58,7 @@ span.space {
 }
 
 table {
+    border: none;
     border-collapse: collapse;
     width: 100%;
     box-shadow: 0 0 4px 0 #000;
@@ -69,6 +70,7 @@ table {
         padding: 8px;
         font-size: 1.2rem;
         text-transform: capitalize;
+        border: none;
     }
 
     th {
@@ -98,7 +100,8 @@ select {
 
 
 button,
-a, input {
+a,
+input {
     position: relative;
     color: $clr-txt;
     background: none;

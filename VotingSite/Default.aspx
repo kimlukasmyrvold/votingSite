@@ -1,8 +1,6 @@
 ﻿<%@ Page Title="Hjemmeside" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="VotingSite._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <script type="text/javascript" src="Scripts/main.js"></script>
-
     <asp:DropDownList ID="DropDownListKommuner" runat="server">
         <asp:ListItem Selected="True" Value="0">Velg Kommune...</asp:ListItem>
     </asp:DropDownList>

@@ -2,13 +2,14 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-pagename="<%: Page.Title %>">
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %></title>
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <script type="text/javascript" src="/Scripts/main.js" defer></script>
 </head>
 <body>
     <form runat="server">
@@ -17,7 +18,11 @@
             <div class="navbar-menuButton"><button class="bar"></button></div>
             <nav class="navbar-links" aria-label="Navigation Links">
                 <ul>
-                    <li><a id="homeLink" class="navbar-link" runat="server" href="~/">Hjemmeside</a></li>
+                    <li><a class="navbar-link" runat="server" href="~/">Hjemmeside</a></li>
+                    <li><a class="navbar-link" runat="server" href="~/About/">Om oss</a></li>
+                    <li><a class="navbar-link" runat="server" href="~/Kommuner/">Kommuner</a></li>
+                    <li><a class="navbar-link" runat="server" href="~/Partier/">Partier</a></li>
+                    <li><a class="navbar-link" runat="server" href="~/Statistikk/">Statistikk</a></li>
                 </ul>
             </nav>
             <div class="navbar-buttons">               

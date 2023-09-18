@@ -177,3 +177,30 @@ noscript {
     border-radius: var(--border-radius);
     min-height: 50px;
 }
+
+.modal {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    padding: 3% 5%;
+
+    @media (width < 800px) {
+        padding-inline: 2%;
+    }
+
+    @media (height < 500px) {
+        padding-block: 2%;
+    }
+    
+    background-color: #000000a6;
+    
+    &__container {
+        display: block;
+        width: 100%;
+        border-radius: $radius-3;
+        overflow: auto;
+        padding: $gap-5;
+        background-color: #0000ffc9;
+    }
+}

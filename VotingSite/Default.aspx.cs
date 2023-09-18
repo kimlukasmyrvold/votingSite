@@ -19,7 +19,7 @@ namespace VotingSite
             {
                 Response.Write(Request.QueryString["result"]);
                 string script = "removeQueryString();";
-                ClientScript.RegisterStartupScript(this.GetType(), "MyScript", script, true);
+                ClientScript.RegisterStartupScript(GetType(), "MyScript", script, true);
             }
 
             if (!IsPostBack)
@@ -35,7 +35,7 @@ namespace VotingSite
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * from kommuner", conn);
+                SqlCommand cmd = new SqlCommand("SELECT * from kommuner order by KNavn", conn);
                 cmd.CommandType = CommandType.Text;
                 SqlDataReader reader = cmd.ExecuteReader();
                 dt.Load(reader);

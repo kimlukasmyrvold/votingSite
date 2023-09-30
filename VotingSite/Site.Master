@@ -1,51 +1,84 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="VotingSite.SiteMaster" %>
 
-    <!DOCTYPE html>
+<!DOCTYPE html>
 
-    <html lang="en" data-pagename="<%: Page.Title %>">
+<html lang="no" data-pagename="<%: Page.Title %>">
 
-    <head runat="server">
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>
-            <%: Page.Title %>
-        </title>
-        <webopt:bundlereference runat="server" path="~/Content/css" />
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <script type="text/javascript" src="/Scripts/main.js" defer></script>
-    </head>
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        <%: Page.Title %>
+    </title>
+    <webopt:bundlereference runat="server" path="~/assets/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <script type="text/javascript" src="/assets/js/main.js"></script>
+</head>
 
-    <body>
-        <form runat="server">
-            <!-- <div class="modal">
-                <div class="modal__container">
-                    
+<body>
+    <form runat="server">
+        <div class="modal" data-visible="false">
+            <div class="modal__container">
+                <svg class="icon-cross"></svg>
+                <div id="voteForm">
+                    <div class="container">
+                        <div class="votingInfo">
+                            <div class="partiLogo">
+                                <img src="assets/images/parti_logos/.png" alt="Parti logo">
+                            </div>
+                            <p>Du har valgt: <span class="votingSelected">&nbsp</span></p>
+                        </div>
+                        <div class="personalInfo">
+                            <label for="FNavn">Fornavn:</label>
+                            <input type="text" id="FNavn" name="Fornavn" required>
+                            <label for="ENavn">Etternavn:</label>
+                            <input type="text" id="ENavn" name="Etternavn" required>
+                            <label for="FNum">Fødselsnummer:</label>
+                            <input type="text" id="FNum" name="Fødselsnummer" title="Fødselsnummer" required pattern="[0-9]{11}">
+                            <span class="validation-message"></span>
+                        </div>
+                        <div class="location">
+                            <div class="selectFylker">
+                                <p>Velg Fylke</p>
+                                <asp:DropDownList ID="DropDownListFylker" runat="server" AutoPostBack="True" OnSelectedIndexChanged="getKommuner_Click" ClientIDMode="Static">
+                                    <asp:ListItem Selected="True" Value="0" Disabled="true">Velg Fylke...</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                            <div class="selectKommuner">
+                                <p>Velg Kommune</p>
+                                <asp:DropDownList ID="DropDownListKommuner" runat="server" ClientIDMode="Static">
+                                    <asp:ListItem Selected="True" Value="0" Disabled="true">Velg Kommune...</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <button class="cancel" onclick="cancel()" type="reset">Avbryt</button>
+                            <button class="submit" onclick="vote()" type="submit">Stem</button>
+                        </div>
+                    </div>
                 </div>
-            </div> -->
-            <header class="navbar">
-                <a href="#main" class="skip-to-main">Skip to main content.</a>
-                <div class="navbar-menuButton"><button class="bar"></button></div>
-                <nav class="navbar-links" aria-label="Navigation Links">
-                    <ul>
-                        <li><a class="navbar-link" runat="server" href="~/">Hjemmeside</a></li>
-                        <li><a class="navbar-link" runat="server" href="~/About/">Om oss</a></li>
-                        <li><a class="navbar-link" runat="server" href="~/Kommuner/">Kommuner</a></li>
-                        <li><a class="navbar-link" runat="server" href="~/Partier/">Partier</a></li>
-                        <li><a class="navbar-link" runat="server" href="~/Statistikk/">Statistikk</a></li>
-                    </ul>
-                </nav>
-                <div class="navbar-buttons">
-                </div>
-            </header>
+            </div>
+        </div>
+        <header class="navbar">
+            <a href="#main" class="skip-to-main">Skip to main content.</a>
+            <div class="navbar-menuButton"><button class="bar"></button></div>
+            <nav class="navbar-links" aria-label="Navigation Links">
+                <ul>
+                    <li><a class="navbar-link" runat="server" href="~/">Hjemmeside</a></li>
+                    <li><a class="navbar-link" runat="server" href="~/kommuner/">Kommuner</a></li>
+                    <li><a class="navbar-link" runat="server" href="~/partier/">Partier</a></li>
+                    <li><a class="navbar-link" runat="server" href="~/statistikk/">Statistikk</a></li>
+                    <li><a class="navbar-link" runat="server" href="~/privacy/">Privacy</a></li>
+                </ul>
+            </nav>
+            <div class="navbar-buttons">
+            </div>
+        </header>
 
-            <main id="main">
-                <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
-            </main>
+        <main id="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+        </main>
+    </form>
+</body>
 
-            <footer>
-
-            </footer>
-        </form>
-    </body>
-
-    </html>
+</html>

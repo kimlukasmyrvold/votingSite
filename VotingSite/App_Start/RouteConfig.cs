@@ -13,6 +13,13 @@ namespace VotingSite
             var settings = new FriendlyUrlSettings();
             settings.AutoRedirectMode = RedirectMode.Permanent;
             routes.EnableFriendlyUrls(settings);
+
+            // Add custom routes for specific pages
+            routes.MapPageRoute("AboutRoute", "about", "~/pages/About/Default.aspx");
+            routes.MapPageRoute("PrivacyRoute", "privacy", "~/pages/Privacy/Default.aspx");
+            routes.MapPageRoute("KommunerRoute", "kommuner", "~/pages/Kommuner/Default.aspx");
+            routes.MapPageRoute("PartierRoute", "partier", "~/pages/Partier/Default.aspx");
+            routes.MapPageRoute("StatistikkRoute", "statistikk", "~/pages/Statistikk/Default.aspx");
         }
     }
 }

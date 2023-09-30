@@ -1,0 +1,158 @@
+@use "abstracts/index" as *;
+
+.partier {
+
+    @mixin hover {
+        opacity: 1;
+        visibility: visible;
+        max-height: max-content;
+        padding: $gap-4;
+    }
+
+    &__container {
+        display: flex;
+        justify-content: center;
+        gap: $gap-2;
+        flex-wrap: wrap;
+        isolation: isolate;
+    }
+
+    &__item {
+        background-color: #28226f;
+        padding: $gap-4 $gap-3;
+        border-radius: $radius-6;
+        position: relative;
+
+        &:focus,
+        &:hover {
+            ::after {
+                $height: 10px;
+
+                content: '';
+                position: absolute;
+                left: calc(50% - $height);
+                bottom: -#{$height};
+
+                width: 0px;
+                height: 0px;
+                border-left: $height solid transparent;
+                border-right: $height solid transparent;
+                border-bottom: $height solid #28226f;
+            }
+
+            ::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                height: 100px;
+                width: 100%;
+            }
+
+            & .partier__content {
+                @include hover;
+            }
+        }
+
+        // &:nth-child(1) .partier__content {
+        //     @include hover;
+        // }
+    }
+
+    &__logo {
+        $height: 100px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: $height;
+        margin: 0;
+
+        img {
+            margin: 0;
+            width: $height;
+        }
+    }
+
+    &__content {
+        background-color: #28226f;
+        position: absolute;
+        z-index: 9;
+        top: calc(100% + 10px);
+        left: 0px;
+        width: 25em;
+        margin: 0;
+        border-radius: $radius-6;
+        opacity: 0;
+        visibility: hidden;
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.5s ease, opacity 0.5s ease, visibility 0s ease, padding 0.5s ease;
+
+        &:hover {
+            @include hover;
+        }
+    }
+
+    &__name {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: $fs-600;
+        font-weight: $fw-500;
+        margin: 0;
+        text-shadow: 1px -1px 2px #000, 0 0 1em #000, 0 0 0.2em #000;
+
+        p {
+            margin: 0;
+        }
+
+        hr {
+            height: 3px;
+            width: 100%;
+            background: $clr-seperator;
+            border-radius: $radius-9;
+            border: none;
+        }
+    }
+
+    &__description {
+        display: flex;
+        justify-content: center;
+        font-size: $fs-200;
+        margin-block-end: $gap-2;
+    }
+
+    &__vote {
+        $fs-hover: calc($fs-300 * 1.1);
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        min-height: calc($fs-hover * 2.5);
+        height: 100%;
+
+        .voteBtn {
+            display: flex;
+            background-color: $clr-primary;
+            margin: 0;
+            padding: $gap-2;
+            font-size: $fs-300;
+            border-radius: $radius-4;
+            border: none;
+            cursor: pointer;
+            transition: font-size 0.3s ease;
+
+            &:hover {
+                font-size: $fs-hover;
+                transition: font-size 0.3s ease;
+            }
+        }
+
+        .voted {
+            cursor: not-allowed;
+
+            &:hover {
+                opacity: .6;
+            }
+        }
+    }
+}

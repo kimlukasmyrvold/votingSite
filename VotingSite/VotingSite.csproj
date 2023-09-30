@@ -199,6 +199,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -246,30 +247,34 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.aspx" />
-    <Content Include="About\Default.aspx" />
-    <Content Include="Content\css\footer.css" />
-    <Content Include="Content\css\home.css" />
-    <Content Include="Content\css\navbar.css" />
-    <Content Include="Content\css\style.css" />
-    <Content Include="Content\css\themes.css" />
-    <Content Include="Content\images\icons.svg" />
-    <Content Include="Content\images\parti_logos\ap.png" />
-    <Content Include="Content\images\parti_logos\frp.png" />
-    <Content Include="Content\images\parti_logos\h.png" />
-    <Content Include="Content\images\parti_logos\krf.png" />
-    <Content Include="Content\images\parti_logos\mdg.png" />
-    <Content Include="Content\images\parti_logos\r.png" />
-    <Content Include="Content\images\parti_logos\sp.png" />
-    <Content Include="Content\images\parti_logos\sv.png" />
-    <Content Include="Content\images\parti_logos\v.png" />
+    <Content Include="assets\css\footer.css" />
+    <Content Include="assets\css\home.css" />
+    <Content Include="assets\css\navbar.css" />
+    <Content Include="assets\css\style.css" />
+    <Content Include="assets\css\themes.css" />
+    <Content Include="assets\fonts\nunito\nunito.css" />
+    <Content Include="assets\images\icons.svg" />
+    <Content Include="assets\images\parti_logos\ap.png" />
+    <Content Include="assets\images\parti_logos\frp.png" />
+    <Content Include="assets\images\parti_logos\h.png" />
+    <Content Include="assets\images\parti_logos\krf.png" />
+    <Content Include="assets\images\parti_logos\mdg.png" />
+    <Content Include="assets\images\parti_logos\r.png" />
+    <Content Include="assets\images\parti_logos\sp.png" />
+    <Content Include="assets\images\parti_logos\sv.png" />
+    <Content Include="assets\images\parti_logos\v.png" />
+    <Content Include="assets\js\home.js" />
+    <Content Include="assets\js\main.js" />
+    <Content Include="assets\js\test.js" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Kommuner\Default.aspx" />
-    <Content Include="Partier\Default.aspx" />
-    <Content Include="Scripts\main.js" />
+    <Content Include="pages\About\Default.aspx" />
+    <Content Include="pages\Kommuner\Default.aspx" />
+    <Content Include="pages\Partier\Default.aspx" />
+    <Content Include="pages\Privacy\Default.aspx" />
+    <Content Include="pages\Statistikk\Default.aspx" />
     <Content Include="Site.Master" />
-    <Content Include="Statistikk\Default.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -283,13 +288,6 @@
     <Compile Include="404.aspx.designer.cs">
       <DependentUpon>404.aspx</DependentUpon>
     </Compile>
-    <Compile Include="About\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="About\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -301,18 +299,39 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Kommuner\Default.aspx.cs">
+    <Compile Include="pages\About\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Kommuner\Default.aspx.designer.cs">
+    <Compile Include="pages\About\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Partier\Default.aspx.cs">
+    <Compile Include="pages\Kommuner\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Partier\Default.aspx.designer.cs">
+    <Compile Include="pages\Kommuner\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\Partier\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\Partier\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\Privacy\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\Privacy\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\Statistikk\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\Statistikk\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -330,13 +349,6 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
-    <Compile Include="Statistikk\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Statistikk\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -349,17 +361,50 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\css\footer.css.map" />
-    <Content Include="Content\css\home.css.map" />
-    <Content Include="Content\css\navbar.css.map" />
-    <Content Include="Content\css\style.css.map" />
-    <Content Include="Content\scss\abstracts\_index.scss" />
-    <Content Include="Content\scss\abstracts\_mixins.scss" />
-    <Content Include="Content\scss\abstracts\_vars.scss" />
-    <Content Include="Content\scss\footer.scss" />
-    <Content Include="Content\scss\home.scss" />
-    <Content Include="Content\scss\navbar.scss" />
-    <Content Include="Content\scss\style.scss" />
+    <Content Include="assets\css\footer.css.map" />
+    <Content Include="assets\css\home.css.map" />
+    <Content Include="assets\css\navbar.css.map" />
+    <Content Include="assets\css\style.css.map" />
+    <Content Include="assets\fonts\nunito\woff2\nunito-v25-latin-200.woff2" />
+    <Content Include="assets\fonts\nunito\woff2\nunito-v25-latin-200italic.woff2" />
+    <Content Include="assets\fonts\nunito\woff2\nunito-v25-latin-300.woff2" />
+    <Content Include="assets\fonts\nunito\woff2\nunito-v25-latin-300italic.woff2" />
+    <Content Include="assets\fonts\nunito\woff2\nunito-v25-latin-500.woff2" />
+    <Content Include="assets\fonts\nunito\woff2\nunito-v25-latin-500italic.woff2" />
+    <Content Include="assets\fonts\nunito\woff2\nunito-v25-latin-600.woff2" />
+    <Content Include="assets\fonts\nunito\woff2\nunito-v25-latin-600italic.woff2" />
+    <Content Include="assets\fonts\nunito\woff2\nunito-v25-latin-700.woff2" />
+    <Content Include="assets\fonts\nunito\woff2\nunito-v25-latin-700italic.woff2" />
+    <Content Include="assets\fonts\nunito\woff2\nunito-v25-latin-800.woff2" />
+    <Content Include="assets\fonts\nunito\woff2\nunito-v25-latin-800italic.woff2" />
+    <Content Include="assets\fonts\nunito\woff2\nunito-v25-latin-900.woff2" />
+    <Content Include="assets\fonts\nunito\woff2\nunito-v25-latin-900italic.woff2" />
+    <Content Include="assets\fonts\nunito\woff2\nunito-v25-latin-italic.woff2" />
+    <Content Include="assets\fonts\nunito\woff2\nunito-v25-latin-regular.woff2" />
+    <Content Include="assets\fonts\nunito\woff\nunito-v25-latin-200.woff" />
+    <Content Include="assets\fonts\nunito\woff\nunito-v25-latin-200italic.woff" />
+    <Content Include="assets\fonts\nunito\woff\nunito-v25-latin-300.woff" />
+    <Content Include="assets\fonts\nunito\woff\nunito-v25-latin-300italic.woff" />
+    <Content Include="assets\fonts\nunito\woff\nunito-v25-latin-500.woff" />
+    <Content Include="assets\fonts\nunito\woff\nunito-v25-latin-500italic.woff" />
+    <Content Include="assets\fonts\nunito\woff\nunito-v25-latin-600.woff" />
+    <Content Include="assets\fonts\nunito\woff\nunito-v25-latin-600italic.woff" />
+    <Content Include="assets\fonts\nunito\woff\nunito-v25-latin-700.woff" />
+    <Content Include="assets\fonts\nunito\woff\nunito-v25-latin-700italic.woff" />
+    <Content Include="assets\fonts\nunito\woff\nunito-v25-latin-800.woff" />
+    <Content Include="assets\fonts\nunito\woff\nunito-v25-latin-800italic.woff" />
+    <Content Include="assets\fonts\nunito\woff\nunito-v25-latin-900.woff" />
+    <Content Include="assets\fonts\nunito\woff\nunito-v25-latin-900italic.woff" />
+    <Content Include="assets\fonts\nunito\woff\nunito-v25-latin-italic.woff" />
+    <Content Include="assets\fonts\nunito\woff\nunito-v25-latin-regular.woff" />
+    <Content Include="assets\scss\abstracts\_index.scss" />
+    <Content Include="assets\scss\abstracts\_mixins.scss" />
+    <Content Include="assets\scss\abstracts\_vars.scss" />
+    <Content Include="assets\scss\footer.scss" />
+    <Content Include="assets\scss\home.scss" />
+    <Content Include="assets\scss\navbar.scss" />
+    <Content Include="assets\scss\style.scss" />
+    <Content Include="assets\json\partier.json" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -367,6 +412,7 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <None Include="Web.template.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

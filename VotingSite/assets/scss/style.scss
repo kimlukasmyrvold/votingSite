@@ -1,0 +1,391 @@
+@use "abstracts/index" as *;
+@import url("../fonts/nunito/nunito.css");
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    color: $clr-txt;
+    font-family: $font-family;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 50px;
+    overflow-x: hidden;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-size: $fs-100;
+    min-height: 100vh;
+
+    background: $clr-bg;
+    background: linear-gradient(80deg, $clr-bg, $clr-secondary);
+    background-size: 300% 300%;
+    animation: gradientAnimation 90s ease infinite;
+
+    >form {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        // min-height: 100vh;
+    }
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes shake {
+    0% {
+        rotate: 10deg;
+    }
+
+    25% {
+        rotate: -10deg;
+    }
+
+    50% {
+        rotate: 5deg;
+    }
+
+    75% {
+        rotate: -5deg;
+    }
+
+    100% {
+        rotate: 0deg;
+    }
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 1em 5em;
+
+    * {
+        margin-block-start: $gap-1;
+    }
+
+    @media (width < 1200px) {
+        margin-inline: 3em;
+    }
+
+    @media (width < 800px) {
+        margin-inline: 1em;
+    }
+
+    @media (width < 400px) {
+        margin-inline: .5em;
+    }
+}
+
+img {
+    width: auto;
+    max-height: 100%;
+}
+
+span.space {
+    display: block;
+    height: $gap-2;
+}
+
+table {
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    box-shadow: 0 0 4px 0 #000;
+    margin: .5em 0;
+
+    th,
+    td {
+        text-align: left;
+        padding: 8px;
+        font-size: 1.2rem;
+        text-transform: capitalize;
+        border: none;
+    }
+
+    th {
+        background-color: #00000052;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #00000031;
+    }
+
+    th+th,
+    td+td {
+        border-left: 1px solid #000;
+    }
+
+    tr+tr td {
+        border-top: 1px solid #000;
+    }
+}
+
+
+select {
+    background: $clr-primary;
+    border: none;
+    padding: $gap-2;
+}
+
+
+button,
+a,
+input {
+    position: relative;
+    color: $clr-txt;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+input {
+    background: $clr-primary;
+    padding: $gap-1;
+    border-radius: $radius-1;
+}
+
+.round {
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+}
+
+svg {
+    fill: currentColor;
+}
+
+hr {
+    width: 98%;
+    height: 3px;
+    background: var(--separator-color);
+    border-radius: var(--border-radius);
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.flex {
+    display: flex;
+}
+
+.hidden {
+    display: none;
+}
+
+/* heading classes */
+.heading {
+    margin: 0.3em 0 0.8em;
+    font-size: 2.15rem;
+    font-weight: 700;
+}
+
+.subheading {
+    margin: 1.2em 0 0.4em;
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+// Icon sizes
+.icon-redirect,
+.icon-edit {
+    height: 0.8em;
+    margin-inline: 0.2em;
+    position: absolute;
+}
+
+.icon-cross:hover {
+    animation: shake 0.5s ease;
+    cursor: pointer;
+}
+
+noscript {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.3em;
+    background: #fff;
+    color: #000;
+    margin: 0.4em auto 0;
+    padding: 0.8em 1.5em;
+    border-radius: var(--border-radius);
+    min-height: 50px;
+}
+
+.modal {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    padding: 3% 5%;
+    background-color: #000000a6;
+
+    @media (width < 800px) {
+        padding-inline: 2%;
+    }
+
+    @media (height < 500px) {
+        padding-block: 2%;
+    }
+
+    @media (height < 400px) {
+        padding-block: .1em;
+    }
+
+    &[data-visible="false"] {
+        display: none;
+    }
+
+    &__container {
+        display: flex;
+        position: relative;
+        flex-grow: 1;
+        width: 100%;
+        border-radius: $radius-3;
+        overflow: auto;
+        // background-color: #0000ffc9;
+        background-color: #25003a;
+        padding: $gap-5;
+
+        @media (width < 800px) {
+            padding-inline: 2%;
+        }
+
+        @media (width < 500px) {
+            padding-inline: 0;
+        }
+
+        @media (height < 600px) {
+            padding-block: 2%;
+        }
+
+        @media (height < 500px) {
+            padding-block: 0;
+        }
+
+        .icon-cross {
+            position: absolute;
+            $offset: .5em;
+            right: $offset;
+            top: $offset;
+            height: 1.75em;
+        }
+    }
+}
+
+.modal #voteForm {
+    // background: red;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 100%;
+    height: max-content;
+    overflow: auto;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-inline: auto;
+    }
+
+    input,
+    select {
+        min-width: 40ch;
+        width: 100%;
+        margin-block-end: $gap-3;
+    }
+
+    .votingInfo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-block-end: $gap-3;
+
+        p {
+            font-size: $fs-300;
+            font-weight: $fw-500;
+        }
+
+        span {
+            text-decoration: underline;
+        }
+
+        .partiLogo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+    }
+
+    .personalInfo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        label {
+            align-self: flex-start;
+        }
+    }
+
+    .location {
+        display: flex;
+        flex-direction: column;
+
+        .selectKommuner {
+            display: none;
+
+            &.ready {
+                display: block;
+            }
+        }
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        margin-block-start: $gap-1;
+        gap: $gap-2;
+        width: 100%;
+
+        .cancel,
+        .submit {
+            border-radius: $radius-4;
+            padding: $gap-1 $gap-2;
+            font-size: $fs-300;
+        }
+
+        .cancel {
+            background-color: $clr-secondary;
+        }
+
+        .submit {
+            background-color: $clr-primary;
+        }
+
+    }
+
+}

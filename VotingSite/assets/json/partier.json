@@ -1,0 +1,38 @@
+{
+    "ap": {
+        "name": "Arbeiderpartiet",
+        "id": 1
+    },
+    "h": {
+        "name": "Høyre",
+        "id": 2
+    },
+    "sp": {
+        "name": "Senterpartiet",
+        "id": 3
+    },
+    "frp": {
+        "name": "Fremskrittspartiet",
+        "id": 4
+    },
+    "sv": {
+        "name": "Sosialistisk Venstreparti",
+        "id": 5
+    },
+    "r": {
+        "name": "Rødt",
+        "id": 6
+    },
+    "v": {
+        "name": "Venstre",
+        "id": 7
+    },
+    "mdg": {
+        "name": "Miljøpartiet De Grønne",
+        "id": 8
+    },
+    "krf": {
+        "name": "Kristelig Folkeparti",
+        "id": 9
+    }
+}

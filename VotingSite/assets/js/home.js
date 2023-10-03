@@ -1,4 +1,7 @@
+
+// Aligning partier dropdown acording to window space
 function alignPartiHover() {
+    // Checking for overflow
     function isOverflow(parent, child) {
         var left = 0;
         var op = child;
@@ -10,6 +13,7 @@ function alignPartiHover() {
         return ((left + child.offsetWidth) > parent.offsetWidth);
     }
 
+    // Handling the items depending on if they are overflowing
     function getHoverHandler(parent, child) {
         return function () {
             if (isOverflow(parent, child)) {
@@ -20,6 +24,7 @@ function alignPartiHover() {
         }
     }
 
+    // Adding eventListeners
     function attach(o, e, f) {
         if (o.addEventListener) {
             o.addEventListener(e, f, false);
@@ -28,6 +33,7 @@ function alignPartiHover() {
         }
     }
 
+    // Selecting the items to prevent overflow for and its container
     const partierContainer = document.querySelector('.partier__container');
     const partierItem = document.querySelectorAll('.partier__item');
     for (let i = 0; i < partierItem.length; i++) {
@@ -36,11 +42,85 @@ function alignPartiHover() {
         attach(element, 'mouseover', getHoverHandler(partierContainer, partierContent));
     }
 }
-alignPartiHover();
 
 
 
+// **************************
+// *     Input checking     *
+// **************************
 
+function checkInputValues() {
+    // Test regex function
+    function test(isString, subject) {
+        if (isString == true) return /^[a-zA-ZæøåÆØÅ\s]+$/.test(subject);
+        return /^[0-9]{11}$/.test(subject);
+    }
+
+    // Outputing error to textContent if error
+    function ifElse(test, selector, message) {
+        if (test) selector.textContent = '';
+        else selector.textContent = message;
+    }
+
+    const personalInfo = document.querySelector('#voteForm .personalInfo');
+    const validationMessage = personalInfo.querySelector('.validation-message');
+
+    // First name
+    const FNavnInput = personalInfo.querySelector('#FNavn');
+    FNavnInput.addEventListener('input', () => ifElse(test(true, FNavnInput.value), validationMessage, 'FNavn kan bare være bokstaver'));
+
+    // Last name
+    const ENavnInput = personalInfo.querySelector('#ENavn');
+    ENavnInput.addEventListener('input', () => ifElse(test(true, ENavnInput.value), validationMessage, 'ENavn kan bare være bokstaver'));
+
+    // National ID Number
+    const FNumInput = personalInfo.querySelector('#FNum');
+    FNumInput.addEventListener('input', () => ifElse(test(false, FNumInput.value), validationMessage, 'Fødselsnummer må være et 11-sifret nummer.'));
+}
+
+async function showModal(parti) {
+    const modal = document.querySelector('.modal');
+    modal.dataset.visible = true;
+
+    const partiLogo = modal.querySelector('#voteForm .partiLogo img');
+    partiLogo.setAttribute('src', `assets/images/parti_logos/${parti}.png`);
+
+    const votingSelected = modal.querySelector('#voteForm .votingSelected');
+    votingSelected.textContent = (await getPartiInfo(parti)).name;
+
+    checkInputValues();
+}
+
+function cancel(e) {
+    e.preventDefault();
+    const modal = document.querySelector('.modal');
+    modal.dataset.visible = false;
+}
+
+
+async function callVoteMethod(parti) {
+    const aspBtn = document.querySelector('.sendToStemmer');
+    aspBtn.dataset.pid = (await getPartiInfo(parti)).id;
+    aspBtn.click();
+}
+
+function triggerVoteMethod(e) {
+    e.preventDefault();
+    const parti = sessionStorage.getItem('parti');
+    callVoteMethod(parti)
+}
+
+// Prevents default behavior of button to stop form submit
+// Adds the selected "party" to sessionStorage
+// Then calls showModal to show vote screen
+function vote(e) {
+    e.preventDefault();
+    const parti = this.dataset.id;
+    sessionStorage.setItem('parti', parti);
+    showModal(parti);
+}
+
+// Add voted class to all vote buttons if 'voted' is true in localStorage
 function getVoted() {
     if (localStorage.getItem('voted') == false) return
     const voteBtn = document.querySelectorAll('.voteBtn');
@@ -49,98 +129,64 @@ function getVoted() {
     });
 }
 
-function checkVoteSubmitValues() {
-    const fNumInput = document.querySelector('#voteForm .personalInfo #FNum');
-    const validationMessage = document.querySelector('#voteForm .personalInfo .validation-message');
-
-    fNumInput.addEventListener('input', () => {
-        const fNumValue = fNumInput.value;
-        const isValidFormat = /^[0-9]{11}$/.test(fNumValue);
-
-        if (isValidFormat) {
-            validationMessage.textContent = '';
-        } else {
-            validationMessage.textContent = 'Fødselsnummer må være et 11-sifret nummer.';
-        }
-    });
-}
 
 
-function showModal(parti) {
-    const modal = document.querySelector('.modal');
-    modal.dataset.visible = true;
+// ***************************************
+// *          Utility Functions          *
+// ***************************************
 
-    const voteForm = modal.querySelector('#voteForm');
-    const partiLogo = voteForm.querySelector('.partiLogo img');
-    const votingSelected = voteForm.querySelector('.votingSelected');
-
-    partiLogo.setAttribute('src', `assets/images/parti_logos/${parti}.png`);
-    votingSelected.textContent = getPartiName(parti);
-
-    checkVoteSubmitValues();
-    addIcons();
-
-    const name = "Steve";
-    PageMethods.SayHello(name, onSuccess, onError);
-}
-
-function onSuccess(result) {
-    alert(result);  // Display the result returned from the server
-}
-
-function onError(error) {
-    alert("Error: " + error.get_message());
-}
-
-function hideModal() {
-    const modal = document.querySelector('.modal');
-    modal.dataset.visible = false;
-}
-
-function cancel() {
-    hideModal();
-}
-
-function vote(e) {
-    e.preventDefault();
-    const parti = this.dataset.id;
-    showModal(parti);
-}
-
-
-let partierJSON;
-try {
-    fetch('/assets/json/partier.json')
+function getPartiInfo(key) {
+    return fetch('/assets/json/partier.json')
         .then(response => response.json())
         .then(data => {
-            partierJSON = data;
-            // getPartierNames();
-            // getPartierIDs();
-            // Object.entries(partierJSON).forEach(([key, value]) => {
-            //     console.log(key)
-            // });
+            return {
+                name: data[key].name,
+                id: data[key].id
+            };
+        })
+        .catch(e => {
+            console.error('Error:', e)
         });
-} catch (e) {
-    console.error('Error:', e)
 }
 
-function getPartierNames() {
-    Object.entries(partierJSON).forEach(([key, value]) => {
-        console.log(partierJSON[key].name)
-    });
+
+
+// ***************************************
+// *          Startup Functions          *
+// ***************************************
+
+function handleQueryString() {
+    let querystring = new URLSearchParams(document.location.search);
+    if (querystring.get("result") === "modal_open") {
+        showModal(querystring.get("parti"));
+    }
+    removeQueryString();
+};
+
+alignPartiHover();
+
+
+
+// ****************************************
+// *        Functions called by c#        *
+// ****************************************
+
+// Adds ready class to kommuner dropdown to make it visible
+// Then adds querystring to url with information about "modal open" and which "party" chosen
+function getFromKommuner_Callback() {
+    document.querySelector('.selectKommuner').classList.add("ready");
+    history.replaceState({}, document.title, window.location.pathname + `?result=modal_open&parti=${sessionStorage.getItem('parti')}`);
 }
 
-function getPartierIDs() {
-    Object.entries(partierJSON).forEach(([key, value]) => {
-        console.log(partierJSON[key].id)
-    });
-}
 
-function getPartiName(key) {
-    return partierJSON[key].name;
-}
 
-document.querySelectorAll('.voteBtn').forEach(btn => {
-    btn.addEventListener('click', vote);
-});
+// ****************************************
+// *            EventListeners            *
+// ****************************************
+
+document.addEventListener('DOMContentLoaded', handleQueryString);
+
+document.querySelectorAll('.voteBtn').forEach(btn => btn.addEventListener('click', vote));
+document.querySelector('.modal .submit').addEventListener('click', triggerVoteMethod);
+document.querySelector('.modal .cancel').addEventListener('click', cancel);
 document.querySelector('.modal .icon-cross').addEventListener('click', cancel);

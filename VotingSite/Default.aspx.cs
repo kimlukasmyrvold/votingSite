@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Services;
 using System.Web.UI;
@@ -17,83 +18,193 @@ namespace VotingSite
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Request.QueryString.Count > 0)
-            //{
-            //    Response.Write(Request.QueryString["result"]);
-            //    string script = "removeQueryString();";
-            //    ClientScript.RegisterStartupScript(GetType(), "MyScript", script, true);
-            //}
+            if (Request.QueryString.Count > 0)
+            {
+                // Response.Write(Request.QueryString["result"]);
+                //string script = "removeQueryString();";
+                //ClientScript.RegisterStartupScript(GetType(), "MyScript", script, true);
+            }
 
-            //if (!Page.IsPostBack)
-            //{
-            //    // getFromKommuner();
-            //}
+            if (!Page.IsPostBack)
+            {
+                //Response.Write(GetFromPersoner("01088469169"));
+                //SendToPersoner("John", "Steve", "10039642789", 123);
+                GetFromFylker();
+            }
+
         }
 
-        [WebMethod]
-        public static string SayHello(string name)
+        private void GetFromFylker()
         {
-            return "Hello, " + name + "!";
+            var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+            DataTable dt = new DataTable();
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT FID, Fylke from Fylker order by Fylke COLLATE Danish_Norwegian_CI_AS", conn);
+                cmd.CommandType = CommandType.Text;
+                SqlDataReader reader = cmd.ExecuteReader();
+                dt.Load(reader);
+                reader.Close();
+                conn.Close();
+            }
+
+            foreach (DataRow row in dt.Rows)
+            {
+                ListItem item = new ListItem(row["Fylke"].ToString(), row["FID"].ToString());
+                DropDownListFylker.Items.Add(item);
+            }
+
+            DropDownListFylker.DataBind();
         }
 
-        // private void getFromKommuner()
-        // {
-        //     var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
-        //     DataTable dt = new DataTable();
-        //     using (SqlConnection conn = new SqlConnection(connString))
-        //     {
-        //         conn.Open();
-        //         SqlCommand cmd = new SqlCommand("SELECT KID, Kommune from ViewKommuner order by Kommune COLLATE Danish_Norwegian_CI_AS", conn);
-        //         cmd.CommandType = CommandType.Text;
-        //         SqlDataReader reader = cmd.ExecuteReader();
-        //         dt.Load(reader);
-        //         reader.Close();
-        //         conn.Close();
-        //     }
+        protected void GetFromKommuner(object sender, EventArgs e)
+        {
+            // Clear list to prevent duplicated values
+            DropDownListKommuner.Items.Clear();
 
-        //     foreach (DataRow row in dt.Rows)
-        //     {
-        //         ListItem item = new ListItem(row["Kommune"].ToString(), row["KID"].ToString());
-        //         DropDownListKommuner.Items.Add(item);
-        //     }
+            // Get the values from database
+            SqlParameter param;
+            var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+            DataTable dt = new DataTable();
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT KID, Kommune from Kommuner, Fylker where Kommuner.FID = Fylker.FID and Fylker.FID=@fid", conn);
+                cmd.CommandType = CommandType.Text;
 
-        //     DropDownListKommuner.DataBind();
-        // }
+                param = new SqlParameter("@fid", SqlDbType.Int);
+                param.Value = int.Parse(DropDownListFylker.SelectedValue);
+                cmd.Parameters.Add(param);
 
-        // protected void ButtonVote_Click(object sender, EventArgs e)
-        // {
-        //     if (!(sender is Button button)) return;
-        //     if (int.Parse(DropDownListKommuner.SelectedValue) == 0)
-        //     {
-        //         Response.Redirect(Request.Url.AbsolutePath + "?result=Error, du må velge en kommune");
-        //     }
+                SqlDataReader reader = cmd.ExecuteReader();
+                dt.Load(reader);
+                reader.Close();
+                conn.Close();
+            }
 
-        //     string id;
-        //     id = button.Attributes["data-id"];
+            // Add the values to list
+            foreach (DataRow row in dt.Rows)
+            {
+                ListItem item = new ListItem(row["Kommune"].ToString(), row["KID"].ToString());
+                DropDownListKommuner.Items.Add(item);
+            }
 
-        //     SqlParameter param;
-        //     var connectionString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
-        //     using (SqlConnection conn = new SqlConnection(connectionString))
-        //     {
-        //         conn.Open();
+            // Bind the values
+            DropDownListKommuner.DataBind();
 
-        //         SqlCommand cmd = new SqlCommand("INSERT INTO test (KID,PID) Values(@kid,@pid)", conn);
-        //         cmd.CommandType = CommandType.Text;
+            // Calling JavaScript 
+            string script = @"
+                document.addEventListener('DOMContentLoaded', () => {
+                    getFromKommuner_Callback();
+                });
+            ";
+            ScriptManager.RegisterStartupScript(this, GetType(), "callFunctions", script, true);
+        }
 
-        //         param = new SqlParameter("@kid", SqlDbType.Int);
-        //         param.Value = int.Parse(DropDownListKommuner.SelectedValue);
-        //         cmd.Parameters.Add(param);
+        private void SendToPersoner(string FNavn, string ENavn, string FNum, int KID)
+        {
+            SqlParameter param;
+            var connectionString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
 
-        //         param = new SqlParameter("@pid", SqlDbType.Int);
-        //         param.Value = int.Parse(id);
-        //         cmd.Parameters.Add(param);
+                SqlCommand cmd = new SqlCommand("INSERT INTO personer (FNavn,ENavn,FNum,KID) Values(@FNavn,@ENavn,@FNum,@KID)", conn);
+                cmd.CommandType = CommandType.Text;
 
-        //         cmd.ExecuteNonQuery();
-        //         conn.Close();
-        //     }
+                // Param for Fornavn
+                param = new SqlParameter("@FNavn", SqlDbType.VarChar);
+                param.Value = FNavn;
+                cmd.Parameters.Add(param);
 
-        //     Response.Redirect(Request.Url.AbsolutePath + "?result=Success");
-        // }
+                // Param for Etternavn
+                param = new SqlParameter("@ENavn", SqlDbType.VarChar);
+                param.Value = ENavn;
+                cmd.Parameters.Add(param);
+
+                // Param for Fødselsnummer
+                param = new SqlParameter("@FNum", SqlDbType.VarChar);
+                param.Value = FNum;
+                cmd.Parameters.Add(param);
+
+                // Param for Kommune ID
+                param = new SqlParameter("@KID", SqlDbType.Int);
+                param.Value = KID;
+                cmd.Parameters.Add(param);
+
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
+
+        private bool GetFromPersoner(string FNum)
+        {
+            bool personExists = false;
+
+            // Get persons from database
+            SqlParameter param;
+            var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * from personer WHERE FNum = @FNum", conn);
+                cmd.CommandType = CommandType.Text;
+
+                param = new SqlParameter("@FNum", SqlDbType.VarChar);
+                param.Value = FNum;
+                cmd.Parameters.Add(param);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    // Checking if person exists within database
+                    personExists = true;
+                }
+
+                reader.Close();
+                conn.Close();
+            }
+
+            // return true if person exists in database
+            return personExists;
+        }
+
+        protected void SendToStemmer_Click(object sender, EventArgs e)
+        {
+            if (!(sender is Button button)) return;
+            if (int.Parse(DropDownListKommuner.SelectedValue) == 0)
+            {
+                //Response.Redirect(Request.Url.AbsolutePath + "?result=Error, du må velge en kommune");
+                return;
+            }
+
+            //string pid = button.Attributes["data-pid"];
+            string pid = Request.Form["pid"];
+
+            SqlParameter param;
+            var connectionString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand("INSERT INTO test (KID,PID) Values(@kid,@pid)", conn);
+                cmd.CommandType = CommandType.Text;
+
+                param = new SqlParameter("@kid", SqlDbType.Int);
+                param.Value = int.Parse(DropDownListKommuner.SelectedValue);
+                cmd.Parameters.Add(param);
+
+                param = new SqlParameter("@pid", SqlDbType.Int);
+                param.Value = int.Parse(pid);
+                cmd.Parameters.Add(param);
+
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+
+            //Response.Redirect(Request.Url.AbsolutePath);
+        }
 
     }
 }

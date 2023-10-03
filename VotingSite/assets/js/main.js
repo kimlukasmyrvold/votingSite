@@ -22,11 +22,6 @@ function handleMouseEvents(event) {
     };
 }
 
-function AddReadyClassToSelectKommuner() {
-    const selectKommuner = document.querySelector('.selectKommuner')
-    selectKommuner.classList.add("ready");
-}
-
 function addIcons() {
     // Loop trough every element with 'icon-' class
     document.querySelectorAll('[class^="icon-"], [class*=" icon-"]').forEach((e) => {

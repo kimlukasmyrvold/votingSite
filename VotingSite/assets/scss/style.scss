@@ -32,7 +32,6 @@ body {
         display: flex;
         flex-direction: column;
         flex-grow: 1;
-        // min-height: 100vh;
     }
 }
 
@@ -238,6 +237,7 @@ noscript {
     z-index: 99;
     padding: 3% 5%;
     background-color: #000000a6;
+    margin: 0;
 
     @media (width < 800px) {
         padding-inline: 2%;
@@ -288,18 +288,19 @@ noscript {
             right: $offset;
             top: $offset;
             height: 1.75em;
+            margin: 0;
         }
     }
 }
 
 .modal #voteForm {
-    // background: red;
     display: flex;
     align-items: center;
     width: 100%;
     min-height: 100%;
     height: max-content;
     overflow: auto;
+    margin: 0;
 
     .container {
         display: flex;
@@ -321,6 +322,7 @@ noscript {
         flex-direction: column;
         justify-content: center;
         margin-block-end: $gap-3;
+        height: 100%;
 
         p {
             font-size: $fs-300;
@@ -344,6 +346,7 @@ noscript {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        width: 100%;
 
         label {
             align-self: flex-start;
@@ -353,6 +356,7 @@ noscript {
     .location {
         display: flex;
         flex-direction: column;
+        width: 100%;
 
         .selectKommuner {
             display: none;

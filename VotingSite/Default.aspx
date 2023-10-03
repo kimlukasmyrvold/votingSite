@@ -4,7 +4,6 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <%--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>--%>
-    <script src="assets/js/test.js" defer></script>
     <script src="assets/js/home.js" defer></script>
 
   <%--  <div>
@@ -21,13 +20,58 @@
         </asp:Chart>
     </div>--%>
 
-
     <%--  <asp:DropDownList ID="DropDownListKommuner" runat="server">
         <asp:ListItem Selected="True" Value="0">Velg Kommune...</asp:ListItem>
     </asp:DropDownList>--%>
 
-    <%--<asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"></asp:ScriptManager>
-    <button onclick="callServerMethod()">Call Server Method</button>--%>
+    <div class="modal" data-visible="false">
+        <div class="modal__container">
+            <svg class="icon-cross"></svg>
+            <div id="voteForm">
+                <div class="container">
+
+                    <div class="votingInfo">
+                        <div class="partiLogo">
+                            <img src="assets/images/parti_logos/.png" alt="Parti logo">
+                        </div>
+                        <p>Du har valgt: <span class="votingSelected">&nbsp</span></p>
+                    </div>
+
+                    <div class="personalInfo">
+                        <label for="FNavn">Fornavn:</label>
+                        <input type="text" id="FNavn" name="Fornavn" required title="foo" pattern="[a-zA-ZæøåÆØÅ\s]+">
+                        <label for="ENavn">Etternavn:</label>
+                        <input type="text" id="ENavn" name="Etternavn" required title="foo" pattern="[a-zA-ZæøåÆØÅ\s]+">
+                        <label for="FNum">Fødselsnummer:</label>
+                        <input type="text" id="FNum" name="Fødselsnummer" required title="foo" pattern="[0-9]{11}">
+                        <span class="validation-message"></span>
+                    </div>
+
+                    <div class="location">
+                        <div class="selectFylker">
+                            <p>Velg Fylke</p>
+                            <asp:DropDownList ID="DropDownListFylker" runat="server" AutoPostBack="True" OnSelectedIndexChanged="GetFromKommuner">
+                                <asp:ListItem Selected="True" Value="0" Disabled="true">Velg Fylke...</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                        <div class="selectKommuner">
+                            <p>Velg Kommune</p>
+                            <asp:DropDownList ID="DropDownListKommuner" runat="server">
+                                <asp:ListItem Selected="True" Value="0" Disabled="true">Velg Kommune...</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <button class="cancel">Avbryt</button>
+                        <button class="submit">Stem</button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <div class="partier">
         <div class="partier__container">
@@ -53,7 +97,6 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <%--<!-- <asp:Button ID="Button1" runat="server" Text="Stem på parti" CssClass="voteBtn" data-id="1" OnClick="ButtonVote_Click" /> -->--%>
                         <button class="voteBtn" data-id="ap">Stem på parti</button>
                     </div>
                 </div>
@@ -80,7 +123,6 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <%--<!-- <asp:Button ID="Button2" runat="server" Text="Stem på parti" CssClass="voteBtn" data-id="2" OnClick="ButtonVote_Click" /> -->--%>
                         <button class="voteBtn" data-id="h">Stem på parti</button>
                     </div>
                 </div>
@@ -107,7 +149,6 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <%--<!-- <asp:Button ID="Button3" runat="server" Text="Stem på parti" CssClass="voteBtn" data-id="3" OnClick="ButtonVote_Click" /> -->--%>
                         <button class="voteBtn" data-id="sp">Stem på parti</button>
                     </div>
                 </div>
@@ -130,7 +171,6 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <%--<!-- <asp:Button ID="Button4" runat="server" Text="Stem på parti" CssClass="voteBtn" data-id="4" OnClick="ButtonVote_Click" /> -->--%>
                         <button class="voteBtn" data-id="frp">Stem på parti</button>
                     </div>
                 </div>
@@ -152,7 +192,6 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <%--<!-- <asp:Button ID="Button5" runat="server" Text="Stem på parti" CssClass="voteBtn" data-id="5" OnClick="ButtonVote_Click" /> -->--%>
                         <button class="voteBtn" data-id="sv">Stem på parti</button>
                     </div>
                 </div>
@@ -179,7 +218,6 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <%--<!-- <asp:Button ID="Button6" runat="server" Text="Stem på parti" CssClass="voteBtn" data-id="6" OnClick="ButtonVote_Click" /> -->--%>
                         <button class="voteBtn" data-id="r">Stem på parti</button>
                     </div>
                 </div>
@@ -202,7 +240,6 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <%--<!-- <asp:Button ID="Button7" runat="server" Text="Stem på parti" CssClass="voteBtn" data-id="7" OnClick="ButtonVote_Click" /> -->--%>
                         <button class="voteBtn" data-id="v">Stem på parti</button>
                     </div>
                 </div>
@@ -230,7 +267,6 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <%--<!-- <asp:Button ID="Button8" runat="server" Text="Stem på parti" CssClass="voteBtn" data-id="8" OnClick="ButtonVote_Click" /> -->--%>
                         <button class="voteBtn" data-id="mdg">Stem på parti</button>
                     </div>
                 </div>
@@ -255,7 +291,6 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <%--<!-- <asp:Button ID="Button9" runat="server" Text="Stem på parti" CssClass="voteBtn" data-id="9" OnClick="ButtonVote_Click" /> -->--%>
                         <button class="voteBtn" data-id="krf">Stem på parti</button>
                     </div>
                 </div>

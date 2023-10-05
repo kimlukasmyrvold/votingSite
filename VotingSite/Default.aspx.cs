@@ -20,7 +20,7 @@ namespace VotingSite
         {
             if (Request.QueryString.Count > 0)
             {
-                // Response.Write(Request.QueryString["result"]);
+                Response.Write(Request.QueryString["result"]);
                 //string script = "removeQueryString();";
                 //ClientScript.RegisterStartupScript(GetType(), "MyScript", script, true);
             }
@@ -70,7 +70,7 @@ namespace VotingSite
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT KID, Kommune from Kommuner, Fylker where Kommuner.FID = Fylker.FID and Fylker.FID=@fid", conn);
+                SqlCommand cmd = new SqlCommand("SELECT KID, Kommune from Kommuner, Fylker where Kommuner.FID = Fylker.FID and Fylker.FID=@fid order by Kommune COLLATE Danish_Norwegian_CI_AS", conn);
                 cmd.CommandType = CommandType.Text;
 
                 param = new SqlParameter("@fid", SqlDbType.Int);
@@ -82,6 +82,9 @@ namespace VotingSite
                 reader.Close();
                 conn.Close();
             }
+
+            ListItem firstRow = new ListItem("Velg Kommune...", "0");
+            DropDownListKommuner.Items.Add(firstRow);
 
             // Add the values to list
             foreach (DataRow row in dt.Rows)
@@ -172,15 +175,12 @@ namespace VotingSite
 
         protected void SendToStemmer_Click(object sender, EventArgs e)
         {
-            if (!(sender is Button button)) return;
+            //if (!(sender is Button button)) return;
             if (int.Parse(DropDownListKommuner.SelectedValue) == 0)
             {
-                //Response.Redirect(Request.Url.AbsolutePath + "?result=Error, du må velge en kommune");
+                Response.Redirect(Request.Url.AbsolutePath + "?result=Error, du må velge en kommune");
                 return;
             }
-
-            //string pid = button.Attributes["data-pid"];
-            string pid = Request.Form["pid"];
 
             SqlParameter param;
             var connectionString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
@@ -196,14 +196,14 @@ namespace VotingSite
                 cmd.Parameters.Add(param);
 
                 param = new SqlParameter("@pid", SqlDbType.Int);
-                param.Value = int.Parse(pid);
+                param.Value = dataPidHiddenField.Value;
                 cmd.Parameters.Add(param);
 
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
 
-            //Response.Redirect(Request.Url.AbsolutePath);
+            Response.Redirect(Request.Url.AbsolutePath);
         }
 
     }

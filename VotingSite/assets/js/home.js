@@ -45,21 +45,101 @@ function alignPartiHover() {
 
 
 
-// **************************
-// *     Input checking     *
-// **************************
+// ********************************
+// *        Main Functions        *
+// ********************************
 
+
+// ======<     Opening     >======
+
+// Function for opening the voting modal.
+async function openVoteModal(e, isBtn = true) {
+    e.preventDefault();
+
+    // Get the selected parti
+    const parti = ((!isBtn) ? e.target.parentElement.querySelector('.voteBtn') : this).dataset.id;
+    sessionStorage.setItem('parti', parti);
+    sessionStorage.setItem('pid', (await getPartiInfo(parti)).id);
+
+    makeModalVisible();
+    setLogoAndName(parti);
+    checkInputValues();
+}
+
+// Function for opening the voting modal from callback.
+function openVoteModalFromCallback(parti) {
+    makeModalVisible();
+    setLogoAndName(parti);
+    checkInputValues();
+}
+
+
+// ======<     Closing     >======
+
+// Function for closing the voting modal
+function closeVoteModal(e) {
+    e.preventDefault();
+    const modal = document.querySelector('.modal');
+    modal.dataset.visible = false;
+}
+
+
+// ======<     Calling     >======
+
+// Calling the vote method in c#
+function callVoteMethod() {
+    document.querySelector('#MainContent_dataPidHiddenField').value = sessionStorage.getItem('pid');
+    const aspBtn = document.querySelector('.sendToStemmer');
+    aspBtn.click();
+}
+
+
+
+// ***************************************
+// *          Utility Functions          *
+// ***************************************
+
+// Function for making modal visible
+function makeModalVisible() {
+    const modal = document.querySelector('.modal');
+    modal.dataset.visible = true;
+}
+
+// Gets name and id from partier.json, takes in parti key (mdg, a, sv...)
+function getPartiInfo(key) {
+    return fetch('/assets/json/partier.json')
+        .then(response => response.json())
+        .then(data => {
+            return {
+                name: data[key].name,
+                id: data[key].id
+            };
+        })
+        .catch(e => {
+            console.error('Error:', e)
+        });
+}
+
+async function setLogoAndName(parti) {
+    // Show the logo for the selected "parti"
+    const partiLogo = document.querySelector('#voteForm .partiLogo img');
+    partiLogo.setAttribute('src', `assets/images/parti_logos/${parti}.png`);
+
+    // Show the name for the selected "parti"
+    const votingSelected = document.querySelector('#voteForm .votingSelected');
+    votingSelected.textContent = (await getPartiInfo(parti)).name;
+}
+
+// Function for checking if input is valid
 function checkInputValues() {
     // Test regex function
     function test(isString, subject) {
-        if (isString == true) return /^[a-zA-ZæøåÆØÅ\s]+$/.test(subject);
-        return /^[0-9]{11}$/.test(subject);
+        return (isString) ? /^[a-zA-ZæøåÆØÅ\s]+$/.test(subject) : /^[0-9]{11}$/.test(subject);
     }
 
     // Outputing error to textContent if error
     function ifElse(test, selector, message) {
-        if (test) selector.textContent = '';
-        else selector.textContent = message;
+        selector.textContent = (test) ? '' : message;
     }
 
     const personalInfo = document.querySelector('#voteForm .personalInfo');
@@ -78,47 +158,23 @@ function checkInputValues() {
     FNumInput.addEventListener('input', () => ifElse(test(false, FNumInput.value), validationMessage, 'Fødselsnummer må være et 11-sifret nummer.'));
 }
 
-async function showModal(parti) {
-    const modal = document.querySelector('.modal');
-    modal.dataset.visible = true;
-
-    const partiLogo = modal.querySelector('#voteForm .partiLogo img');
-    partiLogo.setAttribute('src', `assets/images/parti_logos/${parti}.png`);
-
-    const votingSelected = modal.querySelector('#voteForm .votingSelected');
-    votingSelected.textContent = (await getPartiInfo(parti)).name;
-
-    checkInputValues();
-}
-
-function cancel(e) {
-    e.preventDefault();
-    const modal = document.querySelector('.modal');
-    modal.dataset.visible = false;
-}
 
 
-async function callVoteMethod(parti) {
-    const aspBtn = document.querySelector('.sendToStemmer');
-    aspBtn.dataset.pid = (await getPartiInfo(parti)).id;
-    aspBtn.click();
-}
+// ***************************************
+// *          Startup Functions          *
+// ***************************************
 
-function triggerVoteMethod(e) {
-    e.preventDefault();
-    const parti = sessionStorage.getItem('parti');
-    callVoteMethod(parti)
-}
+// Making sure when hovering over vote items that they don't go outside of screen
+alignPartiHover();
 
-// Prevents default behavior of button to stop form submit
-// Adds the selected "party" to sessionStorage
-// Then calls showModal to show vote screen
-function vote(e) {
-    e.preventDefault();
-    const parti = this.dataset.id;
-    sessionStorage.setItem('parti', parti);
-    showModal(parti);
-}
+// Handling queryString in url
+function handleQueryString() {
+    let querystring = new URLSearchParams(document.location.search);
+    if (querystring.get("result") === "modal_open") {
+        openVoteModalFromCallback(sessionStorage.getItem('parti'));
+    }
+    removeQueryString();
+};
 
 // Add voted class to all vote buttons if 'voted' is true in localStorage
 function getVoted() {
@@ -131,42 +187,6 @@ function getVoted() {
 
 
 
-// ***************************************
-// *          Utility Functions          *
-// ***************************************
-
-function getPartiInfo(key) {
-    return fetch('/assets/json/partier.json')
-        .then(response => response.json())
-        .then(data => {
-            return {
-                name: data[key].name,
-                id: data[key].id
-            };
-        })
-        .catch(e => {
-            console.error('Error:', e)
-        });
-}
-
-
-
-// ***************************************
-// *          Startup Functions          *
-// ***************************************
-
-function handleQueryString() {
-    let querystring = new URLSearchParams(document.location.search);
-    if (querystring.get("result") === "modal_open") {
-        showModal(querystring.get("parti"));
-    }
-    removeQueryString();
-};
-
-alignPartiHover();
-
-
-
 // ****************************************
 // *        Functions called by c#        *
 // ****************************************
@@ -174,8 +194,13 @@ alignPartiHover();
 // Adds ready class to kommuner dropdown to make it visible
 // Then adds querystring to url with information about "modal open" and which "party" chosen
 function getFromKommuner_Callback() {
-    document.querySelector('.selectKommuner').classList.add("ready");
-    history.replaceState({}, document.title, window.location.pathname + `?result=modal_open&parti=${sessionStorage.getItem('parti')}`);
+    document.querySelector('.remains').classList.add("ready");
+    history.replaceState({}, document.title, window.location.pathname + `?result=modal_open`);
+
+    // Disable the first value from being selected
+    const kommuneDropdown = document.querySelector('#MainContent_DropDownListKommuner')
+    const firstKommune = kommuneDropdown.querySelectorAll('option')[0];
+    firstKommune.disabled = true;
 }
 
 
@@ -184,9 +209,16 @@ function getFromKommuner_Callback() {
 // *            EventListeners            *
 // ****************************************
 
+// Calling handleQueryString function when DOMContent has loaded
 document.addEventListener('DOMContentLoaded', handleQueryString);
 
-document.querySelectorAll('.voteBtn').forEach(btn => btn.addEventListener('click', vote));
-document.querySelector('.modal .submit').addEventListener('click', triggerVoteMethod);
-document.querySelector('.modal .cancel').addEventListener('click', cancel);
-document.querySelector('.modal .icon-cross').addEventListener('click', cancel);
+// Opening voteModal
+document.querySelectorAll('.partier__logo').forEach(item => item.addEventListener('click', (e) => { openVoteModal(e, false); }));
+document.querySelectorAll('.voteBtn').forEach(btn => btn.addEventListener('click', openVoteModal));
+
+// Closing voteModal
+document.querySelector('.modal .cancel').addEventListener('click', closeVoteModal);
+document.querySelector('.modal .icon-cross').addEventListener('click', closeVoteModal);
+
+// Sending the vote
+document.querySelector('.modal .submit').addEventListener('click', callVoteMethod);

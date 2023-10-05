@@ -269,6 +269,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="pages\About\Default.aspx" />
+    <Content Include="pages\Charts\Default.aspx" />
     <Content Include="pages\Kommuner\Default.aspx" />
     <Content Include="pages\Partier\Default.aspx" />
     <Content Include="pages\Privacy\Default.aspx" />
@@ -301,6 +302,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="pages\About\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\Charts\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\Charts\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\Kommuner\Default.aspx.cs">

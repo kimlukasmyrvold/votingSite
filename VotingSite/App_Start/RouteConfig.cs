@@ -20,6 +20,7 @@ namespace VotingSite
             routes.MapPageRoute("KommunerRoute", "kommuner", "~/pages/Kommuner/Default.aspx");
             routes.MapPageRoute("PartierRoute", "partier", "~/pages/Partier/Default.aspx");
             routes.MapPageRoute("StatistikkRoute", "statistikk", "~/pages/Statistikk/Default.aspx");
+            routes.MapPageRoute("ChartskkRoute", "charts", "~/pages/Charts/Default.aspx");
         }
     }
 }

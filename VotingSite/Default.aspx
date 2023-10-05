@@ -38,33 +38,35 @@
                     </div>
 
                     <div class="personalInfo">
-                        <label for="FNavn">Fornavn:</label>
-                        <input type="text" id="FNavn" name="Fornavn" required title="foo" pattern="[a-zA-ZæøåÆØÅ\s]+">
-                        <label for="ENavn">Etternavn:</label>
-                        <input type="text" id="ENavn" name="Etternavn" required title="foo" pattern="[a-zA-ZæøåÆØÅ\s]+">
-                        <label for="FNum">Fødselsnummer:</label>
-                        <input type="text" id="FNum" name="Fødselsnummer" required title="foo" pattern="[0-9]{11}">
-                        <span class="validation-message"></span>
-                    </div>
-
-                    <div class="location">
                         <div class="selectFylker">
                             <p>Velg Fylke</p>
                             <asp:DropDownList ID="DropDownListFylker" runat="server" AutoPostBack="True" OnSelectedIndexChanged="GetFromKommuner">
                                 <asp:ListItem Selected="True" Value="0" Disabled="true">Velg Fylke...</asp:ListItem>
                             </asp:DropDownList>
                         </div>
-                        <div class="selectKommuner">
-                            <p>Velg Kommune</p>
-                            <asp:DropDownList ID="DropDownListKommuner" runat="server">
-                                <asp:ListItem Selected="True" Value="0" Disabled="true">Velg Kommune...</asp:ListItem>
-                            </asp:DropDownList>
+                        <div class="remains">
+                            <div class="selectKommuner">
+                                <p>Velg Kommune</p>
+                                <asp:DropDownList ID="DropDownListKommuner" runat="server">
+                                    <asp:ListItem Selected="True" Value="0" Disabled="true">Velg Kommune...</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                            
+                            <label for="FNavn">Fornavn:</label>
+                            <input type="text" id="FNavn" name="Fornavn" required title="Fornavn" pattern="[a-zA-ZæøåÆØÅ\s]+">
+                            <label for="ENavn">Etternavn:</label>
+                            <input type="text" id="ENavn" name="Etternavn" required title="Etternavn" pattern="[a-zA-ZæøåÆØÅ\s]+">
+                            <label for="FNum">Fødselsnummer:</label>
+                            <input type="text" id="FNum" name="Fødselsnummer" required title="Fødselsnummer" pattern="[0-9]{11}">
+                            <span class="validation-message"></span>
                         </div>
                     </div>
 
                     <div class="buttons">
                         <button class="cancel">Avbryt</button>
                         <button class="submit">Stem</button>
+                        <input type="hidden" id="dataPidHiddenField" runat="server" />
+                        <asp:Button CssClass="sendToStemmer hidden" ID="sendToStemmer" OnClick="SendToStemmer_Click" runat="server"/>
                     </div>
 
                 </div>

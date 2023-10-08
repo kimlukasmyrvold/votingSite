@@ -50,7 +50,7 @@ namespace VotingSite.pages.Charts
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT count(PNavn) from partier", conn);
+                SqlCommand cmd = new SqlCommand("SELECT count(Parti) from partier", conn);
                 cmd.CommandType = CommandType.Text;
 
                 SqlDataReader reader = cmd.ExecuteReader();

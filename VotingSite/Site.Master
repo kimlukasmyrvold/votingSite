@@ -12,7 +12,8 @@
     </title>
     <webopt:bundlereference runat="server" path="~/assets/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <script type="text/javascript" src="/assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
 </head>
 
 <body>

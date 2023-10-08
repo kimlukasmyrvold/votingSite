@@ -10,7 +10,8 @@ using System.Web;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-//using System.Web.UI.DataVisualization.Charting;
+using System.Web.UI.DataVisualization.Charting;
+using System.Diagnostics;
 
 namespace VotingSite
 {
@@ -20,9 +21,7 @@ namespace VotingSite
         {
             if (Request.QueryString.Count > 0)
             {
-                Response.Write(Request.QueryString["result"]);
-                //string script = "removeQueryString();";
-                //ClientScript.RegisterStartupScript(GetType(), "MyScript", script, true);
+                ErrMsg.InnerHtml = Request.QueryString["r"];
             }
 
             if (!Page.IsPostBack)
@@ -33,6 +32,12 @@ namespace VotingSite
             }
 
         }
+
+
+
+        // ***********************************************
+        // *     Adding fylker from database to page     *
+        // ***********************************************
 
         private void GetFromFylker()
         {
@@ -57,6 +62,12 @@ namespace VotingSite
 
             DropDownListFylker.DataBind();
         }
+
+
+
+        // ***********************************************
+        // *    Adding kommuner from database to page    *
+        // ***********************************************
 
         protected void GetFromKommuner(object sender, EventArgs e)
         {
@@ -83,6 +94,7 @@ namespace VotingSite
                 conn.Close();
             }
 
+            // Making the first row say "Velg Kommune..."
             ListItem firstRow = new ListItem("Velg Kommune...", "0");
             DropDownListKommuner.Items.Add(firstRow);
 
@@ -105,15 +117,31 @@ namespace VotingSite
             ScriptManager.RegisterStartupScript(this, GetType(), "callFunctions", script, true);
         }
 
+
+
+        // *******************************************
+        // *          Add person to database          *
+        // *******************************************
+
         private void SendToPersoner(string FNavn, string ENavn, string FNum, int KID)
         {
+            // Checking if person already is in the database
+            bool isInDB = GetFromPersoner(FNum);
+            if (isInDB)
+            {
+                ErrMsg.InnerHtml = "Error, person er i database";
+                Response.Redirect(Request.Url.AbsolutePath + "?r=Error, person er i database");
+                return;
+            };
+
+            // Inserting the person into database
             SqlParameter param;
             var connectionString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("INSERT INTO personer (FNavn,ENavn,FNum,KID) Values(@FNavn,@ENavn,@FNum,@KID)", conn);
+                SqlCommand cmd = new SqlCommand("INSERT INTO personer (FNavn,ENavn,FNum,KID,Voted) Values(@FNavn,@ENavn,@FNum,@KID,1)", conn);
                 cmd.CommandType = CommandType.Text;
 
                 // Param for Fornavn
@@ -140,6 +168,12 @@ namespace VotingSite
                 conn.Close();
             }
         }
+
+
+
+        // ********************************************
+        // *      Check if person is in database      *
+        // ********************************************
 
         private bool GetFromPersoner(string FNum)
         {
@@ -169,34 +203,44 @@ namespace VotingSite
                 conn.Close();
             }
 
-            // return true if person exists in database
+            // returns true if person exists in database
             return personExists;
         }
 
+
+
+        // *******************************************
+        // *          Send vote to database          *
+        // *******************************************
+
         protected void SendToStemmer_Click(object sender, EventArgs e)
         {
-            //if (!(sender is Button button)) return;
+            // Checking if a "Kommune" is actually selected
             if (int.Parse(DropDownListKommuner.SelectedValue) == 0)
             {
-                Response.Redirect(Request.Url.AbsolutePath + "?result=Error, du må velge en kommune");
+                ErrMsg.InnerHtml = "Error, du må velge en kommune";
                 return;
             }
 
+            int KID = int.Parse(DropDownListKommuner.SelectedValue);
+            SendToPersoner(FNavn.Value, ENavn.Value, FNum.Value.Replace(" ", ""), KID);
+
+            // Inserting vote into database
             SqlParameter param;
             var connectionString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("INSERT INTO test (KID,PID) Values(@kid,@pid)", conn);
+                SqlCommand cmd = new SqlCommand("INSERT INTO stemmer (KID,PID) Values(@kid,@pid)", conn);
                 cmd.CommandType = CommandType.Text;
 
                 param = new SqlParameter("@kid", SqlDbType.Int);
-                param.Value = int.Parse(DropDownListKommuner.SelectedValue);
+                param.Value = KID;
                 cmd.Parameters.Add(param);
 
                 param = new SqlParameter("@pid", SqlDbType.Int);
-                param.Value = dataPidHiddenField.Value;
+                param.Value = hiddenDataField.Value;
                 cmd.Parameters.Add(param);
 
                 cmd.ExecuteNonQuery();
@@ -205,6 +249,7 @@ namespace VotingSite
 
             Response.Redirect(Request.Url.AbsolutePath);
         }
+
 
     }
 }

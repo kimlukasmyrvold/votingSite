@@ -4,7 +4,7 @@
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
         <Columns>
             <asp:BoundField DataField="PID" HeaderText="ID" />
-            <asp:BoundField DataField="PNavn" HeaderText="Parti" />
+            <asp:BoundField DataField="Parti" HeaderText="Parti" />
         </Columns>
     </asp:GridView>
 

@@ -17,7 +17,7 @@ namespace VotingSite.Statistikk
             if (!IsPostBack)
             {
                 // Retrieve data from the SQL database
-                DataTable dt = getFromTest();
+                DataTable dt = getFromStemmer();
 
                 // Bind the data to the GridView
                 GridView1.DataSource = dt;
@@ -25,14 +25,15 @@ namespace VotingSite.Statistikk
             }
         }
 
-        private DataTable getFromTest()
+        private DataTable getFromStemmer()
         {
             var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * from viewStemmerTest order by newid()", conn);
+                //SqlCommand cmd = new SqlCommand("SELECT * from viewStemmerTest order by newid()", conn);
+                SqlCommand cmd = new SqlCommand("SELECT Kommune,Parti from viewStemmer", conn);
                 cmd.CommandType = CommandType.Text;
                 SqlDataReader reader = cmd.ExecuteReader();
                 dt.Load(reader);

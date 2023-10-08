@@ -1,38 +1,38 @@
 {
-    "ap": {
-        "name": "Arbeiderpartiet",
-        "id": 1
+    "1": {
+        "name": "ap",
+        "fullName": "Arbeiderpartiet"
     },
-    "h": {
-        "name": "Høyre",
-        "id": 2
+    "2": {
+        "name": "h",
+        "fullName": "Høyre"
     },
-    "sp": {
-        "name": "Senterpartiet",
-        "id": 3
+    "3": {
+        "name": "sp",
+        "fullName": "Senterpartiet"
     },
-    "frp": {
-        "name": "Fremskrittspartiet",
-        "id": 4
+    "4": {
+        "name": "frp",
+        "fullName": "Fremskrittspartiet"
     },
-    "sv": {
-        "name": "Sosialistisk Venstreparti",
-        "id": 5
+    "5": {
+        "name": "sv",
+        "fullName": "Sosialistisk Venstreparti"
     },
-    "r": {
-        "name": "Rødt",
-        "id": 6
+    "6": {
+        "name": "r",
+        "fullName": "Rødt"
     },
-    "v": {
-        "name": "Venstre",
-        "id": 7
+    "7": {
+        "name": "v",
+        "fullName": "Venstre"
     },
-    "mdg": {
-        "name": "Miljøpartiet De Grønne",
-        "id": 8
+    "8": {
+        "name": "mdg",
+        "fullName": "Miljøpartiet De Grønne"
     },
-    "krf": {
-        "name": "Kristelig Folkeparti",
-        "id": 9
+    "9": {
+        "name": "krf",
+        "fullName": "Kristelig Folkeparti"
     }
 }

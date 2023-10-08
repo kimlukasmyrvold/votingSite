@@ -15,6 +15,15 @@ namespace VotingSite
     {
 
         /// <summary>
+        /// ErrMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ErrMsg;
+
+        /// <summary>
         /// DropDownListFylker control.
         /// </summary>
         /// <remarks>
@@ -33,13 +42,40 @@ namespace VotingSite
         protected global::System.Web.UI.WebControls.DropDownList DropDownListKommuner;
 
         /// <summary>
-        /// dataPidHiddenField control.
+        /// FNavn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden dataPidHiddenField;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText FNavn;
+
+        /// <summary>
+        /// ENavn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText ENavn;
+
+        /// <summary>
+        /// FNum control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText FNum;
+
+        /// <summary>
+        /// hiddenDataField control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hiddenDataField;
 
         /// <summary>
         /// sendToStemmer control.

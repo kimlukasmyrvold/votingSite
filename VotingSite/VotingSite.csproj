@@ -272,6 +272,7 @@
     <Content Include="pages\Charts\Default.aspx" />
     <Content Include="pages\Kommuner\Default.aspx" />
     <Content Include="pages\Partier\Default.aspx" />
+    <Content Include="pages\Personer\Default.aspx" />
     <Content Include="pages\Privacy\Default.aspx" />
     <Content Include="pages\Statistikk\Default.aspx" />
     <Content Include="Site.Master" />
@@ -323,6 +324,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="pages\Partier\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\Personer\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\Personer\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\Privacy\Default.aspx.cs">

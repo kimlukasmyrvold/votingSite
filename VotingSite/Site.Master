@@ -19,19 +19,21 @@
 <body>
     <form runat="server">
         <header class="navbar">
-            <a href="#main" class="skip-to-main">Skip to main content.</a>
-            <div class="navbar-menuButton"><button class="bar"></button></div>
-            <nav class="navbar-links" aria-label="Navigation Links">
+            <a href="#main" class="skip_to_main">Skip to main content.</a>
+            <nav class="navbar__links" aria-label="Navigation Links">
                 <ul>
-                    <li><a class="navbar-link" runat="server" href="~/">Hjemmeside</a></li>
-                    <li><a class="navbar-link" runat="server" href="~/charts/">Charts</a></li>
-                    <li><a class="navbar-link" runat="server" href="~/statistikk/">Statistikk</a></li>
-                    <li><a class="navbar-link" runat="server" href="~/kommuner/">Kommuner</a></li>
-                    <li><a class="navbar-link" runat="server" href="~/partier/">Partier</a></li>
-                    <li><a class="navbar-link" runat="server" href="~/privacy/">Privacy</a></li>
+                    <li><a class="navbar__link" runat="server" href="~/">Hjemmeside</a></li>
+                    <li><a class="navbar__link" runat="server" href="~/charts/">Charts</a></li>
+                    <li><a class="navbar__link" runat="server" href="~/statistikk/">Statistikk</a></li>
+                    <li><a class="navbar__link" runat="server" href="~/kommuner/">Kommuner</a></li>
+                    <li><a class="navbar__link" runat="server" href="~/partier/">Partier</a></li>
+                    <li><a class="navbar__link" runat="server" href="~/personer/">Personer</a></li>
+                    <li><a class="navbar__link" runat="server" href="~/privacy/">Privacy</a></li>
                 </ul>
             </nav>
-            <div class="navbar-buttons">
+            <div class="navbar__buttons">
+                <button class="navbar__button" id="toggleTheme">Toggle Theme</button>
+                <button class="navbar__button" id="toggleMode">Toggle Mode</button>
             </div>
         </header>
 

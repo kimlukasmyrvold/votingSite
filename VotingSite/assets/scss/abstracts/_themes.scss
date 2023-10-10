@@ -1,0 +1,257 @@
+$themes: (
+    Fairstar: (
+        light: (
+            text: #201a13,
+            background: #f2ede8,
+            primary: #9eb0c7,
+            secondary: #edecf4,
+            accent: #6aa5a9,
+        ),
+        dark: (
+            text: #ece6df,
+            background: #17120d,
+            primary: #384a61,
+            secondary: #0c0b13,
+            accent: #569195,
+        ),
+    ),
+    SweetSparrow: (
+        light: (
+            text: #07060a,
+            background: #edecf4,
+            primary: #a2ab6d,
+            secondary: #eff4ec,
+            accent: #a9926a,
+        ),
+        dark: (
+            text: #f6f5f9,
+            background: #0c0b13,
+            primary: #899254,
+            secondary: #0e130b,
+            accent: #957e56,
+        ),
+    ),
+    SkirretGreen: (
+        light: (
+            text: #130614,
+            background: #f9effa,
+            primary: #82d87d,
+            secondary: #f2d8f3,
+            accent: #42c43b,
+        ),
+        dark: (
+            text: #f8ebf9,
+            background: #0f0510,
+            primary: #2b8227,
+            secondary: #260c27,
+            accent: #42c43b,
+        ),
+    ),
+    NightThistle: (
+        light: (
+            text: #0b1310,
+            background: #f2f7f5,
+            primary: #517f8a,
+            secondary: #eceff4,
+            accent: #6b7fa8,
+        ),
+        dark: (
+            text: #ecf4f1,
+            background: #080d0b,
+            primary: #75a3ae,
+            secondary: #0b0e13,
+            accent: #576a94,
+        ),
+    ),
+    Medieval: (
+        light: (
+            text: #000000,
+            background: #fcfcfd,
+            primary: #505395,
+            secondary: #eeeef6,
+            accent: #6a6daf,
+        ),
+        dark: (
+            text: #ffffff,
+            background: #020203,
+            primary: #6a6caf,
+            secondary: #090911,
+            accent: #505395,
+        ),
+    ),
+    Netherworld: (
+        light: (
+            text: #0a1324,
+            background: #f3f6fc,
+            primary: #cd131f,
+            secondary: #e7edf8,
+            accent: #830c14,
+        ),
+        dark: (
+            text: #dbe4f5,
+            background: #03060c,
+            primary: #ec323e,
+            secondary: #070d18,
+            accent: #f37c84,
+        ),
+    ),
+    ZamesiDesert: (
+        light: (
+            text: #0a1324,
+            background: #f3f6fc,
+            primary: #f1d7a7,
+            secondary: #e7edf8,
+            accent: #de9f2b,
+        ),
+        dark: (
+            text: #dbe4f5,
+            background: #03060c,
+            primary: #583e0e,
+            secondary: #070d18,
+            accent: #d49521,
+        ),
+    ),
+    Juneberry: (
+        light: (
+            text: #0a1324,
+            background: #f3f6fc,
+            primary: #aba4cc,
+            secondary: #e7edf8,
+            accent: #7d5393,
+        ),
+        dark: (
+            text: #dbe4f5,
+            background: #03060c,
+            primary: #3a335b,
+            secondary: #070d18,
+            accent: #976cac,
+        ),
+    ),
+    OpulentBlue: (
+        light: (
+            text: #0a1324,
+            background: #f3f6fc,
+            primary: #052766,
+            secondary: #d8e1f3,
+            accent: #0c59e9,
+        ),
+        dark: (
+            text: #dbe4f5,
+            background: #03060c,
+            primary: #0d2b63,
+            secondary: #0c1628,
+            accent: #1e60dc,
+        ),
+    ),
+    BlueVault: (
+        light: (
+            text: #000000,
+            background: #e9f0f7,
+            primary: #244261,
+            secondary: #e1eaf4,
+            accent: #4c85bd,
+        ),
+        dark: (
+            text: #ffffff,
+            background: #080f16,
+            primary: #09315c,
+            secondary: #102030,
+            accent: #9ebddb,
+        ),
+    )
+);
+
+:root {
+    @each $theme, $modes in $themes {
+        &[data-theme="#{$theme}"] {
+            @each $mode, $colors in $modes {
+                &[data-mode="#{$mode}"] {
+                    @each $type, $value in $colors {
+                        --clr-#{$type}: #{$value};
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* Color set 1 */
+// $clr-txt: #fff;
+// $clr-bg: #001233;
+// $clr-primary: #005762;
+// $clr-secondary: #2b015e;
+// $clr-accent: #007ac1;
+// $clr-destructive: #d30000;
+// $clr-seperator: #ffffff2f;
+
+/* Color set 2 */
+// $clr-txt: #f1f2ed;
+// $clr-bg: #191b13;
+// $clr-primary: #53684b;
+// $clr-secondary: #1e2920;
+// $clr-accent: #779c7f;
+// $clr-destructive: #b94343;
+// $clr-seperator: #ffffff2f;
+
+/* Color set 3 */
+// $clr-txt: #ffffff;
+// $clr-bg: #080f16;
+// $clr-primary: #09315c;
+// $clr-secondary: #102030;
+// $clr-accent: #9ebddb;
+// $clr-txt: #ffffff;
+// $clr-bg: #020203;
+// $clr-primary: #6a6caf;
+// $clr-secondary: #090911;
+// $clr-accent: #505395;
+
+// Light
+// $clr-txt: #000000;
+// $clr-bg: #e9f0f7;
+// $clr-primary: #244261;
+// $clr-secondary: #e1eaf4;
+// $clr-accent: #4c85bd;
+
+
+$clr-destructive: #c52121;
+$clr-seperator: #ffffff2f;
+
+$clr-black: rgba(0, 0, 0, 1.0);
+$clr-black-90: rgba(0, 0, 0, 0.9);
+$clr-black-80: rgba(0, 0, 0, 0.8);
+$clr-black-70: rgba(0, 0, 0, 0.7);
+$clr-black-60: rgba(0, 0, 0, 0.6);
+$clr-black-50: rgba(0, 0, 0, 0.5);
+$clr-black-40: rgba(0, 0, 0, 0.4);
+$clr-black-30: rgba(0, 0, 0, 0.3);
+$clr-black-20: rgba(0, 0, 0, 0.2);
+$clr-black-10: rgba(0, 0, 0, 0.03);
+
+$clr-white: rgba(255, 255, 255, 1.0);
+$clr-white-90: rgba(255, 255, 255, 0.9);
+$clr-white-80: rgba(255, 255, 255, 0.8);
+$clr-white-70: rgba(255, 255, 255, 0.7);
+$clr-white-60: rgba(255, 255, 255, 0.6);
+$clr-white-50: rgba(255, 255, 255, 0.5);
+$clr-white-40: rgba(255, 255, 255, 0.4);
+$clr-white-30: rgba(255, 255, 255, 0.3);
+$clr-white-20: rgba(255, 255, 255, 0.2);
+$clr-white-10: rgba(255, 255, 255, 0.03);
+
+
+// $static: #00000080;
+// $static4: #e1e1e133;
+// $static3: #161616;
+// $clr-white: #f0f0f0;
+// $static5: #18ac7a;
+// $static6: #ffffff26;
+// $static7: #ffffff1a;
+// $static8: #ffffff0d;
+// $static9: #ffffff4d;
+// $static10: #282828;
+// $static11: #ffffff08;
+// $static12: #000000cc;
+// $static13: #282828;
+// $static14: #ffffff33;
+// $static15: #00000080;

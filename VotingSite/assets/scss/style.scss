@@ -5,7 +5,7 @@
 *::before,
 *::after {
     box-sizing: border-box;
-    color: $clr-txt;
+    color: var(--clr-text);
     font-family: $font-family;
     margin: 0;
     padding: 0;
@@ -23,10 +23,10 @@ body {
     font-size: $fs-100;
     min-height: 100vh;
 
-    background: $clr-bg;
-    background: linear-gradient(80deg, $clr-bg, $clr-secondary);
-    background-size: 300% 300%;
-    animation: gradientAnimation 90s ease infinite;
+    background: var(--clr-background);
+    // background: linear-gradient(80deg, var(--clr-background), var(--clr-secondary));
+    // background-size: 300% 300%;
+    // animation: gradientAnimation 90s ease infinite;
 
     >form {
         display: flex;
@@ -121,11 +121,19 @@ table {
     }
 
     th {
-        background-color: #00000052;
+        // background-color: #0000006c;
+        // background-color: $clr-accent;
+        background-color: var(--clr-secondary);
     }
 
+    // tr {
+        // background-color: #{var(--clr-primary)}9f;
+    // }
+
     tr:nth-child(odd) {
-        background-color: #00000031;
+        // background-color: #00000056;
+        // background-color: var(--clr-primary);
+        background-color: var(--clr-secondary);
     }
 
     th+th,
@@ -140,7 +148,7 @@ table {
 
 
 select {
-    background: $clr-primary;
+    background: var(--clr-primary);
     border: none;
     padding: $gap-2;
 }
@@ -150,14 +158,14 @@ button,
 a,
 input {
     position: relative;
-    color: $clr-txt;
+    color: var(--clr-text);
     background: none;
     border: none;
     cursor: pointer;
 }
 
 input {
-    background: $clr-primary;
+    background: var(--clr-primary);
     padding: $gap-1;
     border-radius: $radius-1;
 }
@@ -174,8 +182,8 @@ svg {
 hr {
     width: 98%;
     height: 3px;
-    background: var(--separator-color);
-    border-radius: var(--border-radius);
+    background: $clr-seperator;
+    border-radius: $radius-3;
 }
 
 .underline {
@@ -226,7 +234,7 @@ noscript {
     color: #000;
     margin: 0.4em auto 0;
     padding: 0.8em 1.5em;
-    border-radius: var(--border-radius);
+    border-radius: $radius-3;
     min-height: 50px;
 }
 
@@ -262,8 +270,8 @@ noscript {
         width: 100%;
         border-radius: $radius-3;
         overflow: auto;
-        // background-color: #0000ffc9;
-        background-color: #25003a;
+        // background-color: #25003a;
+        background-color: var(--clr-secondary);
         padding: $gap-5;
 
         @media (width < 800px) {
@@ -290,175 +298,5 @@ noscript {
             height: 1.75em;
             margin: 0;
         }
-    }
-}
-
-.modal #voteForm {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    min-height: 100%;
-    height: max-content;
-    overflow: auto;
-    margin: 0;
-
-    &[data-visible="false"] {
-        display: none;
-    }
-
-    .container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-inline: auto;
-    }
-
-    input,
-    select {
-        min-width: 40ch;
-        width: 100%;
-        padding: $gap-1 $gap-2;
-        margin-block-end: $gap-3;
-        font-size: $fs-100;
-        border-radius: $radius-2;
-
-        option {
-            font-size: calc($fs-100 / 1.2);
-        }
-    }
-
-
-    .votingInfo {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin-block-end: $gap-3;
-        height: 100%;
-
-        p {
-            font-size: $fs-300;
-            font-weight: $fw-500;
-        }
-
-        span {
-            text-decoration: underline;
-        }
-
-        .partiLogo {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100px;
-
-            img {
-                margin: 0;
-            }
-        }
-    }
-
-    .personalInfo {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-
-        label {
-            align-self: flex-start;
-        }
-
-        .selectFylker {
-            width: 100%;
-        }
-
-        .remains {
-            display: none;
-            flex-direction: column;
-            width: 100%;
-
-            &.ready {
-                display: flex;
-            }
-        }
-
-        .inputField {
-            position: relative;
-            margin: 0;
-        }
-
-        .validBox {
-            @include hidden;
-            
-            background-color: $clr-destructive;
-            padding: calc($gap-1 / 2) calc($gap-2 / 2);
-            border-radius: $radius-1;
-            margin: 0;
-            
-            position: absolute;
-            top: 48px;
-            left: 0;
-            right: 0;
-            z-index: 10;
-            
-            &.invalid {
-                @include visible;
-            }
-        }
-
-        span {
-            font-size: 1rem;
-            max-width: 80%;
-            margin: 0;
-        }
-
-        span::after {
-            $height: 10px;
-
-            content: '';
-            position: absolute;
-            left: calc(10% - $height);
-            top: -#{$height};
-
-            width: 0px;
-            height: 0px;
-            border-left: $height solid transparent;
-            border-right: $height solid transparent;
-            border-bottom: $height solid $clr-destructive;
-        }
-    }
-
-    .buttons {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        margin-block-start: $gap-1;
-        gap: $gap-2;
-        width: 100%;
-
-        .cancel,
-        .submit {
-            border-radius: $radius-4;
-            padding: $gap-1 $gap-2;
-            font-size: $fs-300;
-        }
-
-        .cancel {
-            background-color: $clr-secondary;
-        }
-
-        .submit {
-            background-color: $clr-primary;
-        }
-
-    }
-
-}
-
-.modal #voted {
-    background-color: red;
-
-    &[data-visible="false"] {
-        display: none;
     }
 }

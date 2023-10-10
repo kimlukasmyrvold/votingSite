@@ -223,7 +223,9 @@ namespace VotingSite
             }
 
             int KID = int.Parse(DropDownListKommuner.SelectedValue);
-            SendToPersoner(FNavn.Value, ENavn.Value, FNum.Value.Replace(" ", ""), KID);
+            //SendToPersoner(FNavn.Value, ENavn.Value, FNum.Value.Replace(" ", ""), KID);
+            //SendToPersoner(FNum.Value.Replace(" ", ""), KID);
+
 
             // Inserting vote into database
             SqlParameter param;

@@ -41,9 +41,23 @@ function closeVoteModal(e) {
 // Calling the vote method in c#
 function callVoteMethod(e) {
     e.preventDefault();
+
+    // Checking if all values are correct
+    const kommunerList = document.querySelector('#voteForm #MainContent_DropDownListKommuner');
+    const value = kommunerList.value;
+    if (value === "0") {
+        const validKommune = personalInfo.querySelector('#voteForm .personalInfo .validKommune');
+        validKommune.textContent = (test) ? '' : message;
+        validKommune.parentElement.classList[test ? 'remove' : 'add']('invalid');
+        return;
+    }
+
+    // Adding data to hiddendatafield and clearing localstorage
     document.querySelector('#MainContent_hiddenDataField').value = sessionStorage.getItem('pid');
-    const aspBtn = document.querySelector('.sendToStemmer');
     sessionStorage.clear();
+
+    // Calling the c# method
+    const aspBtn = document.querySelector('.sendToStemmer');
     aspBtn.click();
 }
 
@@ -96,28 +110,26 @@ function checkInputValues() {
     function test(isString, subject) {
         return (isString) ? /^(?![\s]+$)[a-zA-Z\u00C0-\u02AF\s]+$/.test(subject) : /^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{2}\s?\d{5}$/.test(subject);
     }
-
+    
     // Outputing error to textContent if error
     function ifElse(test, selector, message) {
         selector.textContent = (test) ? '' : message;
         selector.parentElement.classList[test ? 'remove' : 'add']('invalid');
     }
 
-    const personalInfo = document.querySelector('#voteForm .personalInfo');
-    const validFNavn = personalInfo.querySelector('.validFNavn');
-    const validENavn = personalInfo.querySelector('.validENavn');
-    const validFNum = personalInfo.querySelector('.validFNum');
-
-    // First name
-    const FNavnInput = personalInfo.querySelector('#MainContent_FNavn');
-    FNavnInput.addEventListener('input', () => ifElse(test(true, FNavnInput.value), validFNavn, 'Fornavn kan bare være bokstaver'));
-
-    // Last name
-    const ENavnInput = personalInfo.querySelector('#MainContent_ENavn');
-    ENavnInput.addEventListener('input', () => ifElse(test(true, ENavnInput.value), validENavn, 'Etternavn kan bare være bokstaver'));
-
+    // // First name
+    // const validFNavn = document.querySelector('#voteForm .personalInfo .validFNavn');
+    // const FNavnInput = document.querySelector('#voteForm .personalInfo #MainContent_FNavn');
+    // FNavnInput.addEventListener('input', () => ifElse(test(true, FNavnInput.value), validFNavn, 'Fornavn kan bare være bokstaver'));
+    
+    // // Last name
+    // const validENavn = document.querySelector('#voteForm .personalInfo .validENavn');
+    // const ENavnInput = document.querySelector('#voteForm .personalInfo #MainContent_ENavn');
+    // ENavnInput.addEventListener('input', () => ifElse(test(true, ENavnInput.value), validENavn, 'Etternavn kan bare være bokstaver'));
+    
     // National ID Number
-    const FNumInput = personalInfo.querySelector('#MainContent_FNum');
+    const validFNum = document.querySelector('#voteForm .personalInfo .validFNum');
+    const FNumInput = document.querySelector('#voteForm .personalInfo #MainContent_FNum');
     FNumInput.addEventListener('input', () => {
         ifElse(test(false, FNumInput.value), validFNum, 'Fødselsnummer må være et 11-sifret nummer.');
 
@@ -136,10 +148,8 @@ function checkInputValues() {
 
 // Handling queryString in url
 function handleQueryString() {
-    let querystring = new URLSearchParams(document.location.search);
-    if (querystring.get("r") === "mo") {
-        openVoteModalFromCallback(sessionStorage.getItem('pid'));
-    }
+    const querystring = new URLSearchParams(document.location.search);
+    if (querystring.get("r") === "mo") openVoteModalFromCallback(sessionStorage.getItem('pid'));
     removeQueryString();
 };
 
@@ -199,18 +209,26 @@ function alignPartiHover() {
 }
 alignPartiHover();
 
-function addReadyClass() {
-    console.log('called');
+// Make elements with focus state unfocused when other element is being hovered
+function handleHoverOnFocus() {
+    const items = document.querySelectorAll('.partier__item');
 
+    items.forEach(item => {
+        item.addEventListener('mouseover', () => {
+            const focusedItem = document.activeElement;
+            if (focusedItem && focusedItem !== item) {
+                focusedItem.blur();
+            }
+        });
+    });
+}
+handleHoverOnFocus();
+
+function addReadyClass() {
     const fylkerList = document.querySelector('#voteForm #MainContent_DropDownListFylker');
     const value = fylkerList.value;
-
-    console.log(value);
-
-    if (value !== "0") {
-        document.querySelector('#voteForm .remains').classList.add("ready");
-        console.log("x2: " + value);
-    }
+    if (value === "0") return;
+    document.querySelector('#voteForm .remains').classList.add("ready");
 }
 addReadyClass();
 
@@ -241,7 +259,6 @@ function getFromKommuner_Callback() {
 document.addEventListener('DOMContentLoaded', handleQueryString);
 
 // Opening voteModal
-document.querySelectorAll('.partier__logo').forEach(item => item.addEventListener('click', (e) => { openVoteModal(e, false); }));
 document.querySelectorAll('.voteBtn').forEach(btn => btn.addEventListener('click', openVoteModal));
 
 // Closing voteModal

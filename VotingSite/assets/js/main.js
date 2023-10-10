@@ -1,12 +1,13 @@
-// remove querystring from url (www.example.com/?IamQueryString)
-function removeQueryString() {
-    let cleanURL = window.location.pathname;
-    history.replaceState({}, document.title, cleanURL);
-}
 
-// Indicating current page on navbar
+
+// ************************************
+// *         Navbar functions         *
+// ************************************
+
+// ======<   Indicating current page on navbar   >======
+
 function setActiveLink() {
-    document.querySelectorAll('.navbar-link').forEach(link => {
+    document.querySelectorAll('.navbar__link').forEach(link => {
         link.classList.remove('active');
         if (link.textContent.includes(document.documentElement.dataset.pagename)) {
             link.classList.add('active');
@@ -14,13 +15,104 @@ function setActiveLink() {
     });
 }
 
-// Checking for hover on navbar links
+
+// ======<   Checking for hover on navbar links   >======
+
 function handleMouseEvents(event) {
-    if (event.target.matches('.navbar-link')) {
-        document.querySelectorAll('.navbar-link').forEach(link => link.classList.remove('active'));
+    if (event.target.matches('.navbar__link')) {
+        document.querySelectorAll('.navbar__link').forEach(link => link.classList.remove('active'));
         event.type === 'mouseout' ? setActiveLink() : event.type === 'mouseover' ? event.target.classList.add('active') : null;
     };
 }
+
+
+// ======<   Handling navbar buttons   >======
+
+function navbarButtons() {
+    const buttons = document.querySelectorAll('.navbar__button');
+    buttons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const id = e.target.id;
+            switch (id) {
+                case "toggleTheme":
+                    toggleTheme();
+                    break;
+                case "toggleMode":
+                    toggleMode();
+                    break;
+            };
+        });
+    })
+}
+
+// Toggles theme and mode for site
+function toggleTheme() {
+    let theme = localStorage.getItem('theme');
+    const themes = [
+        "Fairstar",
+        "SweetSparrow",
+        "SkirretGreen",
+        "NightThistle",
+        "Medieval",
+        "Netherworld",
+        "ZamesiDesert",
+        "Juneberry",
+        "OpulentBlue",
+        "BlueVault",
+    ];
+
+    for (let i = 0; i < themes.length; i++) {
+        if (!theme || theme === themes[0]) {
+            theme = themes[1];
+            break;
+        } else if (theme === themes[themes.length - 1]) {
+            theme = themes[0];
+            break;
+        } else if (theme === themes[i]) {
+            theme = themes[i + 1];
+            break;
+        }
+    }
+
+    localStorage.setItem("theme", theme);
+    document.documentElement.dataset.theme = theme;
+}
+
+// Toggles mode for site
+function toggleMode() {
+    let mode = localStorage.getItem('mode');
+
+    if (!mode || mode === "dark") mode = "light";
+    else if (mode === "light") mode = "dark";
+
+    localStorage.setItem("mode", mode);
+    document.documentElement.dataset.mode = mode;
+}
+
+function setThemeAndMode() {
+    const theme = localStorage.getItem("theme");
+    const mode = localStorage.getItem("mode");
+    if (!theme || !mode) return;
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.dataset.mode = mode;
+}
+
+
+
+// *************************************
+// *         Utility functions         *
+// *************************************
+
+
+// ======<   Removes querystring from URL   >======
+
+function removeQueryString() {
+    let cleanURL = window.location.pathname;
+    history.replaceState({}, document.title, cleanURL);
+}
+
+
+// ======<   Adds icons to page from svg file   >======
 
 function addIcons() {
     // Loop trough every element with 'icon-' class
@@ -46,9 +138,17 @@ function addIcons() {
     });
 }
 
+
+
+// *************************************
+// *       Start Scripts on load       *
+// *************************************
+
 window.onload = () => {
     addIcons();
     setActiveLink();
-    document.querySelector('.navbar-links').addEventListener('mouseover', handleMouseEvents);
-    document.querySelector('.navbar-links').addEventListener('mouseout', handleMouseEvents);
+    navbarButtons();
+    setThemeAndMode();
+    document.querySelector('.navbar__links').addEventListener('mouseover', handleMouseEvents);
+    document.querySelector('.navbar__links').addEventListener('mouseout', handleMouseEvents);
 }

@@ -7,6 +7,7 @@
         visibility: visible;
         max-height: max-content;
         padding: $gap-4;
+        transition: visibility 0s ease, opacity .3s ease;
     }
 
     &__container {
@@ -18,14 +19,14 @@
     }
 
     &__item {
-        background-color: #28226f;
+        background-color: $clr-white-10;
         padding: $gap-4 $gap-3;
         border-radius: $radius-6;
         position: relative;
 
-        &:focus,
+        &:focus-within,
         &:hover {
-            ::after {
+            &::after {
                 $height: 10px;
 
                 content: '';
@@ -37,10 +38,10 @@
                 height: 0px;
                 border-left: $height solid transparent;
                 border-right: $height solid transparent;
-                border-bottom: $height solid #28226f;
+                border-bottom: $height solid var(--clr-secondary);
             }
 
-            ::before {
+            &::before {
                 content: '';
                 position: absolute;
                 top: 50%;
@@ -52,10 +53,6 @@
                 @include hover;
             }
         }
-
-        // &:nth-child(1) .partier__content {
-        //     @include hover;
-        // }
     }
 
     &__logo {
@@ -75,7 +72,8 @@
     }
 
     &__content {
-        background-color: #28226f;
+        // background-color: #28226f;
+        background-color: var(--clr-secondary);
         position: absolute;
         z-index: 9;
         top: calc(100% + 10px);
@@ -88,10 +86,6 @@
         overflow: hidden;
         max-height: 0;
         transition: max-height 0.5s ease, opacity 0.5s ease, visibility 0s ease, padding 0.5s ease;
-
-        &:hover {
-            @include hover;
-        }
     }
 
     &__name {
@@ -101,7 +95,7 @@
         font-size: $fs-600;
         font-weight: $fw-500;
         margin: 0;
-        text-shadow: 1px -1px 2px #000, 0 0 1em #000, 0 0 0.2em #000;
+        // text-shadow: 1px -1px 2px #000, 0 0 1em #000, 0 0 0.2em #000;
 
         p {
             margin: 0;
@@ -133,7 +127,7 @@
 
         .voteBtn {
             display: flex;
-            background-color: $clr-primary;
+            background-color: var(--clr-primary);
             margin: 0;
             padding: $gap-2;
             font-size: $fs-300;
@@ -155,5 +149,175 @@
                 opacity: .6;
             }
         }
+    }
+}
+
+.modal #voteForm {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 100%;
+    height: max-content;
+    overflow: auto;
+    margin: 0;
+
+    &[data-visible="false"] {
+        display: none;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-inline: auto;
+    }
+
+    input,
+    select {
+        min-width: 40ch;
+        width: 100%;
+        padding: $gap-1 $gap-2;
+        margin-block-end: $gap-3;
+        font-size: $fs-100;
+        border-radius: $radius-2;
+
+        option {
+            font-size: calc($fs-100 / 1.2);
+        }
+    }
+
+
+    .votingInfo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-block-end: $gap-3;
+        height: 100%;
+
+        p {
+            font-size: $fs-300;
+            font-weight: $fw-500;
+        }
+
+        span {
+            text-decoration: underline;
+        }
+
+        .partiLogo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+
+            img {
+                margin: 0;
+            }
+        }
+    }
+
+    .personalInfo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+
+        label {
+            align-self: flex-start;
+        }
+
+        .selectFylker {
+            width: 100%;
+        }
+
+        .remains {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+
+            &.ready {
+                display: flex;
+            }
+        }
+
+        .inputField {
+            position: relative;
+            margin: 0;
+        }
+
+        .validBox {
+            @include hidden;
+
+            background-color: $clr-destructive;
+            padding: calc($gap-1 / 2) calc($gap-2 / 2);
+            border-radius: $radius-1;
+            margin: 0;
+
+            position: absolute;
+            top: 48px;
+            left: 0;
+            right: 0;
+            z-index: 10;
+
+            &.invalid {
+                @include visible;
+            }
+        }
+
+        span {
+            font-size: 1rem;
+            max-width: 80%;
+            margin: 0;
+        }
+
+        span::after {
+            $height: 10px;
+
+            content: '';
+            position: absolute;
+            left: calc(10% - $height);
+            top: -#{$height};
+
+            width: 0px;
+            height: 0px;
+            border-left: $height solid transparent;
+            border-right: $height solid transparent;
+            border-bottom: $height solid $clr-destructive;
+        }
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        margin-block-start: $gap-1;
+        gap: $gap-2;
+        width: 100%;
+
+        .cancel,
+        .submit {
+            border-radius: $radius-4;
+            padding: $gap-1 $gap-2;
+            font-size: $fs-300;
+        }
+
+        .cancel {
+            background-color: $clr-destructive;
+        }
+
+        .submit {
+            background-color: var(--clr-primary);
+        }
+
+    }
+
+}
+
+.modal #voted {
+    background-color: red;
+
+    &[data-visible="false"] {
+        display: none;
     }
 }

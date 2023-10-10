@@ -42,24 +42,6 @@ namespace VotingSite
         protected global::System.Web.UI.WebControls.DropDownList DropDownListKommuner;
 
         /// <summary>
-        /// FNavn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText FNavn;
-
-        /// <summary>
-        /// ENavn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText ENavn;
-
-        /// <summary>
         /// FNum control.
         /// </summary>
         /// <remarks>

@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="Hjemmeside" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="VotingSite._Default" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
+    <link rel="stylesheet" href="assets/css/home.css">
     <script src="/assets/js/home.js" defer></script>
 </asp:Content>
 
@@ -33,13 +34,16 @@
                         <div class="remains">
                             <div class="selectKommuner">
                                 <p>Velg Kommune</p>
-                                <asp:DropDownList ID="DropDownListKommuner" runat="server">
-                                    <asp:ListItem Selected="True" Value="0" Disabled="true">Velg Kommune...
-                                    </asp:ListItem>
-                                </asp:DropDownList>
+                                <div class="inputField">
+                                    <asp:DropDownList ID="DropDownListKommuner" runat="server">
+                                        <asp:ListItem Selected="True" Value="0" Disabled="true">Velg Kommune...
+                                        </asp:ListItem>
+                                    </asp:DropDownList>
+                                    <div class="validBox"><span class="validKommune"></span></div>
+                                </div>
                             </div>
 
-                            <label for="FNavn">Fornavn:</label>
+                            <%--<label for="FNavn">Fornavn:</label>
                             <div class="inputField">
                                 <input runat="server" type="text" id="FNavn" name="Fornavn" required title="Fornavn" pattern="(?![\s]+$)[a-zA-Z\u00C0-\u02AF\s]+">
                                 <div class="validBox"><span class="validFNavn"></span></div>
@@ -49,7 +53,7 @@
                             <div class="inputField">
                                 <input runat="server" type="text" id="ENavn" name="Etternavn" required title="Etternavn" pattern="(?![\s]+$)[a-zA-Z\u00C0-\u02AF\s]+">
                                 <div class="validBox"><span class="validENavn"></span></div>
-                            </div>
+                            </div>--%>
 
                             <label for="FNum">Fødselsnummer:</label>
                             <div class="inputField">
@@ -86,7 +90,7 @@
     <div class="partier">
         <div class="partier__container">
 
-            <div class="partier__item">
+            <div class="partier__item" tabindex="0" data-id="1">
                 <div class="partier__logo">
                     <img src="assets/images/parti_logos/ap.png" alt="Parti logo">
                 </div>
@@ -111,12 +115,12 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <button class="voteBtn" data-id="1">Stem på parti</button>
+                        <button class="voteBtn" tabindex="0" data-id="1">Stem på parti</button>
                     </div>
                 </div>
             </div>
 
-            <div class="partier__item">
+            <div class="partier__item" tabindex="0" data-id="2">
                 <div class="partier__logo">
                     <img src="assets/images/parti_logos/h.png" alt="Parti logo">
                 </div>
@@ -141,12 +145,12 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <button class="voteBtn" data-id="2">Stem på parti</button>
+                        <button class="voteBtn" tabindex="0" data-id="2">Stem på parti</button>
                     </div>
                 </div>
             </div>
 
-            <div class="partier__item">
+            <div class="partier__item" tabindex="0" data-id="3">
                 <div class="partier__logo">
                     <img src="assets/images/parti_logos/sp.png" alt="Parti logo">
                 </div>
@@ -171,12 +175,12 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <button class="voteBtn" data-id="3">Stem på parti</button>
+                        <button class="voteBtn" tabindex="0" data-id="3">Stem på parti</button>
                     </div>
                 </div>
             </div>
 
-            <div class="partier__item">
+            <div class="partier__item" tabindex="0" data-id="4">
                 <div class="partier__logo">
                     <img src="assets/images/parti_logos/frp.png" alt="Parti logo">
                 </div>
@@ -195,12 +199,12 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <button class="voteBtn" data-id="4">Stem på parti</button>
+                        <button class="voteBtn" tabindex="0" data-id="4">Stem på parti</button>
                     </div>
                 </div>
             </div>
 
-            <div class="partier__item">
+            <div class="partier__item" tabindex="0" data-id="5">
                 <div class="partier__logo">
                     <img src="assets/images/parti_logos/sv.png" alt="Parti logo">
                 </div>
@@ -217,12 +221,12 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <button class="voteBtn" data-id="5">Stem på parti</button>
+                        <button class="voteBtn" tabindex="0" data-id="5">Stem på parti</button>
                     </div>
                 </div>
             </div>
 
-            <div class="partier__item">
+            <div class="partier__item" tabindex="0" data-id="6">
                 <div class="partier__logo">
                     <img src="assets/images/parti_logos/r.png" alt="Parti logo">
                 </div>
@@ -247,12 +251,12 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <button class="voteBtn" data-id="6">Stem på parti</button>
+                        <button class="voteBtn" tabindex="0" data-id="6">Stem på parti</button>
                     </div>
                 </div>
             </div>
 
-            <div class="partier__item">
+            <div class="partier__item" tabindex="0" data-id="7">
                 <div class="partier__logo">
                     <img src="assets/images/parti_logos/v.png" alt="Parti logo">
                 </div>
@@ -271,12 +275,12 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <button class="voteBtn" data-id="7">Stem på parti</button>
+                        <button class="voteBtn" tabindex="0" data-id="7">Stem på parti</button>
                     </div>
                 </div>
             </div>
 
-            <div class="partier__item">
+            <div class="partier__item" tabindex="0" data-id="8">
                 <div class="partier__logo">
                     <img src="assets/images/parti_logos/mdg.png" alt="Parti logo">
                 </div>
@@ -304,12 +308,12 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <button class="voteBtn" data-id="8">Stem på parti</button>
+                        <button class="voteBtn" tabindex="0" data-id="8">Stem på parti</button>
                     </div>
                 </div>
             </div>
 
-            <div class="partier__item">
+            <div class="partier__item" tabindex="0" data-id="9">
                 <div class="partier__logo">
                     <img src="assets/images/parti_logos/krf.png" alt="Parti logo">
                 </div>
@@ -332,7 +336,7 @@
                         </p>
                     </div>
                     <div class="partier__vote">
-                        <button class="voteBtn" data-id="9">Stem på parti</button>
+                        <button class="voteBtn" tabindex="0" data-id="9">Stem på parti</button>
                     </div>
                 </div>
             </div>

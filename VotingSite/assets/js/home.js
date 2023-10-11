@@ -43,14 +43,8 @@ function callVoteMethod(e) {
     e.preventDefault();
 
     // Checking if all values are correct
-    const kommunerList = document.querySelector('#voteForm #MainContent_DropDownListKommuner');
-    const value = kommunerList.value;
-    if (value === "0") {
-        const validKommune = personalInfo.querySelector('#voteForm .personalInfo .validKommune');
-        validKommune.textContent = (test) ? '' : message;
-        validKommune.parentElement.classList[test ? 'remove' : 'add']('invalid');
-        return;
-    }
+    const isOK = checkValues();
+    if (!isOK) return;
 
     // Adding data to hiddendatafield and clearing localstorage
     document.querySelector('#MainContent_hiddenDataField').value = sessionStorage.getItem('pid');
@@ -66,6 +60,40 @@ function callVoteMethod(e) {
 // ***************************************
 // *          Utility Functions          *
 // ***************************************
+
+function checkValues() {
+
+    // Checking if a "Kommune" is selected
+    function checkKommuner() {
+        const kommunerList = document.querySelector('#voteForm #MainContent_DropDownListKommuner');
+        const value = kommunerList.value;
+        if (value === "0") {
+            const validKommune = document.querySelector('#voteForm .personalInfo .validKommune');
+            validKommune.textContent = "Error, du må velge kommune.";
+            validKommune.parentElement.classList.add('invalid');
+
+            // Removing warning after some time
+            setTimeout(() => {
+                validKommune.parentElement.classList.remove('invalid');
+            }, 5_000);
+
+            return false
+        }
+
+        return true;
+    }
+
+    function checkFNavn() {
+        return true;
+    }
+
+    let isOK = () => {
+        if (checkKommuner() && checkFNavn()) return true;
+        return false;
+    };
+
+    return isOK();
+}
 
 // Function for making modal visible
 function makeModalVisible(selector = "none") {
@@ -100,7 +128,7 @@ async function setLogoAndName(parti) {
     partiLogo.setAttribute('src', `assets/images/parti_logos/${(await getPartiInfo(parti)).name}.png`);
 
     // Show the name for the selected "parti"
-    const votingSelected = document.querySelector('#voteForm .votingSelected');
+    const votingSelected = document.querySelector('#voteForm .partiName');
     votingSelected.textContent = (await getPartiInfo(parti)).fullName;
 }
 
@@ -110,34 +138,66 @@ function checkInputValues() {
     function test(isString, subject) {
         return (isString) ? /^(?![\s]+$)[a-zA-Z\u00C0-\u02AF\s]+$/.test(subject) : /^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{2}\s?\d{5}$/.test(subject);
     }
-    
+
+
     // Outputing error to textContent if error
     function ifElse(test, selector, message) {
         selector.textContent = (test) ? '' : message;
         selector.parentElement.classList[test ? 'remove' : 'add']('invalid');
     }
 
-    // // First name
-    // const validFNavn = document.querySelector('#voteForm .personalInfo .validFNavn');
-    // const FNavnInput = document.querySelector('#voteForm .personalInfo #MainContent_FNavn');
-    // FNavnInput.addEventListener('input', () => ifElse(test(true, FNavnInput.value), validFNavn, 'Fornavn kan bare være bokstaver'));
-    
-    // // Last name
-    // const validENavn = document.querySelector('#voteForm .personalInfo .validENavn');
-    // const ENavnInput = document.querySelector('#voteForm .personalInfo #MainContent_ENavn');
-    // ENavnInput.addEventListener('input', () => ifElse(test(true, ENavnInput.value), validENavn, 'Etternavn kan bare være bokstaver'));
-    
+
+    // Format National ID Number input
+    function formatFNumInput(FNumInput) {
+        let value = FNumInput.value.replace(/\s/g, '');
+        const cursorPosition = FNumInput.selectionStart;  // Save cursor position
+        const initialLength = value.length;
+
+        // Store the index of the last non-space character before the cursor
+        let lastNonSpaceIndex = -1;
+        for (let i = 0; i < value.length && i < cursorPosition; i++) {
+            if (value[i] !== ' ') {
+                lastNonSpaceIndex = i;
+            }
+        }
+
+        // Calculate the new cursor position after formatting
+        let newCursorPosition = cursorPosition;
+        value = value.replace(/(.{6})/g, '$1 ');
+        FNumInput.value = value.trim();
+
+        // Adjust the cursor position for edits within the first six digits
+        if (cursorPosition <= lastNonSpaceIndex) {
+            newCursorPosition += Math.floor(cursorPosition / 6);
+        }
+
+        // Adjust the cursor position for deleting a digit in the last five digits
+        if (initialLength > value.length && cursorPosition % 7 !== 0) {
+            newCursorPosition = Math.max(0, cursorPosition - 1);
+        }
+
+        // Restore cursor position
+        FNumInput.setSelectionRange(newCursorPosition, newCursorPosition);
+    }
+
+
     // National ID Number
     const validFNum = document.querySelector('#voteForm .personalInfo .validFNum');
     const FNumInput = document.querySelector('#voteForm .personalInfo #MainContent_FNum');
     FNumInput.addEventListener('input', () => {
         ifElse(test(false, FNumInput.value), validFNum, 'Fødselsnummer må være et 11-sifret nummer.');
-
-        // Adding a space to value after 6 characters to space between birthday and social security number
-        let value = FNumInput.value.replace(/\s/g, '');
-        value = value.replace(/(.{6})/g, '$1 ');
-        FNumInput.value = value.trim();
+        // formatFNumInput(FNumInput);
     });
+
+    // // First name
+    // const validFNavn = document.querySelector('#voteForm .personalInfo .validFNavn');
+    // const FNavnInput = document.querySelector('#voteForm .personalInfo #MainContent_FNavn');
+    // FNavnInput.addEventListener('input', () => ifElse(test(true, FNavnInput.value), validFNavn, 'Fornavn kan bare være bokstaver'));
+
+    // // Last name
+    // const validENavn = document.querySelector('#voteForm .personalInfo .validENavn');
+    // const ENavnInput = document.querySelector('#voteForm .personalInfo #MainContent_ENavn');
+    // ENavnInput.addEventListener('input', () => ifElse(test(true, ENavnInput.value), validENavn, 'Etternavn kan bare være bokstaver'));
 }
 
 

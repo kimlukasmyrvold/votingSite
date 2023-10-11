@@ -2,7 +2,7 @@
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="assets/css/home.css">
-    <script src="/assets/js/home.js" defer></script>
+    <script src="assets/js/home.js" defer></script>
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -10,17 +10,19 @@
 
     <div class="modal" data-visible="false">
         <div class="modal__container">
-            <svg class="icon-cross"></svg>
+            <div class="close-icon">
+                <svg class="icon-cross"></svg>
+            </div>
 
             <!-- Voting Form -->
             <div id="voteForm" data-visible="false">
-                <div class="container">
+                <div class="container no-margin">
 
                     <div class="votingInfo">
                         <div class="partiLogo">
                             <img src="assets/images/parti_logos/.png" alt="Parti logo">
                         </div>
-                        <p>Du har valgt: <span class="votingSelected">&nbsp</span></p>
+                        <p class="partiName">&nbsp</p>
                     </div>
 
                     <div class="personalInfo">
@@ -57,15 +59,15 @@
 
                             <label for="FNum">Fødselsnummer:</label>
                             <div class="inputField">
-                                <input runat="server" type="text" id="FNum" name="Fødselsnummer" maxlength="12" placeholder="11 sifre..." required title="Fødselsnummer" pattern="(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{2}\s?\d{5}">
+                                <input runat="server" type="text" id="FNum" name="Fødselsnummer" maxlength="11" placeholder="11 sifre..." required title="Fødselsnummer" pattern="(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{2}\s?\d{5}">
                                 <div class="validBox"><span class="validFNum"></span></div>
                             </div>
                         </div>
                     </div>
 
                     <div class="buttons">
-                        <button class="cancel" type="button">Avbryt</button>
-                        <button class="submit" type="submit">Stem</button>
+                        <button class="cancel" type="button"><span>Avbryt</span></button>
+                        <button class="submit" type="submit"><span>Stem</span></button>
                         <input type="hidden" id="hiddenDataField" runat="server" />
                         <asp:Button CssClass="sendToStemmer hidden" ID="sendToStemmer"
                             OnClick="SendToStemmer_Click" runat="server" />

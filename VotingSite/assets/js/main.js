@@ -32,13 +32,11 @@ function navbarButtons() {
     const buttons = document.querySelectorAll('.navbar__button');
     buttons.forEach(button => {
         button.addEventListener('click', (e) => {
+            e.preventDefault();
             const id = e.target.id;
             switch (id) {
                 case "toggleTheme":
                     toggleTheme();
-                    break;
-                case "toggleMode":
-                    toggleMode();
                     break;
             };
         });
@@ -48,53 +46,18 @@ function navbarButtons() {
 // Toggles theme and mode for site
 function toggleTheme() {
     let theme = localStorage.getItem('theme');
-    const themes = [
-        "Fairstar",
-        "SweetSparrow",
-        "SkirretGreen",
-        "NightThistle",
-        "Medieval",
-        "Netherworld",
-        "ZamesiDesert",
-        "Juneberry",
-        "OpulentBlue",
-        "BlueVault",
-    ];
 
-    for (let i = 0; i < themes.length; i++) {
-        if (!theme || theme === themes[0]) {
-            theme = themes[1];
-            break;
-        } else if (theme === themes[themes.length - 1]) {
-            theme = themes[0];
-            break;
-        } else if (theme === themes[i]) {
-            theme = themes[i + 1];
-            break;
-        }
-    }
+    if (!theme || theme === "dark") theme = "light";
+    else if (theme === "light") theme = "dark";
 
     localStorage.setItem("theme", theme);
     document.documentElement.dataset.theme = theme;
 }
 
-// Toggles mode for site
-function toggleMode() {
-    let mode = localStorage.getItem('mode');
-
-    if (!mode || mode === "dark") mode = "light";
-    else if (mode === "light") mode = "dark";
-
-    localStorage.setItem("mode", mode);
-    document.documentElement.dataset.mode = mode;
-}
-
-function setThemeAndMode() {
+function setTheme() {
     const theme = localStorage.getItem("theme");
-    const mode = localStorage.getItem("mode");
-    if (!theme || !mode) return;
+    if (!theme) return;
     document.documentElement.dataset.theme = theme;
-    document.documentElement.dataset.mode = mode;
 }
 
 
@@ -148,7 +111,7 @@ window.onload = () => {
     addIcons();
     setActiveLink();
     navbarButtons();
-    setThemeAndMode();
+    setTheme();
     document.querySelector('.navbar__links').addEventListener('mouseover', handleMouseEvents);
     document.querySelector('.navbar__links').addEventListener('mouseout', handleMouseEvents);
 }

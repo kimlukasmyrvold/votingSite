@@ -19,9 +19,9 @@
     }
 
     &__item {
-        background-color: $clr-white-10;
+        background-color: var(--clr-secondary);
         padding: $gap-4 $gap-3;
-        border-radius: $radius-6;
+        border-radius: 20px;
         position: relative;
 
         &:focus-within,
@@ -36,6 +36,7 @@
 
                 width: 0px;
                 height: 0px;
+
                 border-left: $height solid transparent;
                 border-right: $height solid transparent;
                 border-bottom: $height solid var(--clr-secondary);
@@ -45,6 +46,7 @@
                 content: '';
                 position: absolute;
                 top: 50%;
+                left: 0;
                 height: 100px;
                 width: 100%;
             }
@@ -67,12 +69,12 @@
         img {
             margin: 0;
             width: $height;
+            border-radius: 10px;
             pointer-events: none;
         }
     }
 
     &__content {
-        // background-color: #28226f;
         background-color: var(--clr-secondary);
         position: absolute;
         z-index: 9;
@@ -80,7 +82,7 @@
         left: 0px;
         width: 25em;
         margin: 0;
-        border-radius: $radius-6;
+        border-radius: 20px;
         opacity: 0;
         visibility: hidden;
         overflow: hidden;
@@ -92,21 +94,12 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        font-size: $fs-600;
-        font-weight: $fw-500;
+        font-size: $fs-500;
+        font-weight: 500;
         margin: 0;
-        // text-shadow: 1px -1px 2px #000, 0 0 1em #000, 0 0 0.2em #000;
 
         p {
             margin: 0;
-        }
-
-        hr {
-            height: 3px;
-            width: 100%;
-            background: $clr-seperator;
-            border-radius: $radius-9;
-            border: none;
         }
     }
 
@@ -128,10 +121,11 @@
         .voteBtn {
             display: flex;
             background-color: var(--clr-primary);
+            color: $clr-white;
             margin: 0;
             padding: $gap-2;
             font-size: $fs-300;
-            border-radius: $radius-4;
+            border-radius: 20px;
             border: none;
             cursor: pointer;
             transition: font-size 0.3s ease;
@@ -152,6 +146,8 @@
     }
 }
 
+
+// ======<   Modal Voteform   >======
 .modal #voteForm {
     display: flex;
     align-items: center;
@@ -175,43 +171,79 @@
 
     input,
     select {
+        background: var(--clr-primary);
+        color: $clr-white;
+
+        margin-block-end: $gap-3;
+        padding: $gap-1 $gap-2;
+        border-radius: 10px;
+        border: none;
+
         min-width: 40ch;
         width: 100%;
-        padding: $gap-1 $gap-2;
-        margin-block-end: $gap-3;
-        font-size: $fs-100;
-        border-radius: $radius-2;
+
+        font-size: $fs-200;
+        cursor: pointer;
 
         option {
-            font-size: calc($fs-100 / 1.2);
+            border-radius: 10px;
+            font-size: calc($fs-200 / 1.2);
+            color: $clr-white;
         }
     }
-
 
     .votingInfo {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        align-items: center;
         margin-block-end: $gap-3;
         height: 100%;
+        width: 100%;
+        cursor: pointer;
 
-        p {
-            font-size: $fs-300;
-            font-weight: $fw-500;
-        }
+        .partiName {
+            font-size: $fs-500;
+            font-weight: 500;
+            position: relative;
 
-        span {
-            text-decoration: underline;
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 5px;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background-color: var(--clr-accent);
+                border-radius: 10px;
+                scale: 0 1;
+                transition: scale .25s linear;
+                transform-origin: right;
+            }
         }
 
         .partiLogo {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100px;
+            height: 110px;
 
             img {
+                height: 100px;
                 margin: 0;
+                border-radius: 10px;
+                transition: height .25s ease;
+
+            }
+        }
+
+        &:hover {
+            .partiName::after {
+                scale: 1;
+                transform-origin: left;
+            }
+
+            .partiLogo img {
+                height: 110px;
             }
         }
     }
@@ -251,7 +283,7 @@
 
             background-color: $clr-destructive;
             padding: calc($gap-1 / 2) calc($gap-2 / 2);
-            border-radius: $radius-1;
+            border-radius: 10px;
             margin: 0;
 
             position: absolute;
@@ -287,6 +319,7 @@
         }
     }
 
+    // Buttons
     .buttons {
         display: flex;
         flex-direction: row;
@@ -297,9 +330,20 @@
 
         .cancel,
         .submit {
-            border-radius: $radius-4;
+            border-radius: 10px;
             padding: $gap-1 $gap-2;
-            font-size: $fs-300;
+            height: 50px;
+
+            span {
+                font-size: calc($fs-400 / 1.15);
+                color: $clr-white;
+                margin: 0;
+                transition: color .3s ease;
+                
+                &:hover {
+                    color: #b3b3b3;
+                }
+            }
         }
 
         .cancel {
@@ -314,6 +358,8 @@
 
 }
 
+
+// ======<   Modal Voted   >======
 .modal #voted {
     background-color: red;
 

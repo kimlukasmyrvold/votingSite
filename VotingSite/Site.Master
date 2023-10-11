@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 
-<html lang="no" data-pagename="<%: Page.Title %>">
+<html lang="no" data-pagename="<%: Page.Title %>" data-theme="dark">
 
 <head runat="server">
     <meta charset="utf-8" />
@@ -18,6 +18,17 @@
 
 <body>
     <form runat="server">
+        <noscript>
+            <svg height="32px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#f1a500" d="M22.25,17.55,14.63,3.71a3,3,0,0,0-5.26,0L1.75,17.55A3,3,0,0,0,4.38,22H19.62a3,3,0,0,0,2.63-4.45ZM12,18a1,1,0,1,1,1-1A1,1,0,0,1,12,18Zm1-5a1,1,0,0,1-2,0V9a1,1,0,0,1,2,0Z" />
+            </svg>
+            To fully access and navigate this website, please ensure that JavaScript is enabled in your browser settings.
+            <style>
+                [class*="icon-"] {
+                    display: none
+                }
+            </style>
+        </noscript>
         <header class="navbar">
             <a href="#main" class="skip_to_main">Skip to main content.</a>
             <nav class="navbar__links" aria-label="Navigation Links">
@@ -32,8 +43,7 @@
                 </ul>
             </nav>
             <div class="navbar__buttons">
-                <button class="navbar__button" id="toggleTheme">Toggle Theme</button>
-                <button class="navbar__button" id="toggleMode">Toggle Mode</button>
+                <button class="navbar__button" id="toggleTheme"><svg class="icon-appearance"></svg></button>
             </div>
         </header>
 

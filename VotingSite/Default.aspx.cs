@@ -28,6 +28,7 @@ namespace VotingSite
             {
                 //Response.Write(GetFromPersoner("01088469169"));
                 //SendToPersoner("John", "Steve", "10039642789", 123);
+
                 GetFromFylker();
             }
 

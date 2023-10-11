@@ -20,55 +20,29 @@ html {
 body {
     display: flex;
     flex-direction: column;
-    font-size: $fs-100;
+    font-size: $fs-200;
     min-height: 100vh;
-
     background: var(--clr-background);
-    // background: linear-gradient(80deg, var(--clr-background), var(--clr-secondary));
-    // background-size: 300% 300%;
-    // animation: gradientAnimation 90s ease infinite;
-
-    >form {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-    }
 }
 
-@keyframes gradientAnimation {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
+form {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
-@keyframes shake {
-    0% {
-        rotate: 10deg;
-    }
-
-    25% {
-        rotate: -10deg;
-    }
-
-    50% {
-        rotate: 5deg;
-    }
-
-    75% {
-        rotate: -5deg;
-    }
-
-    100% {
-        rotate: 0deg;
-    }
+noscript {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.3em;
+    background: #fff;
+    color: #000;
+    margin: 0.4em auto 0;
+    padding: 0.8em 1.5em;
+    border-radius: 10px;
+    min-height: 50px;
 }
 
 main {
@@ -91,6 +65,10 @@ main {
 
     @media (width < 400px) {
         margin-inline: .5em;
+    }
+
+    .no-margin {
+        margin: 0;
     }
 }
 
@@ -121,19 +99,11 @@ table {
     }
 
     th {
-        // background-color: #0000006c;
-        // background-color: $clr-accent;
-        background-color: var(--clr-secondary);
+        background-color: #0000006c;
     }
 
-    // tr {
-        // background-color: #{var(--clr-primary)}9f;
-    // }
-
     tr:nth-child(odd) {
-        // background-color: #00000056;
-        // background-color: var(--clr-primary);
-        background-color: var(--clr-secondary);
+        background-color: #00000056;
     }
 
     th+th,
@@ -146,14 +116,6 @@ table {
     }
 }
 
-
-select {
-    background: var(--clr-primary);
-    border: none;
-    padding: $gap-2;
-}
-
-
 button,
 a,
 input {
@@ -164,59 +126,23 @@ input {
     cursor: pointer;
 }
 
-input {
-    background: var(--clr-primary);
-    padding: $gap-1;
-    border-radius: $radius-1;
-}
-
-.round {
-    border-radius: 50%;
-    aspect-ratio: 1 / 1;
-}
-
-svg {
-    fill: currentColor;
-}
-
-hr {
-    width: 98%;
-    height: 3px;
-    background: $clr-seperator;
-    border-radius: $radius-3;
-}
-
-.underline {
-    text-decoration: underline;
-}
-
-.flex {
-    display: flex;
-}
-
 .hidden {
     display: none;
 }
 
-/* heading classes */
-.heading {
-    margin: 0.3em 0 0.8em;
-    font-size: 2.15rem;
-    font-weight: 700;
+svg {
+    fill: currentColor;
+    display: block;
+    width: 100%;
+    margin: 0;
 }
 
-.subheading {
-    margin: 1.2em 0 0.4em;
-    font-size: 1.75rem;
-    font-weight: 600;
-}
-
-// Icon sizes
-.icon-redirect,
-.icon-edit {
-    height: 0.8em;
-    margin-inline: 0.2em;
-    position: absolute;
+hr {
+    height: 3px;
+    width: 100%;
+    background: $clr-seperator;
+    border-radius: 10px;
+    border: none;
 }
 
 .icon-cross:hover {
@@ -224,27 +150,16 @@ hr {
     cursor: pointer;
 }
 
-noscript {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.3em;
-    background: #fff;
-    color: #000;
-    margin: 0.4em auto 0;
-    padding: 0.8em 1.5em;
-    border-radius: $radius-3;
-    min-height: 50px;
-}
 
+
+// ======<   Modal styling   >======
 .modal {
     display: flex;
     position: fixed;
     inset: 0;
     z-index: 99;
     padding: 3% 5%;
-    background-color: #000000a6;
+    background-color: $clr-black-60;
     margin: 0;
 
     @media (width < 800px) {
@@ -268,9 +183,8 @@ noscript {
         position: relative;
         flex-grow: 1;
         width: 100%;
-        border-radius: $radius-3;
+        border-radius: 10px;
         overflow: auto;
-        // background-color: #25003a;
         background-color: var(--clr-secondary);
         padding: $gap-5;
 
@@ -290,13 +204,16 @@ noscript {
             padding-block: 0;
         }
 
-        .icon-cross {
+        .close-icon {
             position: absolute;
             $offset: .5em;
             right: $offset;
             top: $offset;
-            height: 1.75em;
             margin: 0;
+            
+            .icon-cross {
+                height: 1.75em;
+            }
         }
     }
 }

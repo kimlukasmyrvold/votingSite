@@ -10,7 +10,9 @@
             <asp:BoundField DataField="ENavn" HeaderText="Etternavn" SortExpression="ENavn" />
             <asp:BoundField DataField="FNum" HeaderText="Fødselsnummer" SortExpression="FNum" />
             <asp:BoundField DataField="Kommune" HeaderText="Kommune" SortExpression="Kommune" />
-            <asp:BoundField DataField="Voted" HeaderText="Har stemt" SortExpression="Voted" />
+            <asp:BoundField DataField="Voted" HeaderText="Har stemt" />
         </Columns>
     </asp:GridView>
+
+    <asp:Button Text="RemoveVoted" OnClick="RemoveVoted_Click" runat="server" />
 </asp:Content>

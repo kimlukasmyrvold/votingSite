@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace VotingSite.Partier
 {
@@ -16,16 +11,11 @@ namespace VotingSite.Partier
         {
             if (!IsPostBack)
             {
-                // Retrieve data from the SQL database
-                DataTable dt = getFromPartier();
-
-                // Bind the data to the GridView
-                GridView1.DataSource = dt;
-                GridView1.DataBind();
+                getFromPartier();
             }
         }
 
-        private DataTable getFromPartier()
+        private void getFromPartier()
         {
             var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
             DataTable dt = new DataTable();
@@ -36,10 +26,16 @@ namespace VotingSite.Partier
                 cmd.CommandType = CommandType.Text;
                 SqlDataReader reader = cmd.ExecuteReader();
                 dt.Load(reader);
+
                 reader.Close();
                 conn.Close();
-                return dt;
             }
+
+            // Bind the data to the GridView
+            GridView1.DataSource = dt;
+            GridView1.DataBind();
         }
+
+
     }
 }

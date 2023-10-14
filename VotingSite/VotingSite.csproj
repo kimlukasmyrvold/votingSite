@@ -268,13 +268,12 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="pages\About\Default.aspx" />
     <Content Include="pages\Charts\Default.aspx" />
     <Content Include="pages\Kommuner\Default.aspx" />
     <Content Include="pages\Partier\Default.aspx" />
     <Content Include="pages\Personer\Default.aspx" />
     <Content Include="pages\Privacy\Default.aspx" />
-    <Content Include="pages\Statistikk\Default.aspx" />
+    <Content Include="pages\Stemmer\Default.aspx" />
     <Content Include="Site.Master" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -290,20 +289,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="pages\About\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="pages\About\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\Charts\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -340,11 +331,11 @@
     <Compile Include="pages\Privacy\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="pages\Statistikk\Default.aspx.cs">
+    <Compile Include="pages\Stemmer\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="pages\Statistikk\Default.aspx.designer.cs">
+    <Compile Include="pages\Stemmer\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

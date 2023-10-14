@@ -10,7 +10,7 @@
     <title>
         <%: Page.Title %>
     </title>
-    <webopt:bundlereference runat="server" path="~/assets/css" />
+    <webopt:BundleReference runat="server" Path="~/assets/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <script src="/assets/js/main.js"></script>
     <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
@@ -35,7 +35,7 @@
                 <ul>
                     <li><a class="navbar__link" runat="server" href="~/">Hjemmeside</a></li>
                     <li><a class="navbar__link" runat="server" href="~/charts/">Charts</a></li>
-                    <li><a class="navbar__link" runat="server" href="~/statistikk/">Statistikk</a></li>
+                    <li><a class="navbar__link" runat="server" href="~/stemmer/">Stemmer</a></li>
                     <li><a class="navbar__link" runat="server" href="~/kommuner/">Kommuner</a></li>
                     <li><a class="navbar__link" runat="server" href="~/partier/">Partier</a></li>
                     <li><a class="navbar__link" runat="server" href="~/personer/">Personer</a></li>
@@ -43,13 +43,23 @@
                 </ul>
             </nav>
             <div class="navbar__buttons">
-                <button class="navbar__button" id="toggleTheme"><svg class="icon-appearance"></svg></button>
+                <button class="navbar__button" id="toggleTheme">
+                    <svg class="icon-appearance"></svg></button>
             </div>
         </header>
 
         <main id="main">
             <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
         </main>
+
+        <div class="modal" data-visible="false">
+            <div class="modal__container">
+                <div class="close-icon"><svg class="icon-cross"></svg></div>
+                <asp:ContentPlaceHolder ID="ModalContent" runat="server"></asp:ContentPlaceHolder>
+            </div>
+        </div>
+
+
     </form>
 </body>
 

@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Web.Optimization;
+using System.Text.RegularExpressions;
 
 namespace VotingSite
 {

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace VotingSite.Statistikk
+namespace VotingSite.Stemmer
 {
 
 

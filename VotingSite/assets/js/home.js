@@ -31,8 +31,15 @@ function openVoteModalFromCallback(parti) {
 // Function for closing the voting modal
 function closeVoteModal(e) {
     e.preventDefault();
+    
     const modal = document.querySelector('.modal');
     modal.dataset.visible = false;
+    
+    const voteForm = document.querySelector('.modal #voteForm');
+    voteForm.dataset.visible = false;
+    
+    const voted = document.querySelector('.modal #voted');
+    voted.dataset.visible = false;
 }
 
 
@@ -47,7 +54,7 @@ function callVoteMethod(e) {
     if (!isOK) return;
 
     // Adding data to hiddendatafield and clearing localstorage
-    document.querySelector('#MainContent_hiddenDataField').value = sessionStorage.getItem('pid');
+    document.querySelector('#ModalContent_hiddenDataField').value = sessionStorage.getItem('pid');
     sessionStorage.clear();
 
     // Calling the c# method
@@ -65,7 +72,7 @@ function checkValues() {
 
     // Checking if a "Kommune" is selected
     function checkKommuner() {
-        const kommunerList = document.querySelector('#voteForm #MainContent_DropDownListKommuner');
+        const kommunerList = document.querySelector('#voteForm #ModalContent_DropDownListKommuner');
         const value = kommunerList.value;
         if (value === "0") {
             const validKommune = document.querySelector('#voteForm .personalInfo .validKommune');
@@ -114,7 +121,8 @@ function getPartiInfo(key) {
             return {
                 id: data[key],
                 name: data[key].name,
-                fullName: data[key].fullName
+                fullName: data[key].fullName,
+                description: data[key].description
             };
         })
         .catch(e => {
@@ -183,7 +191,7 @@ function checkInputValues() {
 
     // National ID Number
     const validFNum = document.querySelector('#voteForm .personalInfo .validFNum');
-    const FNumInput = document.querySelector('#voteForm .personalInfo #MainContent_FNum');
+    const FNumInput = document.querySelector('#voteForm .personalInfo #ModalContent_FNum');
     FNumInput.addEventListener('input', () => {
         ifElse(test(false, FNumInput.value), validFNum, 'Fødselsnummer må være et 11-sifret nummer.');
         // formatFNumInput(FNumInput);
@@ -191,12 +199,12 @@ function checkInputValues() {
 
     // // First name
     // const validFNavn = document.querySelector('#voteForm .personalInfo .validFNavn');
-    // const FNavnInput = document.querySelector('#voteForm .personalInfo #MainContent_FNavn');
+    // const FNavnInput = document.querySelector('#voteForm .personalInfo #ModalContent_FNavn');
     // FNavnInput.addEventListener('input', () => ifElse(test(true, FNavnInput.value), validFNavn, 'Fornavn kan bare være bokstaver'));
 
     // // Last name
     // const validENavn = document.querySelector('#voteForm .personalInfo .validENavn');
-    // const ENavnInput = document.querySelector('#voteForm .personalInfo #MainContent_ENavn');
+    // const ENavnInput = document.querySelector('#voteForm .personalInfo #ModalContent_ENavn');
     // ENavnInput.addEventListener('input', () => ifElse(test(true, ENavnInput.value), validENavn, 'Etternavn kan bare være bokstaver'));
 }
 
@@ -285,7 +293,7 @@ function handleHoverOnFocus() {
 handleHoverOnFocus();
 
 function addReadyClass() {
-    const fylkerList = document.querySelector('#voteForm #MainContent_DropDownListFylker');
+    const fylkerList = document.querySelector('#voteForm #ModalContent_DropDownListFylker');
     const value = fylkerList.value;
     if (value === "0") return;
     document.querySelector('#voteForm .remains').classList.add("ready");
@@ -304,7 +312,7 @@ function getFromKommuner_Callback() {
     history.replaceState({}, document.title, `${window.location.pathname}?r=mo`);
 
     // Disable the first value from being selected
-    const kommuneDropdown = document.querySelector('#MainContent_DropDownListKommuner')
+    const kommuneDropdown = document.querySelector('#ModalContent_DropDownListKommuner')
     const firstKommune = kommuneDropdown.querySelectorAll('option')[0];
     firstKommune.disabled = true;
 }

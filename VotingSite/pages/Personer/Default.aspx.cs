@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Web;
+using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -159,6 +156,23 @@ namespace VotingSite.pages.Personer
             // returns true if person exists in database
             return personExists;
         }
+
+        protected void RemoveVoted_Click(object sender, EventArgs e)
+        {
+            var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("UPDATE personer SET Voted=0", con);
+                cmd.CommandType = CommandType.Text;
+
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+
+            Response.Redirect(Request.Url.AbsolutePath);
+        }
+
 
     }
 }

@@ -1,20 +1,23 @@
-﻿using Microsoft.Ajax.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Web;
-using System.Web.Services;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.DataVisualization.Charting;
-using System.Diagnostics;
 
 namespace VotingSite
 {
+    public class Parti
+    {
+        public string Name { get; set; }
+        public string FullName { get; set; }
+        public string Description { get; set; }
+    }
+
     public partial class _Default : Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -26,12 +29,86 @@ namespace VotingSite
 
             if (!Page.IsPostBack)
             {
-                //Response.Write(GetFromPersoner("01088469169"));
-                //SendToPersoner("John", "Steve", "10039642789", 123);
-
+                AddPartierItems();
                 GetFromFylker();
             }
 
+        }
+
+
+
+        // **********************************************
+        // *         Adding the parties to page         *
+        // **********************************************
+
+        private void AddPartierItems()
+        {
+            string jsonFilePath = Server.MapPath("~/assets/json/partier.json");
+            dynamic jsonObj;
+            using (StreamReader r = new StreamReader(jsonFilePath))
+            {
+                string json = r.ReadToEnd();
+                jsonObj = new JavaScriptSerializer().Deserialize<dynamic>(json);
+            }
+
+            Dictionary<int, string> partiNamesFromDatabase = GetPartiNamesFromDatabase();
+
+            foreach (var partiEntry in jsonObj)
+            {
+                var partiID = int.Parse(partiEntry.Key);
+                var parti = new Parti
+                {
+                    Name = partiEntry.Value["name"],
+                    FullName = partiEntry.Value["fullName"],
+                    Description = partiEntry.Value["description"]
+                };
+
+                partierContainer.InnerHtml += $@"
+                    <div class=""partier__item"" tabindex=""0"" data-id=""{partiID}"">
+                        <div class=""partier__logo"">
+                            <img src=""/assets/images/parti_logos/{parti.Name}.png"" alt=""Parti logo"">
+                        </div>
+                        <div class=""partier__content"">
+                            <div class=""partier__name"">
+                                <p>{(partiNamesFromDatabase.ContainsKey(partiID) ? partiNamesFromDatabase[partiID] : parti.FullName)}</p>
+                                <hr>
+                            </div>
+                            <div class=""partier__description"">
+                                <p>{parti.Description}</p>
+                            </div>
+                            <div class=""partier__vote"">
+                                <button class=""voteBtn"" tabindex=""0"" data-id=""{partiID}"">Stem på parti</button>
+                            </div>
+                        </div>
+                    </div>
+                ";
+            }
+
+        }
+
+        private Dictionary<int, string> GetPartiNamesFromDatabase()
+        {
+            Dictionary<int, string> partiNames = new Dictionary<int, string>();
+
+            var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT PID, Parti FROM partier", conn);
+                cmd.CommandType = CommandType.Text;
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    int partiId = Convert.ToInt32(reader["PID"]);
+                    string partiName = reader["Parti"].ToString();
+                    partiNames.Add(partiId, partiName);
+                }
+
+                reader.Close();
+            }
+
+            return partiNames;
         }
 
 
@@ -62,6 +139,11 @@ namespace VotingSite
             }
 
             DropDownListFylker.DataBind();
+
+            if (int.Parse(DropDownListKommuner.SelectedValue) != 0)
+            {
+                GetFromKommuner();
+            }
         }
 
 
@@ -70,7 +152,11 @@ namespace VotingSite
         // *    Adding kommuner from database to page    *
         // ***********************************************
 
-        protected void GetFromKommuner(object sender, EventArgs e)
+        protected void GetFromKommuner_Click(object sender, EventArgs e)
+        {
+            GetFromKommuner();
+        }
+        private void GetFromKommuner()
         {
             // Clear list to prevent duplicated values
             DropDownListKommuner.Items.Clear();
@@ -120,67 +206,55 @@ namespace VotingSite
 
 
 
-        // *******************************************
-        // *          Add person to database          *
-        // *******************************************
+        // **********************************************
+        // *   Check if person in database has voted    *
+        // **********************************************
 
-        private void SendToPersoner(string FNavn, string ENavn, string FNum, int KID)
+        private bool CheckIfVoted(string FNum)
         {
-            // Checking if person already is in the database
-            bool isInDB = GetFromPersoner(FNum);
-            if (isInDB)
-            {
-                ErrMsg.InnerHtml = "Error, person er i database";
-                Response.Redirect(Request.Url.AbsolutePath + "?r=Error, person er i database");
-                return;
-            };
+            bool hasVoted = false;
 
-            // Inserting the person into database
+            // Get persons from database
             SqlParameter param;
-            var connectionString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
-
-                SqlCommand cmd = new SqlCommand("INSERT INTO personer (FNavn,ENavn,FNum,KID,Voted) Values(@FNavn,@ENavn,@FNum,@KID,1)", conn);
+                SqlCommand cmd = new SqlCommand("SELECT * from personer WHERE FNum = @FNum AND Voted = 1", conn);
                 cmd.CommandType = CommandType.Text;
 
-                // Param for Fornavn
-                param = new SqlParameter("@FNavn", SqlDbType.VarChar);
-                param.Value = FNavn;
-                cmd.Parameters.Add(param);
-
-                // Param for Etternavn
-                param = new SqlParameter("@ENavn", SqlDbType.VarChar);
-                param.Value = ENavn;
-                cmd.Parameters.Add(param);
-
-                // Param for Fødselsnummer
                 param = new SqlParameter("@FNum", SqlDbType.VarChar);
                 param.Value = FNum;
                 cmd.Parameters.Add(param);
 
-                // Param for Kommune ID
-                param = new SqlParameter("@KID", SqlDbType.Int);
-                param.Value = KID;
-                cmd.Parameters.Add(param);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    // Checking if person exists within database
+                    hasVoted = true;
+                }
 
-                cmd.ExecuteNonQuery();
+                reader.Close();
                 conn.Close();
             }
+
+            // returns true if person exists in database
+            return hasVoted;
         }
 
 
 
         // ********************************************
-        // *      Check if person is in database      *
+        // *          Check if FNum is valid          *
         // ********************************************
 
-        private bool GetFromPersoner(string FNum)
+        private bool CheckFNum(string FNum)
         {
-            bool personExists = false;
+            string pattern = @"^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{7}$";
+            bool regexOK = Regex.IsMatch(FNum, pattern);
+            if (!regexOK) return false;
+            bool FNumOK = false;
 
-            // Get persons from database
             SqlParameter param;
             var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connString))
@@ -196,39 +270,107 @@ namespace VotingSite
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    // Checking if person exists within database
-                    personExists = true;
+                    FNumOK = true;
                 }
 
                 reader.Close();
                 conn.Close();
             }
 
-            // returns true if person exists in database
-            return personExists;
+            return FNumOK;
+        }
+
+        private bool CheckKommune(string FNum)
+        {
+            bool isOK = false;
+            if (int.Parse(DropDownListKommuner.SelectedValue) == 0) return isOK;
+
+            SqlParameter param;
+            var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * from personer WHERE FNum = @FNum AND KID = @KID", conn);
+                cmd.CommandType = CommandType.Text;
+
+                param = new SqlParameter("@FNum", SqlDbType.VarChar);
+                param.Value = FNum;
+                cmd.Parameters.Add(param);
+
+                param = new SqlParameter("@KID", SqlDbType.Int);
+                param.Value = int.Parse(DropDownListKommuner.SelectedValue);
+                cmd.Parameters.Add(param);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    isOK = true;
+                }
+ 
+                reader.Close();
+                conn.Close();
+            }
+
+            return isOK;
         }
 
 
 
-        // *******************************************
-        // *          Send vote to database          *
-        // *******************************************
+        // ********************************************
+        // *    Check all values if they are valid    *
+        // ********************************************
 
-        protected void SendToStemmer_Click(object sender, EventArgs e)
+        private bool CheckValues()
         {
-            // Checking if a "Kommune" is actually selected
-            if (int.Parse(DropDownListKommuner.SelectedValue) == 0)
+            bool isOK = false;
+
+            string FNUM = FNum.Value.Replace(" ", "");
+            bool FNumIsOK = CheckFNum(FNUM);
+            bool hasVoted = CheckIfVoted(FNUM);
+            bool kommuneIsOK = CheckKommune(FNUM);
+            bool partiIsOk = true;
+            bool pidOK = int.TryParse(hiddenDataField.Value, out int PNum);
+
+            // Clear error message field
+            ErrMsg.InnerHtml = string.Empty;
+
+            // Sending error if FNum is invalid
+            if (!FNumIsOK)
             {
-                ErrMsg.InnerHtml = "Error, du må velge en kommune";
-                return;
+                ErrMsg.InnerHtml += "Error, fødselsnummer er ugyldig. ";
             }
 
-            int KID = int.Parse(DropDownListKommuner.SelectedValue);
-            //SendToPersoner(FNavn.Value, ENavn.Value, FNum.Value.Replace(" ", ""), KID);
-            //SendToPersoner(FNum.Value.Replace(" ", ""), KID);
+            // Sending error if person has voted
+            if (hasVoted)
+            {
+                ErrMsg.InnerHtml += "Error, du har allerede stemt. ";
+            }
+
+            // Checking if selected "kommune" is valid
+            if (!kommuneIsOK)
+            {
+                ErrMsg.InnerHtml += "Error, feil eller ingen kommune valgt. ";
+            }
+
+            // Checking if selected "parti" is valid
+            if (!pidOK || PNum < 1)
+            {
+                ErrMsg.InnerHtml += "Error, ingen parti valgt. ";
+                partiIsOk = false;
+            }
+
+            // Checking if all values are valid
+            if (FNumIsOK && !hasVoted && kommuneIsOK && partiIsOk)
+            {
+                isOK = true;
+            }
+
+            return isOK;
+        }
 
 
-            // Inserting vote into database
+        private void SendToStemmer()
+        {
             SqlParameter param;
             var connectionString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -239,17 +381,50 @@ namespace VotingSite
                 cmd.CommandType = CommandType.Text;
 
                 param = new SqlParameter("@kid", SqlDbType.Int);
-                param.Value = KID;
+                param.Value = int.Parse(DropDownListKommuner.SelectedValue);
                 cmd.Parameters.Add(param);
 
-                param = new SqlParameter("@pid", SqlDbType.Int);
+                param = new SqlParameter("@pid", SqlDbType.VarChar);
                 param.Value = hiddenDataField.Value;
                 cmd.Parameters.Add(param);
 
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
+        }
 
+
+        private void AddVotedToPerson()
+        {
+            SqlParameter param;
+            var connectionString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand("UPDATE personer SET Voted = 1 WHERE FNum = @FNum", conn);
+                cmd.CommandType = CommandType.Text;
+
+                param = new SqlParameter("@FNum", SqlDbType.VarChar);
+                param.Value = FNum.Value.Replace(" ", "");
+                cmd.Parameters.Add(param);
+
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
+
+
+        // *******************************************
+        // *          Send vote to database          *
+        // *******************************************
+
+        protected void SendToStemmer_Click(object sender, EventArgs e)
+        {
+            bool isOK = CheckValues();
+            if (!isOK) return;
+            SendToStemmer();
+            AddVotedToPerson();
             Response.Redirect(Request.Url.AbsolutePath);
         }
 

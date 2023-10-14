@@ -86,33 +86,35 @@ table {
     border: none;
     border-collapse: collapse;
     width: 100%;
-    box-shadow: 0 0 4px 0 #000;
+    box-shadow: 0 0 8px 0 #000;
+    border: 1px solid $clr-seperator;
     margin: .5em 0;
 
     th,
     td {
         text-align: left;
         padding: 8px;
-        font-size: 1.2rem;
+        font-size: $fs-200;
         text-transform: capitalize;
         border: none;
     }
 
     th {
-        background-color: #0000006c;
+        font-size: $fs-300;
+        background-color: var(--clr-secondary);
     }
 
     tr:nth-child(odd) {
-        background-color: #00000056;
+        background-color: var(--clr-secondary);
     }
 
     th+th,
     td+td {
-        border-left: 1px solid #000;
+        border-left: 1px solid $clr-seperator;
     }
 
     tr+tr td {
-        border-top: 1px solid #000;
+        border-top: 1px solid $clr-seperator;
     }
 }
 
@@ -124,6 +126,15 @@ input {
     background: none;
     border: none;
     cursor: pointer;
+}
+
+input {
+    background-color: var(--clr-primary);
+    color: $clr-white;
+    padding: $gap-2 $gap-3;
+    border-radius: 10px;
+    font-size: $fs-200;
+    width: fit-content;
 }
 
 .hidden {
@@ -210,7 +221,7 @@ hr {
             right: $offset;
             top: $offset;
             margin: 0;
-            
+
             .icon-cross {
                 height: 1.75em;
             }

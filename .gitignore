@@ -1,6 +1,13 @@
-Web.config
+.idea
+.vs
 node_modules
 obj
-.vs
 bin
-.vscode
+packages
+*.suo
+*.user
+*.dll
+*.pdb
+*.log
+*.vspscc
+Web.config

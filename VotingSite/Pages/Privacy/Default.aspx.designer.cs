@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace VotingSite
+namespace VotingSite.Pages.Privacy
 {
 
 
-    public partial class _404
+    public partial class Default
     {
 
         /// <summary>

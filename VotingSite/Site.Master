@@ -3,64 +3,77 @@
 <!DOCTYPE html>
 
 <html lang="no" data-pagename="<%: Page.Title %>" data-theme="dark">
-
 <head runat="server">
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-        <%: Page.Title %>
-    </title>
-    <webopt:BundleReference runat="server" Path="~/assets/css" />
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <script src="/assets/js/main.js"></script>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title><%: Page.Title %></title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+
+    <webopt:BundleReference runat="server" Path="~/Content/css"/>
     <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
+    <script src="/Content/JavaScript/main.js"></script>
 </head>
-
 <body>
-    <form runat="server">
-        <noscript>
-            <svg height="32px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path fill="#f1a500" d="M22.25,17.55,14.63,3.71a3,3,0,0,0-5.26,0L1.75,17.55A3,3,0,0,0,4.38,22H19.62a3,3,0,0,0,2.63-4.45ZM12,18a1,1,0,1,1,1-1A1,1,0,0,1,12,18Zm1-5a1,1,0,0,1-2,0V9a1,1,0,0,1,2,0Z" />
-            </svg>
-            To fully access and navigate this website, please ensure that JavaScript is enabled in your browser settings.
-            <style>
-                [class*="icon-"] {
-                    display: none
-                }
-            </style>
-        </noscript>
-        <header class="navbar">
-            <a href="#main" class="skip_to_main">Skip to main content.</a>
-            <nav class="navbar__links" aria-label="Navigation Links">
-                <ul>
-                    <li><a class="navbar__link" runat="server" href="~/">Hjemmeside</a></li>
-                    <li><a class="navbar__link" runat="server" href="~/charts/">Charts</a></li>
-                    <li><a class="navbar__link" runat="server" href="~/stemmer/">Stemmer</a></li>
-                    <li><a class="navbar__link" runat="server" href="~/kommuner/">Kommuner</a></li>
-                    <li><a class="navbar__link" runat="server" href="~/partier/">Partier</a></li>
-                    <li><a class="navbar__link" runat="server" href="~/personer/">Personer</a></li>
-                    <li><a class="navbar__link" runat="server" href="~/privacy/">Privacy</a></li>
-                </ul>
-            </nav>
-            <div class="navbar__buttons">
-                <button class="navbar__button" id="toggleTheme">
-                    <svg class="icon-appearance"></svg></button>
-            </div>
-        </header>
+<form runat="server">
+    <noscript>
+        <svg height="32px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#f1a500" d="M22.25,17.55,14.63,3.71a3,3,0,0,0-5.26,0L1.75,17.55A3,3,0,0,0,4.38,22H19.62a3,3,0,0,0,2.63-4.45ZM12,18a1,1,0,1,1,1-1A1,1,0,0,1,12,18Zm1-5a1,1,0,0,1-2,0V9a1,1,0,0,1,2,0Z"/>
+        </svg>
+        To fully access and navigate this website, please ensure that JavaScript is enabled in your browser settings.
+        <style>
+            [class*="icon-"] {
+                display: none
+            }
+        </style>
+    </noscript>
 
-        <main id="main">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
-        </main>
-
-        <div class="modal" data-visible="false">
-            <div class="modal__container">
-                <div class="close-icon"><svg class="icon-cross"></svg></div>
-                <asp:ContentPlaceHolder ID="ModalContent" runat="server"></asp:ContentPlaceHolder>
-            </div>
+    <header class="navbar">
+        <a href="#main" class="skip_to_main">Skip to main content.</a>
+        <nav class="navbar__links" aria-label="Navigation Links">
+            <ul>
+                <li>
+                    <a class="navbar__link" runat="server" href="~/">Hjemmeside</a>
+                </li>
+                <li>
+                    <a class="navbar__link" runat="server" href="~/Charts/">Charts</a>
+                </li>
+                <li>
+                    <a class="navbar__link" runat="server" href="~/Stemmer/">Stemmer</a>
+                </li>
+                <li>
+                    <a class="navbar__link" runat="server" href="~/Kommuner/">Kommuner</a>
+                </li>
+                <li>
+                    <a class="navbar__link" runat="server" href="~/Partier/">Partier</a>
+                </li>
+                <li>
+                    <a class="navbar__link" runat="server" href="~/Personer/">Personer</a>
+                </li>
+                <li>
+                    <a class="navbar__link" runat="server" href="~/Privacy/">Privacy</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="navbar__buttons">
+            <button class="navbar__button" id="toggleTheme">
+                <svg class="icon-appearance"></svg>
+            </button>
         </div>
+    </header>
 
+    <main id="main">
+        <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+    </main>
 
-    </form>
+    <div class="modal" data-visible="false">
+        <div class="modal__container">
+            <div class="close-icon">
+                <svg class="icon-cross"></svg>
+            </div>
+            <asp:ContentPlaceHolder ID="ModalContent" runat="server"></asp:ContentPlaceHolder>
+        </div>
+    </div>
+
+</form>
 </body>
-
 </html>

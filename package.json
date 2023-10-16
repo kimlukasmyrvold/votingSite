@@ -1,15 +1,15 @@
 {
   "name": "votingsite",
   "version": "1.0.0",
-  "description": "This website is for a school project where the goal is to create a website with C# where you vote. The website also needs to connect to a database where all the voting information will be stored.",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "sass": "sass -w votingSite/assets/scss:votingSite/assets/css --style compressed"
+    "sass": "sass -w VotingSite/Content/CSS:VotingSite/Content/CSS --style=compressed -c"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "sass": "^1.68.0"
+    "sass": "^1.69.3"
   }
 }

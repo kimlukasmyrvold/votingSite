@@ -14,13 +14,12 @@ namespace VotingSite
             settings.AutoRedirectMode = RedirectMode.Permanent;
             routes.EnableFriendlyUrls(settings);
 
-            // Add custom routes for specific pages
-            routes.MapPageRoute("ChartskkRoute", "charts", "~/pages/Charts/Default.aspx");
-            routes.MapPageRoute("StemmerRoute", "stemmer", "~/pages/Stemmer/Default.aspx");
-            routes.MapPageRoute("KommunerRoute", "kommuner", "~/pages/Kommuner/Default.aspx");
-            routes.MapPageRoute("PartierRoute", "partier", "~/pages/Partier/Default.aspx");
-            routes.MapPageRoute("PersonerRoute", "personer", "~/pages/Personer/Default.aspx");
-            routes.MapPageRoute("PrivacyRoute", "privacy", "~/pages/Privacy/Default.aspx");
+            routes.MapPageRoute("ChartsRoute", "Charts", "~/Pages/Charts/Default.aspx");
+            routes.MapPageRoute("StemmerRoute", "Stemmer", "~/Pages/Stemmer/Default.aspx");
+            routes.MapPageRoute("KommunerRoute", "Kommuner", "~/Pages/Kommuner/Default.aspx");
+            routes.MapPageRoute("PartierRoute", "Partier", "~/Pages/Partier/Default.aspx");
+            routes.MapPageRoute("PersonerRoute", "Personer", "~/Pages/Personer/Default.aspx");
+            routes.MapPageRoute("PrivacyRoute", "Privacy", "~/Pages/Privacy/Default.aspx");
         }
     }
 }

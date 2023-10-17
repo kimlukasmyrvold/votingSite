@@ -156,6 +156,7 @@
     <Content Include="Content\Images\PartyLogos\sp.png" />
     <Content Include="Content\Images\PartyLogos\sv.png" />
     <Content Include="Content\Images\PartyLogos\v.png" />
+    <Content Include="Content\JavaScript\charts.js" />
     <Content Include="Content\JavaScript\home.js" />
     <Content Include="Content\JavaScript\main.js" />
     <Content Include="Content\JSON\partier.json" />

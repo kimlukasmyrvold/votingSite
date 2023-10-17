@@ -66,7 +66,7 @@ namespace VotingSite
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hiddenDataField;
+        protected global::System.Web.UI.WebControls.HiddenField hiddenDataField;
 
         /// <summary>
         /// sendToStemmer control.

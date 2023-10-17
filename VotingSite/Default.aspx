@@ -11,7 +11,7 @@
     <div class="partier">
         <div class="partier__container" id="partierContainer" runat="server"></div>
     </div>
-    
+
     <div id="results">
         <p>Resultater:</p>
     </div>
@@ -66,7 +66,7 @@
                 <button class="submit" type="submit">
                     <span>Stem</span>
                 </button>
-                <input type="hidden" id="hiddenDataField" runat="server"/>
+                <asp:HiddenField runat="server" ID="hiddenDataField"></asp:HiddenField>
                 <asp:Button CssClass="sendToStemmer hidden" ID="sendToStemmer"
                             OnClick="SendToStemmer_Click" runat="server"/>
             </div>

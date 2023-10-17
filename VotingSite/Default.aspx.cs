@@ -25,7 +25,6 @@ namespace VotingSite
             GetFromFylker();
         }
 
-
         // **********************************************
         // *         Adding the parties to page         *
         // **********************************************
@@ -233,9 +232,11 @@ namespace VotingSite
         // ********************************************
         private static bool CheckFNum(string fNum)
         {
+            // Check fnum with regex
             const string pattern = @"^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{7}$";
             bool regexOk = Regex.IsMatch(fNum, pattern);
             if (!regexOk) return false;
+
             bool fNumOk = false;
 
             var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
@@ -267,7 +268,6 @@ namespace VotingSite
             bool isOk = false;
             if (int.Parse(DropDownListKommuner.SelectedValue) == 0) return false;
 
-            SqlParameter param;
             var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -275,7 +275,7 @@ namespace VotingSite
                 SqlCommand cmd = new SqlCommand("SELECT * from personer WHERE FNum = @FNum AND KID = @KID", conn);
                 cmd.CommandType = CommandType.Text;
 
-                param = new SqlParameter("@FNum", SqlDbType.VarChar);
+                var param = new SqlParameter("@FNum", SqlDbType.VarChar);
                 param.Value = fNum;
                 cmd.Parameters.Add(param);
 

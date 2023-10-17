@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Web.UI;
+using Newtonsoft.Json;
 
 namespace VotingSite.Pages.Charts
 {
@@ -17,6 +20,15 @@ namespace VotingSite.Pages.Charts
 
             int countValue = CountPartier();
             count.InnerHtml = Server.HtmlEncode(countValue.ToString());
+
+            List<int> chartValuesList = new List<int>() { 1, 5, 2, 72, 878, 12, 43 };
+            SetChartValues(chartValuesList);
+        }
+
+        private void SetChartValues(IReadOnlyCollection<int> values)
+        {
+            var jsonArray = JsonConvert.SerializeObject(values);
+            chartValues.Value = jsonArray;
         }
 
         private static DataTable GetFromPartier()

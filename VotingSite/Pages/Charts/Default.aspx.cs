@@ -14,14 +14,12 @@ namespace VotingSite.Pages.Charts
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Page.IsPostBack) return;
-            DataTable dt = GetFromPartier();
-            GridView1.DataSource = dt;
-            GridView1.DataBind();
+            BindPartierTable();
 
             int countValue = CountPartier();
             count.InnerHtml = Server.HtmlEncode(countValue.ToString());
 
-            List<int> chartValuesList = new List<int>() { 1, 5, 2, 72, 878, 12, 43 };
+            List<int> chartValuesList = new List<int> { 1, 5, 2, 72, 878, 12, 43 };
             SetChartValues(chartValuesList);
         }
 
@@ -31,7 +29,7 @@ namespace VotingSite.Pages.Charts
             chartValues.Value = jsonArray;
         }
 
-        private static DataTable GetFromPartier()
+        private void BindPartierTable()
         {
             var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
             DataTable dt = new DataTable();
@@ -42,9 +40,12 @@ namespace VotingSite.Pages.Charts
                 cmd.CommandType = CommandType.Text;
                 SqlDataReader reader = cmd.ExecuteReader();
                 dt.Load(reader);
+                
+                GridView1.DataSource = dt;
+                GridView1.DataBind();
+                
                 reader.Close();
                 conn.Close();
-                return dt;
             }
         }
 

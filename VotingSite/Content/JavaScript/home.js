@@ -12,14 +12,14 @@ async function openVoteModal(e, isBtn = true) {
     const parti = ((!isBtn) ? e.target.parentElement.querySelector('.voteBtn') : this).dataset.id;
     sessionStorage.setItem('pid', parti);
 
-    makeModalVisible("#voteForm");
+    makeModalVisible("#vote_form");
     setLogoAndName(parti);
     checkInputValues();
 }
 
 // Function for opening the voting modal from callback.
 function openVoteModalFromCallback(parti) {
-    makeModalVisible("#voteForm");
+    makeModalVisible("#vote_form");
     setLogoAndName(parti);
     checkInputValues();
 }
@@ -34,10 +34,10 @@ function closeVoteModal(e) {
     const modal = document.querySelector('.modal');
     modal.dataset.visible = "false";
 
-    const voteForm = document.querySelector('.modal #voteForm');
+    const voteForm = document.querySelector('.modal #vote_form');
     voteForm.dataset.visible = "false";
 
-    const voted = document.querySelector('.modal #voted');
+    const voted = document.querySelector('.modal #vote_thankYou');
     voted.dataset.visible = "false";
 }
 
@@ -70,10 +70,10 @@ function checkValues() {
 
     // Checking if a "Kommune" is selected
     function checkKommuner() {
-        const kommunerList = document.querySelector('#voteForm #ModalContent_DropDownListKommuner');
+        const kommunerList = document.querySelector('#vote_form #ModalContent_DropDownListKommuner');
         const value = kommunerList.value;
         if (value === "0") {
-            const validKommune = document.querySelector('#voteForm .personalInfo .validKommune');
+            const validKommune = document.querySelector('#vote_form .personalInfo .validKommune');
             validKommune.textContent = "Error, du må velge kommune.";
             validKommune.parentElement.classList.add('invalid');
 
@@ -119,7 +119,9 @@ function getPartiInfo(key) {
                 id: data[key],
                 name: data[key].name,
                 fullName: data[key].fullName,
-                description: data[key].description
+                description: data[key].description,
+                side: data[key].side,
+                color: data[key].color
             };
         })
         .catch(e => {
@@ -129,12 +131,13 @@ function getPartiInfo(key) {
 
 async function setLogoAndName(parti) {
     // Show the logo for the selected "parti"
-    const partiLogo = document.querySelector('#voteForm .partiLogo img');
+    const partiLogo = document.querySelector('#vote_form .partiLogo img');
     partiLogo.setAttribute('src', `Content/Images/PartyLogos/${(await getPartiInfo(parti)).name}.png`);
 
     // Show the name for the selected "parti"
-    const votingSelected = document.querySelector('#voteForm .partiName');
+    const votingSelected = document.querySelector('#vote_form .partiName');
     votingSelected.textContent = (await getPartiInfo(parti)).fullName;
+    votingSelected.style.setProperty("--parti-color", (await getPartiInfo(parti)).color);
 }
 
 // Function for checking if input is valid
@@ -187,21 +190,21 @@ function checkInputValues() {
 
 
     // National ID Number
-    const validFNum = document.querySelector('#voteForm .personalInfo .validFNum');
-    const FNumInput = document.querySelector('#voteForm .personalInfo #ModalContent_FNum');
+    const validFNum = document.querySelector('#vote_form .personalInfo .validFNum');
+    const FNumInput = document.querySelector('#vote_form .personalInfo #ModalContent_FNum');
     FNumInput.addEventListener('input', () => {
         ifElse(test(false, FNumInput.value), validFNum, 'Fødselsnummer må være et 11-sifret nummer.');
         // formatFNumInput(FNumInput);
     });
 
     // // First name
-    // const validFNavn = document.querySelector('#voteForm .personalInfo .validFNavn');
-    // const FNavnInput = document.querySelector('#voteForm .personalInfo #ModalContent_FNavn');
+    // const validFNavn = document.querySelector('#vote_form .personalInfo .validFNavn');
+    // const FNavnInput = document.querySelector('#vote_form .personalInfo #ModalContent_FNavn');
     // FNavnInput.addEventListener('input', () => ifElse(test(true, FNavnInput.value), validFNavn, 'Fornavn kan bare være bokstaver'));
 
     // // Last name
-    // const validENavn = document.querySelector('#voteForm .personalInfo .validENavn');
-    // const ENavnInput = document.querySelector('#voteForm .personalInfo #ModalContent_ENavn');
+    // const validENavn = document.querySelector('#vote_form .personalInfo .validENavn');
+    // const ENavnInput = document.querySelector('#vote_form .personalInfo #ModalContent_ENavn');
     // ENavnInput.addEventListener('input', () => ifElse(test(true, ENavnInput.value), validENavn, 'Etternavn kan bare være bokstaver'));
 }
 
@@ -217,6 +220,7 @@ function handleQueryString() {
     removeQueryString();
 }
 
+
 /*  Unused
     // Add voted class to all vote buttons if 'voted' is true in localStorage
     function getVoted() {
@@ -227,6 +231,7 @@ function handleQueryString() {
         });
     }
 */
+
 
 // Aligning partier dropdown acording to window space
 function alignPartiHover() {
@@ -274,6 +279,36 @@ function alignPartiHover() {
 
 alignPartiHover();
 
+function reorderPartiItems() {
+    const partierContainer = document.querySelector('.partier__container');
+    const partierItems = Array.from(document.querySelectorAll('.partier__item'));
+    const orderMapping = {
+        left: 0,
+        center: 1,
+        right: 2,
+        "": 2,
+    };
+
+    partierItems.sort((a, b) => {
+        const sideA = a.getAttribute("data-side") || "";
+        const sideB = b.getAttribute("data-side") || "";
+
+        if (orderMapping[sideA] < orderMapping[sideB]) {
+            return -1;
+        }
+        if (orderMapping[sideA] > orderMapping[sideB]) {
+            return 1;
+        }
+        return 0;
+    });
+
+    partierItems.forEach(item => item.remove());
+    partierItems.forEach(item => partierContainer.appendChild(item));
+}
+
+reorderPartiItems();
+
+
 // Make elements with focus state unfocused when other element is being hovered
 function handleHoverOnFocus() {
     const items = document.querySelectorAll('.partier__item');
@@ -290,22 +325,35 @@ function handleHoverOnFocus() {
 
 handleHoverOnFocus();
 
-function addReadyClass() {
-    const fylkerList = document.querySelector('#voteForm #ModalContent_DropDownListFylker');
-    const value = fylkerList.value;
-    if (value === "0") return;
-    document.querySelector('#voteForm .remains').classList.add("ready");
+
+function handleReadyClass() {
+    const fylkerList = document.querySelector("#vote_form #ModalContent_DropDownListFylker");
+    const remains = document.querySelector("#vote_form .remains");
+
+    if (remains.classList.contains("ready")) {
+        fylkerList.options[0].selected = true;
+        remains.classList.remove("ready");
+    }
 }
 
-addReadyClass();
+function addReadyClass() {
+    const fylkerList = document.querySelector("#vote_form #ModalContent_DropDownListFylker");
+    const value = fylkerList.value;
+    const remains = document.querySelector("#vote_form .remains");
+
+    if (value === "0") return;
+    document.querySelectorAll('.voteBtn').forEach(btn => btn.addEventListener('click', handleReadyClass));
+    remains.classList.add("ready");
+}
+
+document.addEventListener("DOMContentLoaded", addReadyClass);
 
 
 // ****************************************
 // *        Functions called by c#        *
 // ****************************************
 
-// Adds ready class to kommuner dropdown to make it visible
-// Then adds querystring to url with information about "modal open" and which "party" chosen
+// Then adds querystring to url with information about "modal open"
 function getFromKommuner_Callback() {
     history.replaceState({}, document.title, `${window.location.pathname}?r=mo`);
 

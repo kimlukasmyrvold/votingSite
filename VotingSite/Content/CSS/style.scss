@@ -4,226 +4,268 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
-  color: var(--clr-text);
-  font-family: $font-family;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    color: var(--clr-text);
+    font-family: $font-family;
+    margin: 0;
+    padding: 0;
 }
 
 html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 50px;
-  overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-padding-top: 50px;
+    overflow-x: hidden;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  font-size: $fs-200;
-  min-height: 100vh;
-  background: var(--clr-background);
+    display: flex;
+    flex-direction: column;
+    font-size: $fs-200;
+    min-height: 100vh;
+    background: var(--clr-background);
 }
 
 form {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 noscript {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.3em;
-  background: #fff;
-  color: #000;
-  margin: 0.4em auto 0;
-  padding: 0.8em 1.5em;
-  border-radius: 10px;
-  min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.3em;
+    background: #fff;
+    color: #000;
+    margin: 0.4em auto 0;
+    padding: 0.8em 1.5em;
+    border-radius: 10px;
+    min-height: 50px;
 }
 
 main {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  margin: 1em 5em;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 1em 5em;
 
-  * {
-    margin-block-start: $gap-1;
-  }
+    * {
+        margin-block-start: $gap-1;
+    }
 
-  @media (width < 1200px) {
-    margin-inline: 3em;
-  }
+    @media (width < 1200px) {
+        margin-inline: 3em;
+    }
 
-  @media (width < 800px) {
-    margin-inline: 1em;
-  }
+    @media (width < 800px) {
+        margin-inline: 1em;
+    }
 
-  @media (width < 400px) {
-    margin-inline: .5em;
-  }
+    @media (width < 400px) {
+        margin-inline: .5em;
+    }
 
-  .no-margin {
-    margin: 0;
-  }
+    .no-margin {
+        margin: 0;
+    }
 }
 
 img {
-  width: auto;
-  max-height: 100%;
+    width: auto;
+    max-height: 100%;
 }
 
 span.space {
-  display: block;
-  height: $gap-2;
+    display: block;
+    height: $gap-2;
 }
 
 table {
-  border: none;
-  border-collapse: collapse;
-  width: 100%;
-  box-shadow: 0 0 8px 0 #000;
-  border: 1px solid $clr-seperator;
-  margin: .5em 0;
+    border-collapse: collapse;
+    width: 100%;
+    box-shadow: 0 0 8px 0 #000;
+    border: 1px solid $clr-seperator;
+    margin: .5em 0;
 
-  th,
-  td {
-    text-align: left;
-    padding: 8px;
-    font-size: $fs-200;
-    text-transform: capitalize;
-    border: none;
-  }
+    th,
+    td {
+        text-align: left;
+        padding: 8px;
+        font-size: $fs-200;
+        text-transform: capitalize;
+        border: none;
+    }
 
-  th {
+    th {
+        font-size: $fs-300;
+        background-color: var(--clr-secondary);
+    }
+
+    tr:nth-child(odd) {
+        background-color: var(--clr-secondary);
+    }
+
+    th + th,
+    td + td {
+        border-left: 1px solid $clr-seperator;
+    }
+
+    tr + tr td {
+        border-top: 1px solid $clr-seperator;
+    }
+}
+
+.button_container {
+    position: relative;
+    z-index: 0;
+    margin: $gap-3;
+    transition: translate 0.3s ease;
+
+    .button {
+        background-color: rgba(255, 255, 255, 0.62);
+        color: $clr-black;
+    }
+
+    .backdrop {
+        background: linear-gradient(100deg, #0f33df 30%, #e99216 80%);
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        border-radius: 5px;
+        translate: 0.5rem 0.5rem;
+        pointer-events: none;
+    }
+
+    &:hover {
+        translate: -2px -2px;
+    }
+}
+
+.button {
+    background-color: var(--clr-primary);
+    backdrop-filter: blur(10px);
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
     font-size: $fs-300;
-    background-color: var(--clr-secondary);
-  }
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--clr-text);
+    box-shadow: 1px 1px 10px rgba(25, 25, 25, 0.5);
+    translate: 0;
+    transition: translate 0.3s ease;
 
-  tr:nth-child(odd) {
-    background-color: var(--clr-secondary);
-  }
-
-  th + th,
-  td + td {
-    border-left: 1px solid $clr-seperator;
-  }
-
-  tr + tr td {
-    border-top: 1px solid $clr-seperator;
-  }
+    &:hover {
+        translate: -2px -2px;
+    }
 }
 
 button,
 a,
 input {
-  position: relative;
-  color: var(--clr-text);
-  background: none;
-  border: none;
-  cursor: pointer;
+    position: relative;
+    color: var(--clr-text);
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 input {
-  background-color: var(--clr-primary);
-  color: $clr-white;
-  padding: $gap-2 $gap-3;
-  border-radius: 10px;
-  font-size: $fs-200;
-  width: fit-content;
+    background-color: var(--clr-primary);
+    padding: $gap-2 $gap-3;
+    border-radius: 10px;
+    font-size: $fs-200;
+    width: fit-content;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
 svg {
-  fill: currentColor;
-  display: block;
-  width: 100%;
-  margin: 0;
+    fill: currentColor;
+    display: block;
+    width: 100%;
+    margin: 0;
 }
 
 hr {
-  height: 3px;
-  width: 100%;
-  background: $clr-seperator;
-  border-radius: 10px;
-  border: none;
+    height: 3px;
+    width: 100%;
+    background: $clr-seperator;
+    border-radius: 10px;
+    border: none;
 }
 
 .icon-cross:hover {
-  animation: shake 0.5s ease;
-  cursor: pointer;
+    animation: shake 0.5s ease;
+    cursor: pointer;
 }
 
 
 // ======<   Modal styling   >======
 .modal {
-  display: flex;
-  position: fixed;
-  inset: 0;
-  z-index: 99;
-  padding: 3% 5%;
-  background-color: $clr-black-60;
-  margin: 0;
-
-  @media (width < 800px) {
-    padding-inline: 2%;
-  }
-
-  @media (height < 500px) {
-    padding-block: 2%;
-  }
-
-  @media (height < 400px) {
-    padding-block: .1em;
-  }
-
-  &[data-visible="false"] {
-    display: none;
-  }
-
-  &__container {
     display: flex;
-    position: relative;
-    flex-grow: 1;
-    width: 100%;
-    border-radius: 10px;
-    overflow: auto;
-    background-color: var(--clr-secondary);
-    padding: $gap-5;
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    padding: 3% 5%;
+    background-color: $clr-black-60;
+    margin: 0;
 
     @media (width < 800px) {
-      padding-inline: 2%;
-    }
-
-    @media (width < 500px) {
-      padding-inline: 0;
-    }
-
-    @media (height < 600px) {
-      padding-block: 2%;
+        padding-inline: 2%;
     }
 
     @media (height < 500px) {
-      padding-block: 0;
+        padding-block: 2%;
     }
 
-    .close-icon {
-      position: absolute;
-      $offset: .5em;
-      right: $offset;
-      top: $offset;
-      margin: 0;
-
-      .icon-cross {
-        height: 1.75em;
-      }
+    @media (height < 400px) {
+        padding-block: .1em;
     }
-  }
+
+    &[data-visible="false"] {
+        display: none;
+    }
+
+    &__container {
+        display: flex;
+        position: relative;
+        flex-grow: 1;
+        width: 100%;
+        border-radius: 10px;
+        overflow: auto;
+        background-color: var(--clr-secondary);
+        padding: $gap-5;
+
+        @media (width < 800px) {
+            padding-inline: 2%;
+        }
+
+        @media (width < 500px) {
+            padding-inline: 0;
+        }
+
+        @media (height < 600px) {
+            padding-block: 2%;
+        }
+
+        @media (height < 500px) {
+            padding-block: 0;
+        }
+
+        .close-icon {
+            position: absolute;
+            $offset: .5em;
+            right: $offset;
+            top: $offset;
+            margin: 0;
+
+            .icon-cross {
+                height: 1.75em;
+            }
+        }
+    }
 }

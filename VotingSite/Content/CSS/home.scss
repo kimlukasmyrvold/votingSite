@@ -69,6 +69,7 @@
         height: 100px;
         aspect-ratio: 1/1;
         margin: 0;
+        filter: drop-shadow(0 0 10px $clr-black-50);
 
         img {
             margin: 0;
@@ -85,7 +86,7 @@
         position: absolute;
         z-index: 9;
         top: calc(100% + 10px);
-        left: 0px;
+        left: 0;
         width: 25em;
         margin: 0;
         border-radius: 20px;
@@ -124,24 +125,6 @@
         min-height: calc($fs-hover * 2.5);
         height: 100%;
 
-        .voteBtn {
-            display: flex;
-            background-color: var(--clr-primary);
-            color: $clr-white;
-            margin: 0;
-            padding: $gap-2;
-            font-size: $fs-300;
-            border-radius: 20px;
-            border: none;
-            cursor: pointer;
-            transition: font-size 0.3s ease;
-
-            &:hover {
-                font-size: $fs-hover;
-                transition: font-size 0.3s ease;
-            }
-        }
-
         .voted {
             cursor: not-allowed;
 
@@ -154,7 +137,7 @@
 
 
 // ======<   Modal Voteform   >======
-.modal #voteForm {
+.modal #vote_form {
     display: flex;
     align-items: center;
     width: 100%;
@@ -178,7 +161,6 @@
     input,
     select {
         background: var(--clr-primary);
-        color: $clr-white;
 
         margin-block-end: $gap-3;
         padding: $gap-1 $gap-2;
@@ -194,7 +176,6 @@
         option {
             border-radius: 10px;
             font-size: calc($fs-200 / 1.2);
-            color: $clr-white;
         }
     }
 
@@ -219,7 +200,7 @@
                 left: 0;
                 width: 100%;
                 height: 2px;
-                background-color: var(--clr-accent);
+                background-color: var(--parti-color, var(--clr-accent));
                 border-radius: 10px;
                 scale: 0 1;
                 transition: scale .25s linear;
@@ -237,8 +218,8 @@
                 height: 100px;
                 margin: 0;
                 border-radius: 10px;
+                filter: drop-shadow(0 0 10px $clr-black-50);
                 transition: height .25s ease;
-
             }
         }
 
@@ -333,40 +314,42 @@
         margin-block-start: $gap-1;
         gap: $gap-2;
         width: 100%;
-
-        .cancel,
-        .submit {
-            border-radius: 10px;
-            padding: $gap-1 $gap-2;
-            height: 50px;
-
-            span {
-                font-size: calc($fs-400 / 1.15);
-                color: $clr-white;
-                margin: 0;
-                transition: color .3s ease;
-
-                &:hover {
-                    color: #b3b3b3;
-                }
-            }
-        }
-
-        .cancel {
-            background-color: $clr-destructive;
-        }
-
-        .submit {
-            background-color: var(--clr-primary);
-        }
-
     }
-
 }
 
+// ======< Confirm vote modal >======
+.modal #vote_confirm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    margin: 0;
 
-// ======<   Modal Voted   >======
-.modal #voted {
+    &[data-visible="false"] {
+        display: none;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-inline: auto;
+    }
+
+    .title {
+        font-size: $fs-400;
+    }
+
+    .buttons {
+        display: flex;
+        gap: $gap-5;
+        margin: $gap-3;
+    }
+}
+
+// ======< Thank you for voting modal >======
+.modal #vote_thankYou {
     background-color: red;
 
     &[data-visible="false"] {

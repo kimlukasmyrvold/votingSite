@@ -1,17 +1,17 @@
 ﻿$themes: (
         light: (
-                text: #000000,
-                background: #c6c9cc,
-                primary: #244261,
-                secondary: #e1eaf4,
-                accent: #4c85bd,
+                text: #080f16,
+                background: #e9f1f7,
+                primary: #8abff5,
+                secondary: #dde9f3,
+                accent: #663c9a,
         ),
         dark: (
-                text: #ffffff,
-                background: #00001c,
-                primary: #09315c,
-                secondary: #102030,
-                accent: #9ebddb,
+                text: #e9f0f7,
+                background: #081016,
+                primary: #0a4075,
+                secondary: #0c1822,
+                accent: #8f65c3,
         ),
 );
 
@@ -49,3 +49,8 @@ $clr-white-40: rgba(255, 255, 255, 0.4);
 $clr-white-30: rgba(255, 255, 255, 0.3);
 $clr-white-20: rgba(255, 255, 255, 0.1);
 $clr-white-10: rgba(255, 255, 255, 0.03);
+
+.clr-destructive {
+    background: $clr-destructive;
+    color: $clr-white;
+}

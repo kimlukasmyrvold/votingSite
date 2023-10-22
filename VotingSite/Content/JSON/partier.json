@@ -1,92 +1,128 @@
 ﻿{
-  "1": {
-    "name": "ap",
-    "fullName": "Arbeiderpartiet",
-    "description": "Arbeiderpartiets visjon er en rettferdig verden uten fattigdom og i fred, der menneskene er frie, likestilte og har innflytelse på sine liv. Alle mennesker er unike, uerstattelige og like mye verdt. Hver av oss skal ha muligheten til å leve gode liv, i små og store fellesskap. Vi vil ha et samfunn basert på frihet, solidaritet og like muligheter for alle. <span class=\"space\"></span> Vår ideologi, eller grunnsyn eller samfunnssyn om du vil, er sosialdemokrati. Vi bygger vår politikk på grunnverdiene frihet, likhet og solidaritet."
-  },
-  "2": {
-    "name": "h",
-    "fullName": "Høyre",
-    "description": "Høyre vil bygge samfunnet på tillit til enkeltmennesket. Hver enkelt skal ha størst mulig frihet til og ansvar for å forme sitt eget liv og sin egen fremtid basert på respekt for andre og for fellesskapet. <span class=\"space\"></span> Samfunnet består av mennesker med ulik kulturell bakgrunn. Høyre mener at mangfold og forskjellighet er en kilde til utveksling av ideer, fornyelse og kreativitet. Valgfrihet er en naturlig del av å kunne bestemme over eget liv."
-  },
-  "3": {
-    "name": "sp",
-    "fullName": "Senterpartiet",
-    "description": "Senterpartiet har som mål å legge vilkårene til rette for en harmonisk samfunnsutvikling. Et levende folkestyre, bygget på kristen og nasjonal grunn, er en forutsetning for folkets trivsel og landets fremgang. <span class=\"space\"></span> Individet og menneskeverdet skal være det sentrale i samfunnet og vises tillit i fellesskapet. De sosiale, kulturelle og økonomiske tiltak fra samfunnets side må ta sikte på å skape vekstvilkår og trivsel for alle uansett bosted eller yrke."
-  },
-  "4": {
-    "name": "frp",
-    "fullName": "Fremskrittspartiet",
-    "description": "Fremskrittspartiet er et liberalistisk folkeparti. Vi jobber for en strengere innvandringspolitikk, trygg eldreomsorg, gode sykehus, lavere skatter og avgifter og bedre veier. En enklere hverdag for folk flest."
-  },
-  "5": {
-    "name": "sv",
-    "fullName": "Sosialistisk Venstreparti",
-    "description": "SV er partiet for deg som vil ha et samfunn med sterke fellesskap, små forskjeller, og en offensiv plan for en rettferdig løsning på klimakrisen."
-  },
-  "6": {
-    "name": "r",
-    "fullName": "Rødt",
-    "description": "Økte forskjeller og privatisering truer alt det arbeiderbevegelsen har bygget opp i Norge - trygghet, velferd og et sterkt fellesskap. Det gjør at makt og muligheter blir urettferdig fordelt. Folk sorteres etter postnummer og bankkonto. <span class=\"space\"></span> Samfunn bygget på samarbeid og likeverd er mer rettferdige enn samfunn basert på kapitalistisk konkurranse. Fordi fellesskap fungerer. Derfor er kampen mot forskjells-Norge Rødts aller viktigste sak."
-  },
-  "7": {
-    "name": "v",
-    "fullName": "Venstre",
-    "description": "Venstre er et liberalt parti som ble stiftet i 1884. Venstre er det eldste partiet i Norge og har vært med på å forme det norske demokratiet. Venstre har som mål å skape et grønt, rettferdig og moderne samfunn der alle har like muligheter og frihet til å utvikle seg."
-  },
-  "8": {
-    "name": "mdg",
-    "fullName": "Miljøpartiet De Grønne",
-    "description": "MDG er her for å stanseklima- og naturkrisa, med politikk som er bra for mennesker og miljø. <span class=\"space\"></span> Klima- og naturkrisen er den største urettferdigheten i vår tid. Kortsiktig populisme, økende forskjeller og miljøødeleggelser truer friheten og tryggheten mange av oss har tatt for gitt. Motgiften er grønn politikk - og grønne politikere, som forstår at en bedre verden er mulig. Det krever at vi våger å tenke nytt, lytter til fagkunnskap og samarbeider på tvers av grenser. <span class=\"space\"></span> I MDG har vi som utgangspunkt at mennesker ikke er hevet over naturen, men at vi er en del av den."
-  },
-  "9": {
-    "name": "krf",
-    "fullName": "Kristelig Folkeparti",
-    "description": "Kristelig Folkeparti har i hele sin historie hatt som hovedmål å verne om kristelige og tradisjonelle moralske verdier. Partiet har ikke noen utpreget klasseforankring, og har derfor heller ikke noen skarpt definert økonomisk eller sosial profil. Den borgerlige profilen ble styrket i 1980- og 1990-årene. Dette kom særlig klart til uttrykk da Kåre Kristiansen var partileder noen år på 1970- og 1980-tallet."
-  },
-  "10": {
-    "name": "pf",
-    "fullName": "Pasientfokus",
-    "description": "Pasientfokus jobber for sårbare og syke menneskers rettigheter til lik behandling på riktig sted til riktig tid. Det finnes ingen unntak i norsk helselovgivning. Heller ikke for Alta, Kautokeino og distriktene i Finnmark. Pasientfokus holder hender med gravid, fødende, babyer og eldre med flere utfordrende sykdommer. Hele Distrikts-Norge trenger noen som jobber med PasientFOKUS - fordi det er riktig."
-  },
-  "11": {
-    "name": "inp",
-    "fullName": "Industri- og Næringspartiet",
-    "description": "INP vil fokusere på Verdi-samfunnsplanlegging og møte næringslivet med riktig kompetanse for neste generasjon. INP vil satse og investere i norsk arbeidskraft og kompetanse. Vi vil investere mer i mennesker, slik at flere kan ta del i de reelle behovene i arbeidslivet fremover. Industri- og næringspartiet vil satse stort på kompetansepolitikk og omstilling. Dette er et satsingsområde for INP."
-  },
-  "12": {
-    "name": "",
-    "fullName": "Konservativt",
-    "description": ""
-  },
-  "13": {
-    "name": "",
-    "fullName": "Pensjonistpartiet",
-    "description": ""
-  },
-  "14": {
-    "name": "",
-    "fullName": "Nordmørslista",
-    "description": ""
-  },
-  "15": {
-    "name": "",
-    "fullName": "Sunnmørslista",
-    "description": ""
-  },
-  "16": {
-    "name": "",
-    "fullName": "Nordkalottfolket",
-    "description": ""
-  },
-  "17": {
-    "name": "",
-    "fullName": "Bergenslisten",
-    "description": ""
-  },
-  "18": {
-    "name": "",
-    "fullName": "",
-    "description": ""
-  }
+    "1": {
+        "name": "ap",
+        "fullName": "Arbeiderpartiet",
+        "description": "Arbeiderpartiets visjon er en rettferdig verden uten fattigdom og i fred, der menneskene er frie, likestilte og har innflytelse på sine liv. Alle mennesker er unike, uerstattelige og like mye verdt. Hver av oss skal ha muligheten til å leve gode liv, i små og store fellesskap. Vi vil ha et samfunn basert på frihet, solidaritet og like muligheter for alle. <span class=\"space\"></span> Vår ideologi, eller grunnsyn eller samfunnssyn om du vil, er sosialdemokrati. Vi bygger vår politikk på grunnverdiene frihet, likhet og solidaritet.",
+        "side": "left",
+        "color": "#cf152d"
+    },
+    "2": {
+        "name": "h",
+        "fullName": "Høyre",
+        "description": "Høyre vil bygge samfunnet på tillit til enkeltmennesket. Hver enkelt skal ha størst mulig frihet til og ansvar for å forme sitt eget liv og sin egen fremtid basert på respekt for andre og for fellesskapet. <span class=\"space\"></span> Samfunnet består av mennesker med ulik kulturell bakgrunn. Høyre mener at mangfold og forskjellighet er en kilde til utveksling av ideer, fornyelse og kreativitet. Valgfrihet er en naturlig del av å kunne bestemme over eget liv.",
+        "side": "right",
+        "color": "#257ce1"
+    },
+    "3": {
+        "name": "sp",
+        "fullName": "Senterpartiet",
+        "description": "Senterpartiet har som mål å legge vilkårene til rette for en harmonisk samfunnsutvikling. Et levende folkestyre, bygget på kristen og nasjonal grunn, er en forutsetning for folkets trivsel og landets fremgang. <span class=\"space\"></span> Individet og menneskeverdet skal være det sentrale i samfunnet og vises tillit i fellesskapet. De sosiale, kulturelle og økonomiske tiltak fra samfunnets side må ta sikte på å skape vekstvilkår og trivsel for alle uansett bosted eller yrke.",
+        "side": "center",
+        "color": "#13964c"
+    },
+    "4": {
+        "name": "frp",
+        "fullName": "Fremskrittspartiet",
+        "description": "Fremskrittspartiet er et liberalistisk folkeparti. Vi jobber for en strengere innvandringspolitikk, trygg eldreomsorg, gode sykehus, lavere skatter og avgifter og bedre veier. En enklere hverdag for folk flest.",
+        "side": "right",
+        "color": "#06205c"
+    },
+    "5": {
+        "name": "sv",
+        "fullName": "Sosialistisk Venstreparti",
+        "description": "SV er partiet for deg som vil ha et samfunn med sterke fellesskap, små forskjeller, og en offensiv plan for en rettferdig løsning på klimakrisen.",
+        "side": "left",
+        "color": "#af0061"
+    },
+    "6": {
+        "name": "r",
+        "fullName": "Rødt",
+        "description": "Økte forskjeller og privatisering truer alt det arbeiderbevegelsen har bygget opp i Norge - trygghet, velferd og et sterkt fellesskap. Det gjør at makt og muligheter blir urettferdig fordelt. Folk sorteres etter postnummer og bankkonto. <span class=\"space\"></span> Samfunn bygget på samarbeid og likeverd er mer rettferdige enn samfunn basert på kapitalistisk konkurranse. Fordi fellesskap fungerer. Derfor er kampen mot forskjells-Norge Rødts aller viktigste sak.",
+        "side": "left",
+        "color": "#701d45"
+    },
+    "7": {
+        "name": "v",
+        "fullName": "Venstre",
+        "description": "Venstre er et liberalt parti som ble stiftet i 1884. Venstre er det eldste partiet i Norge og har vært med på å forme det norske demokratiet. Venstre har som mål å skape et grønt, rettferdig og moderne samfunn der alle har like muligheter og frihet til å utvikle seg.",
+        "side": "center",
+        "color": "#00472e"
+    },
+    "8": {
+        "name": "mdg",
+        "fullName": "Miljøpartiet De Grønne",
+        "description": "MDG er her for å stanseklima- og naturkrisa, med politikk som er bra for mennesker og miljø. <span class=\"space\"></span> Klima- og naturkrisen er den største urettferdigheten i vår tid. Kortsiktig populisme, økende forskjeller og miljøødeleggelser truer friheten og tryggheten mange av oss har tatt for gitt. Motgiften er grønn politikk - og grønne politikere, som forstår at en bedre verden er mulig. Det krever at vi våger å tenke nytt, lytter til fagkunnskap og samarbeider på tvers av grenser. <span class=\"space\"></span> I MDG har vi som utgangspunkt at mennesker ikke er hevet over naturen, men at vi er en del av den.",
+        "side": "center",
+        "color": "#8bc043"
+    },
+    "9": {
+        "name": "krf",
+        "fullName": "Kristelig Folkeparti",
+        "description": "Kristelig Folkeparti har i hele sin historie hatt som hovedmål å verne om kristelige og tradisjonelle moralske verdier. Partiet har ikke noen utpreget klasseforankring, og har derfor heller ikke noen skarpt definert økonomisk eller sosial profil. Den borgerlige profilen ble styrket i 1980- og 1990-årene. Dette kom særlig klart til uttrykk da Kåre Kristiansen var partileder noen år på 1970- og 1980-tallet.",
+        "side": "center",
+        "color": "#f9a134"
+    },
+    "10": {
+        "name": "pf",
+        "fullName": "Pasientfokus",
+        "description": "Pasientfokus jobber for sårbare og syke menneskers rettigheter til lik behandling på riktig sted til riktig tid. Det finnes ingen unntak i norsk helselovgivning. Heller ikke for Alta, Kautokeino og distriktene i Finnmark. Pasientfokus holder hender med gravid, fødende, babyer og eldre med flere utfordrende sykdommer. Hele Distrikts-Norge trenger noen som jobber med PasientFOKUS - fordi det er riktig.",
+        "side": "center",
+        "color": "#fd5201"
+    },
+    "11": {
+        "name": "inp",
+        "fullName": "Industri- og Næringspartiet",
+        "description": "INP vil fokusere på Verdi-samfunnsplanlegging og møte næringslivet med riktig kompetanse for neste generasjon. INP vil satse og investere i norsk arbeidskraft og kompetanse. Vi vil investere mer i mennesker, slik at flere kan ta del i de reelle behovene i arbeidslivet fremover. Industri- og næringspartiet vil satse stort på kompetansepolitikk og omstilling. Dette er et satsingsområde for INP.",
+        "side": "",
+        "color": "#01b0cf"
+    },
+    "12": {
+        "name": "",
+        "fullName": "Konservativt",
+        "description": "",
+        "side": "",
+        "color": "#"
+    },
+    "13": {
+        "name": "",
+        "fullName": "Pensjonistpartiet",
+        "description": "",
+        "side": "",
+        "color": "#"
+    },
+    "14": {
+        "name": "",
+        "fullName": "Nordmørslista",
+        "description": "",
+        "side": "",
+        "color": "#"
+    },
+    "15": {
+        "name": "",
+        "fullName": "Sunnmørslista",
+        "description": "",
+        "side": "",
+        "color": "#"
+    },
+    "16": {
+        "name": "",
+        "fullName": "Nordkalottfolket",
+        "description": "",
+        "side": "",
+        "color": "#"
+    },
+    "17": {
+        "name": "",
+        "fullName": "Bergenslisten",
+        "description": "",
+        "side": "",
+        "color": "#"
+    },
+    "18": {
+        "name": "",
+        "fullName": "",
+        "description": "",
+        "side": "",
+        "color": "#"
+    }
 }

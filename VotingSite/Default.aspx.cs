@@ -11,6 +11,14 @@ using System.Web.UI.WebControls;
 
 namespace VotingSite
 {
+    public class Parti
+    {
+        public string Name { get; set; }
+        public string FullName { get; set; }
+        public string Description { get; set; }
+        public string Side { get; set; }
+    }
+
     public partial class Default : Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -48,11 +56,12 @@ namespace VotingSite
                 {
                     Name = partiEntry.Value["name"],
                     FullName = partiEntry.Value["fullName"],
-                    Description = partiEntry.Value["description"]
+                    Description = partiEntry.Value["description"],
+                    Side = partiEntry.Value["side"]
                 };
 
                 partierContainer.InnerHtml += $@"
-                    <div class=""partier__item"" tabindex=""0"" data-id=""{partiId}"">
+                    <div class=""partier__item"" tabindex=""0"" data-id=""{partiId}"" data-side=""{parti.Side}"">
                         <div class=""partier__logo"">
                             <img src=""/Content/Images/PartyLogos/{parti.Name}.png"" alt=""Parti logo"">
                         </div>
@@ -65,7 +74,11 @@ namespace VotingSite
                                 <p>{parti.Description}</p>
                             </div>
                             <div class=""partier__vote"">
-                                <button class=""voteBtn"" tabindex=""0"" data-id=""{partiId}"">Stem på parti</button>
+                                <!-- <button class=""voteBtn"" tabindex=""0"" data-id=""{partiId}"">Stem på parti</button> -->
+                                <div class=""button_container"">
+                                    <div class=""button voteBtn"" tabindex=""0"" data-id=""{partiId}"">Stem på parti</div>
+                                    <div class=""backdrop""></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -125,11 +138,6 @@ namespace VotingSite
             }
 
             DropDownListFylker.DataBind();
-
-            if (int.Parse(DropDownListKommuner.SelectedValue) != 0)
-            {
-                GetFromKommuner();
-            }
         }
 
 
@@ -433,12 +441,5 @@ namespace VotingSite
             AddVotedToPerson();
             Response.Redirect(Request.Url.AbsolutePath);
         }
-    }
-
-    public class Parti
-    {
-        public string Name { get; set; }
-        public string FullName { get; set; }
-        public string Description { get; set; }
     }
 }

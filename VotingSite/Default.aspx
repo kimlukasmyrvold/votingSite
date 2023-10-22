@@ -19,12 +19,12 @@
 
 <asp:Content ID="ModalContent" ContentPlaceHolderID="ModalContent" runat="server">
     <!-- Voting Form -->
-    <div id="voteForm" data-visible="false">
+    <div id="vote_form" data-visible="false">
         <div class="container no-margin">
 
             <div class="votingInfo">
                 <div class="partiLogo">
-                    <img src="/Content/Images/PartyLogos/ap.png" alt="Parti logo">
+                    <img src="/Content/Images/PartyLogos/" alt="Parti logo">
                 </div>
                 <p class="partiName"></p>
             </div>
@@ -60,22 +60,28 @@
             </div>
 
             <div class="buttons">
-                <button class="cancel" type="button">
-                    <span>Avbryt</span>
-                </button>
-                <button class="submit" type="submit">
-                    <span>Stem</span>
-                </button>
+                <button class="button cancel clr-destructive" type="button">Avbryt</button>
+                <button class="button submit" type="submit">Stem</button>
                 <asp:HiddenField runat="server" ID="hiddenDataField"></asp:HiddenField>
-                <asp:Button CssClass="sendToStemmer hidden" ID="sendToStemmer"
-                            OnClick="SendToStemmer_Click" runat="server"/>
+                <asp:Button CssClass="sendToStemmer hidden" ID="sendToStemmer" OnClick="SendToStemmer_Click" runat="server"/>
             </div>
 
         </div>
     </div>
 
+    <!-- Comfirm Vote -->
+    <div id="vote_confirm" data-visible="false">
+        <div class="container">
+            <p class="title">Er du sikker på at du vil stemme på <span class="parti_name">parti</span>?</p>
+            <div class="buttons">
+                <div class="button clr-destructive">Nei</div>
+                <div class="button">Ja</div>
+            </div>
+        </div>
+    </div>
+
     <!-- Thank you for voting -->
-    <div id="voted" data-visible="false">
+    <div id="vote_thankYou" data-visible="false">
         <div class="container">
             <p class="title">Takk for at du stemmte!</p>
             <p class="results">

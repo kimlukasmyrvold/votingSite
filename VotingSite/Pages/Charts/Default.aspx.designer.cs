@@ -42,6 +42,24 @@ namespace VotingSite.Pages.Charts
         protected global::System.Web.UI.WebControls.HiddenField chartValues;
 
         /// <summary>
+        /// GridView_VoteCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView_VoteCount;
+
+        /// <summary>
+        /// GridView_VoteCountPercent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView_VoteCountPercent;
+
+        /// <summary>
         /// Master property.
         /// </summary>
         /// <remarks>

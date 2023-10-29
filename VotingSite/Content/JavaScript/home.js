@@ -1,8 +1,4 @@
-﻿// ********************************
-// *        Main Functions        *
-// ********************************
-
-// ======<     Opening     >======
+﻿// ======<     Opening     >======
 
 // Function for opening the voting modal.
 async function openVoteModal(e, isBtn = true) {
@@ -24,11 +20,26 @@ function openVoteModalFromCallback(parti) {
     checkInputValues();
 }
 
+// Function for opening the voting modal from callback.
+function openVoteModalFromCallbackResult(errorMsg) {
+    makeModalVisible("#vote_result");
+    // const resultsLinks = document.querySelectorAll(".modal #vote_result .results a");
+    // resultsLinks.forEach(link => link.addEventListener("click", closeModal));
+
+    if (errorMsg === "noError") {
+        document.querySelector(".modal #vote_result [data-result=\"success\"]").dataset.visible = "true";
+        return;
+    }
+
+    document.querySelector(".modal #vote_result [data-result=\"error\"]").dataset.visible = "true";
+    document.querySelector(".modal #vote_result #errorMsg").textContent = errorMsg;
+}
+
 
 // ======<     Closing     >======
 
 // Function for closing the voting modal
-function closeVoteModal(e) {
+function closeModal(e) {
     e.preventDefault();
 
     const modal = document.querySelector('.modal');
@@ -37,27 +48,49 @@ function closeVoteModal(e) {
     const voteForm = document.querySelector('.modal #vote_form');
     voteForm.dataset.visible = "false";
 
-    const voted = document.querySelector('.modal #vote_thankYou');
-    voted.dataset.visible = "false";
+    const confirm = document.querySelector('.modal #vote_confirm');
+    confirm.dataset.visible = "false";
+
+    const success = document.querySelector('.modal #vote_result');
+    success.dataset.visible = "false";
 }
 
 
 // ======<     Calling     >======
 
 // Calling the vote method in c#
-function callVoteMethod(e) {
+async function callVoteMethod(e) {
     e.preventDefault();
 
     // Checking if all values are correct
     const isOK = checkValues();
     if (!isOK) return;
 
+    // Hiding voteForm and Making Confirm vote visible
+    document.querySelector('.modal #vote_form').dataset.visible = "false";
+    document.querySelector('.modal #vote_confirm').dataset.visible = "true";
+
+    const parti = sessionStorage.getItem('pid');
+
+    // Displaying chosen party to user
+    document.querySelector(".modal #vote_confirm .parti_name").textContent = (await getPartiInfo(parti)).fullName;
+
+    const cancel = document.querySelector(".modal #vote_confirm #cancel");
+    const confirm = document.querySelector(".modal #vote_confirm #confirm");
+
+    cancel.addEventListener('click', closeModal);
+    confirm.addEventListener('click', voteConfirmed);
+}
+
+function voteConfirmed(e) {
+    e.preventDefault();
+
     // Adding data to hiddendatafield and clearing localstorage
-    document.querySelector('#ModalContent_hiddenDataField').value = sessionStorage.getItem('pid');
+    document.querySelector('.modal #vote_form #ModalContent_hiddenDataField').value = sessionStorage.getItem('pid');
     sessionStorage.clear();
 
     // Calling the c# method
-    const aspBtn = document.querySelector('.sendToStemmer');
+    const aspBtn = document.querySelector(".modal #vote_form .sendToStemmer");
     aspBtn.click();
 }
 
@@ -67,36 +100,25 @@ function callVoteMethod(e) {
 // ***************************************
 
 function checkValues() {
-
     // Checking if a "Kommune" is selected
     function checkKommuner() {
         const kommunerList = document.querySelector('#vote_form #ModalContent_DropDownListKommuner');
         const value = kommunerList.value;
-        if (value === "0") {
-            const validKommune = document.querySelector('#vote_form .personalInfo .validKommune');
-            validKommune.textContent = "Error, du må velge kommune.";
-            validKommune.parentElement.classList.add('invalid');
+        if (value !== "0") return true;
 
-            // Removing warning after some time
-            setTimeout(() => {
-                validKommune.parentElement.classList.remove('invalid');
-            }, 5_000);
+        const validKommune = document.querySelector('#vote_form .personalInfo .validKommune');
+        validKommune.textContent = "Error, du må velge en kommune.";
+        validKommune.parentElement.classList.add('invalid');
 
-            return false
-        }
+        // Removing warning after some time
+        setTimeout(() => {
+            validKommune.parentElement.classList.remove('invalid');
+        }, 5_000);
 
-        return true;
+        return false;
     }
 
-    function checkFNavn() {
-        return true;
-    }
-
-    let isOK = () => {
-        return checkKommuner() && checkFNavn();
-    };
-
-    return isOK();
+    return checkKommuner();
 }
 
 // Function for making modal visible
@@ -108,6 +130,10 @@ function makeModalVisible(selector = "none") {
         const content = modal.querySelector(selector);
         content.dataset.visible = "true";
     }
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal(e);
+    });
 }
 
 // Gets name and id from partier.json, takes in parti key (mdg, a, sv...)
@@ -142,18 +168,12 @@ async function setLogoAndName(parti) {
 
 // Function for checking if input is valid
 function checkInputValues() {
-    // Test regex function
-    function test(isString, subject) {
-        return (isString) ? /^(?![\s]+$)[a-zA-Z\u00C0-\u02AF\s]+$/.test(subject) : /^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{2}\s?\d{5}$/.test(subject);
-    }
-
-
     // Outputing error to textContent if error
-    function ifElse(test, selector, message) {
-        selector.textContent = (test) ? '' : message;
-        selector.parentElement.classList[test ? 'remove' : 'add']('invalid');
+    function ifElse(subject, selector, message) {
+        const testOk = /^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{2}\s?\d{5}$/.test(subject);
+        selector.textContent = (testOk) ? '' : message;
+        selector.parentElement.classList[testOk ? 'remove' : 'add']('invalid');
     }
-
 
     // Format National ID Number input
     function formatFNumInput(FNumInput) {
@@ -188,24 +208,13 @@ function checkInputValues() {
         FNumInput.setSelectionRange(newCursorPosition, newCursorPosition);
     }
 
-
     // National ID Number
     const validFNum = document.querySelector('#vote_form .personalInfo .validFNum');
     const FNumInput = document.querySelector('#vote_form .personalInfo #ModalContent_FNum');
     FNumInput.addEventListener('input', () => {
-        ifElse(test(false, FNumInput.value), validFNum, 'Fødselsnummer må være et 11-sifret nummer.');
+        ifElse(FNumInput.value, validFNum, 'Fødselsnummer må være et 11-sifret nummer.');
         // formatFNumInput(FNumInput);
     });
-
-    // // First name
-    // const validFNavn = document.querySelector('#vote_form .personalInfo .validFNavn');
-    // const FNavnInput = document.querySelector('#vote_form .personalInfo #ModalContent_FNavn');
-    // FNavnInput.addEventListener('input', () => ifElse(test(true, FNavnInput.value), validFNavn, 'Fornavn kan bare være bokstaver'));
-
-    // // Last name
-    // const validENavn = document.querySelector('#vote_form .personalInfo .validENavn');
-    // const ENavnInput = document.querySelector('#vote_form .personalInfo #ModalContent_ENavn');
-    // ENavnInput.addEventListener('input', () => ifElse(test(true, ENavnInput.value), validENavn, 'Etternavn kan bare være bokstaver'));
 }
 
 
@@ -217,21 +226,9 @@ function checkInputValues() {
 function handleQueryString() {
     const querystring = new URLSearchParams(document.location.search);
     if (querystring.get("r") === "mo") openVoteModalFromCallback(sessionStorage.getItem('pid'));
+    if (querystring.get("r") === "moRe") openVoteModalFromCallbackResult(querystring.get("er"));
     removeQueryString();
 }
-
-
-/*  Unused
-    // Add voted class to all vote buttons if 'voted' is true in localStorage
-    function getVoted() {
-        if (localStorage.getItem('voted') == false) return
-        const voteBtn = document.querySelectorAll('.voteBtn');
-        voteBtn.forEach(el => {
-            el.classList.add('voted');
-        });
-    }
-*/
-
 
 // Aligning partier dropdown acording to window space
 function alignPartiHover() {
@@ -327,10 +324,12 @@ handleHoverOnFocus();
 
 
 function handleReadyClass() {
+    const fNumInput = document.querySelector("#vote_form #ModalContent_FNum");
     const fylkerList = document.querySelector("#vote_form #ModalContent_DropDownListFylker");
     const remains = document.querySelector("#vote_form .remains");
 
-    if (remains.classList.contains("ready")) {
+    if (remains.classList.contains("ready") && !isPostBack) {
+        fNumInput.value = "";
         fylkerList.options[0].selected = true;
         remains.classList.remove("ready");
     }
@@ -339,14 +338,12 @@ function handleReadyClass() {
 function addReadyClass() {
     const fylkerList = document.querySelector("#vote_form #ModalContent_DropDownListFylker");
     const value = fylkerList.value;
-    const remains = document.querySelector("#vote_form .remains");
 
     if (value === "0") return;
     document.querySelectorAll('.voteBtn').forEach(btn => btn.addEventListener('click', handleReadyClass));
+    const remains = document.querySelector("#vote_form .remains");
     remains.classList.add("ready");
 }
-
-document.addEventListener("DOMContentLoaded", addReadyClass);
 
 
 // ****************************************
@@ -358,9 +355,13 @@ function getFromKommuner_Callback() {
     history.replaceState({}, document.title, `${window.location.pathname}?r=mo`);
 
     // Disable the first value from being selected
-    const kommuneDropdown = document.querySelector('#ModalContent_DropDownListKommuner')
-    const firstKommune = kommuneDropdown.querySelectorAll('option')[0];
-    firstKommune.disabled = true;
+    const kommuneDropdown = document.querySelector('#ModalContent_DropDownListKommuner');
+    const selectKommune = kommuneDropdown.querySelectorAll('option')[0];
+    selectKommune.disabled = true;
+}
+
+function SendToStemmer_Click_Callback(errorMsg) {
+    history.replaceState({}, document.title, `${window.location.pathname}?r=moRe&er=${errorMsg}`);
 }
 
 
@@ -369,14 +370,15 @@ function getFromKommuner_Callback() {
 // ****************************************
 
 // Calling handleQueryString function when DOMContent has loaded
+document.addEventListener("DOMContentLoaded", addReadyClass);
 document.addEventListener('DOMContentLoaded', handleQueryString);
 
 // Opening voteModal
 document.querySelectorAll('.voteBtn').forEach(btn => btn.addEventListener('click', openVoteModal));
 
 // Closing voteModal
-document.querySelector('.modal .cancel').addEventListener('click', closeVoteModal);
-document.querySelector('.modal .icon-cross').addEventListener('click', closeVoteModal);
+document.querySelector('.modal .cancel').addEventListener('click', closeModal);
+document.querySelector('.modal .icon-cross').addEventListener('click', closeModal);
 
 // Sending the vote
 document.querySelector('.modal .submit').addEventListener('click', callVoteMethod);

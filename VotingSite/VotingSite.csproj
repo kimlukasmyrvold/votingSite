@@ -102,6 +102,9 @@
     <Content Include="Content\CSS\abstracts\_mixins.scss" />
     <Content Include="Content\CSS\abstracts\_themes.scss" />
     <Content Include="Content\CSS\abstracts\_vars.scss" />
+    <Content Include="Content\CSS\charts.css" />
+    <Content Include="Content\CSS\charts.css.map" />
+    <Content Include="Content\CSS\charts.scss" />
     <Content Include="Content\CSS\home.css" />
     <Content Include="Content\CSS\home.css.map" />
     <Content Include="Content\CSS\home.scss" />
@@ -151,7 +154,10 @@
     <Content Include="Content\Images\PartyLogos\inp.png" />
     <Content Include="Content\Images\PartyLogos\krf.png" />
     <Content Include="Content\Images\PartyLogos\mdg.png" />
+    <Content Include="Content\Images\PartyLogos\nml.png" />
+    <Content Include="Content\Images\PartyLogos\pdk.png" />
     <Content Include="Content\Images\PartyLogos\pf.png" />
+    <Content Include="Content\Images\PartyLogos\pp.png" />
     <Content Include="Content\Images\PartyLogos\r.png" />
     <Content Include="Content\Images\PartyLogos\sp.png" />
     <Content Include="Content\Images\PartyLogos\sv.png" />
@@ -159,6 +165,7 @@
     <Content Include="Content\JavaScript\charts.js" />
     <Content Include="Content\JavaScript\home.js" />
     <Content Include="Content\JavaScript\main.js" />
+    <Content Include="Content\JavaScript\personer.js" />
     <Content Include="Content\JSON\partier.json" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />

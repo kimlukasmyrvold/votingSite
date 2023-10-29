@@ -36,5 +36,20 @@ namespace VotingSite.Pages.Stemmer
                 return dt;
             }
         }
+
+        // Clear all votes
+        protected void ClearVotes(object sender, EventArgs e)
+        {
+            var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+            using (var conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                var cmd = new SqlCommand("DELETE FROM stemmer", conn);
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+            }
+            
+            Response.Redirect(Request.RawUrl);
+        }
     }
 }

@@ -7,4 +7,6 @@
             <asp:BoundField DataField="Parti" HeaderText="Parti" />
         </Columns>
     </asp:GridView>
+    
+    <asp:Button Text="Clear Votes!" OnClick="ClearVotes" runat="server"></asp:Button>
 </asp:Content>

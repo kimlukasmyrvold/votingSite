@@ -348,11 +348,40 @@
     }
 }
 
-// ======< Thank you for voting modal >======
-.modal #vote_thankYou {
-    background-color: red;
+// ======< Result modal >======
+.modal #vote_result {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
 
     &[data-visible="false"] {
         display: none;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: $gap-3;
+
+        .title {
+            font-size: $fs-400;
+        }
+
+        .feedback {
+            font-size: $fs-200;
+            opacity: .8;
+        }
+
+        &[data-result="error"] {
+            .title, #errorMsg {
+                color: $clr-destructive;
+            }
+        }
+
+        &[data-visible="false"] {
+            display: none;
+        }
     }
 }

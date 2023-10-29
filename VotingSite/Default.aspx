@@ -6,14 +6,12 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <p id="ErrMsg" runat="server"></p>
-
     <div class="partier">
         <div class="partier__container" id="partierContainer" runat="server"></div>
     </div>
 
     <div id="results">
-        <p>Resultater:</p>
+        <%-- <p>Resultater:</p> --%>
     </div>
 </asp:Content>
 
@@ -24,7 +22,7 @@
 
             <div class="votingInfo">
                 <div class="partiLogo">
-                    <img src="/Content/Images/PartyLogos/" alt="Parti logo">
+                    <img src="/Content/Images/PartyLogos/r.png" alt="Parti logo">
                 </div>
                 <p class="partiName"></p>
             </div>
@@ -74,18 +72,28 @@
         <div class="container">
             <p class="title">Er du sikker på at du vil stemme på <span class="parti_name">parti</span>?</p>
             <div class="buttons">
-                <div class="button clr-destructive">Nei</div>
-                <div class="button">Ja</div>
+                <div class="button clr-destructive" id="cancel">Nei</div>
+                <div class="button" id="confirm">Ja</div>
             </div>
         </div>
     </div>
 
-    <!-- Thank you for voting -->
-    <div id="vote_thankYou" data-visible="false">
-        <div class="container">
-            <p class="title">Takk for at du stemmte!</p>
+    <!-- Result of sending vote -->
+    <div id="vote_result" data-visible="false">
+        <div class="container" data-visible="false" data-result="success">
+            <p class="title">Takk for at du brukte stemmen din!</p>
+            <p class="feedback">Din stemme ble sendt.</p>
             <p class="results">
-                <a href="#results">Se resultatene</a>
+                <%-- <a href="#results">Se resultatene</a> --%>
+                <a href="~/Stemmer/" runat="server">Se resultatene</a>
+            </p>
+        </div>
+        <div class="container" data-visible="false" data-result="error">
+            <p class="title">Error: <span id="errorMsg"></span></p>
+            <p class="feedback">Din stemme ble ikke sendt.</p>
+            <p class="results">
+                <%-- <a href="#results">Se resultatene</a> --%>
+                <a href="~/Stemmer/" runat="server">Se resultatene</a>
             </p>
         </div>
     </div>

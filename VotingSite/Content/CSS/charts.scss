@@ -1,0 +1,29 @@
+﻿@use "abstracts/index" as *;
+
+.chart {
+    &__container {
+        display: flex;
+        flex-direction: column;
+        gap: $gap-2;
+        
+        width: 100%;
+    }
+
+    &__bar {
+        background-color: steelblue;
+        padding: 10px;
+        border-radius: 10px;
+        
+        text-align: right;
+        transition: width .5s ease;
+    }
+    
+    &__party {
+        
+    }
+    
+    &__value {
+        
+    }
+}
+

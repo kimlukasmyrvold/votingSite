@@ -73,56 +73,55 @@
         "name": "inp",
         "fullName": "Industri- og Næringspartiet",
         "description": "INP vil fokusere på Verdi-samfunnsplanlegging og møte næringslivet med riktig kompetanse for neste generasjon. INP vil satse og investere i norsk arbeidskraft og kompetanse. Vi vil investere mer i mennesker, slik at flere kan ta del i de reelle behovene i arbeidslivet fremover. Industri- og næringspartiet vil satse stort på kompetansepolitikk og omstilling. Dette er et satsingsområde for INP.",
-        "side": "",
+        "side": "right",
         "color": "#01b0cf"
     },
     "12": {
-        "name": "",
+        "name": "pdk",
         "fullName": "Konservativt",
-        "description": "",
-        "side": "",
-        "color": "#"
+        "description": "Konservativt er et politisk parti som vektlegger kristen kulturarv, økonomisk liberalisme, og nasjonal suverenitet. De støtter verdier som nasjonalstaten, familien, billig energi, forsvar, og samarbeid med andre stater uten å avstå suverenitet. Partiet betoner betydningen av vitenskap, forskning og utdanning, mens de ønsker å begrense innvandring og opprettholde en balanse mellom en sterk stat og individuell frihet.",
+        "side": "right",
+        "color": "#2e316f",
+        "disabled": false
     },
     "13": {
-        "name": "",
+        "name": "pp",
         "fullName": "Pensjonistpartiet",
-        "description": "",
-        "side": "",
-        "color": "#"
+        "description": "Pensjonistpartiet kjemper for å øke minstepensjonen i Norge, slik at de 150 000 minstepensjonistene kan ha et verdig liv. Partiet fokuserer også på å sikre kjøpekraften for uføre og pensjonister, som har opplevd en betydelig reduksjon de siste årene på grunn av underregulering. Pensjonistpartiet er uavhengig av de vanlige politiske blokkene og arbeider for å forhandle frem de beste løsningene for sine kjernevelgere.",
+        "side": "center",
+        "color": "#383256",
+        "disabled": false
     },
     "14": {
-        "name": "",
+        "name": "nml",
         "fullName": "Nordmørslista",
-        "description": "",
-        "side": "",
-        "color": "#"
+        "description": "Det handler om å stille krav til nasjonale myndigheter, men det handler også om å opptre ansvarlig og konstruktivt der vi er representert, slik at vi kan samarbeide og bygge opp et flertall for å få til gode løsninger for innbyggerne. Det handler om å samarbeide med de som har de samme målene som oss, både politisk og geografisk. Det som er bra for oss er bra for naboene våre, og omvendt. Hvis vi skal oppnå noe er vi nødt til å samarbeide, og det er slik vi vil arbeide i bystyret og på fylkestinget.",
+        "side": "center",
+        "color": "#338659",
+        "disabled": false
     },
     "15": {
         "name": "",
         "fullName": "Sunnmørslista",
         "description": "",
         "side": "",
-        "color": "#"
+        "color": "#",
+        "disabled": true
     },
     "16": {
         "name": "",
         "fullName": "Nordkalottfolket",
         "description": "",
         "side": "",
-        "color": "#"
+        "color": "#",
+        "disabled": true
     },
     "17": {
         "name": "",
         "fullName": "Bergenslisten",
         "description": "",
         "side": "",
-        "color": "#"
-    },
-    "18": {
-        "name": "",
-        "fullName": "",
-        "description": "",
-        "side": "",
-        "color": "#"
+        "color": "#",
+        "disabled": true
     }
 }

@@ -148,7 +148,7 @@ table {
     backdrop-filter: blur(20px);
     padding: 0.75rem 1.5rem;
     border-radius: 5px;
-    font-size: $fs-300;
+    font-size: $fs-200;
     font-weight: 600;
     cursor: pointer;
     color: var(--clr-text);
@@ -171,12 +171,17 @@ input {
     cursor: pointer;
 }
 
-input {
+input, select {
     background-color: var(--clr-primary);
     padding: $gap-2 $gap-3;
-    border-radius: 10px;
+    border: none;
+    border-radius: 5px;
     font-size: $fs-200;
     width: fit-content;
+}
+
+select {
+    cursor: pointer;
 }
 
 .hidden {

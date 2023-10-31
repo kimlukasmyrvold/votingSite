@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using Newtonsoft.Json;
 
 namespace VotingSite.Pages.Charts
@@ -20,14 +21,35 @@ namespace VotingSite.Pages.Charts
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Page.IsPostBack) return;
+            AddKommunerToDropDown();
+            SetChartValues((from DataRow row in GetVoteCountPercent().Rows select new PartyData { Name = row["parti"].ToString(), Percent = (double)row["Percent"] }).ToArray());
+        }
 
-            // Bind values from GetVotedCountPercent() to gridView
-            var dt = GetVoteCountPercent();
-            GridView_VoteCountPercent.DataSource = dt;
-            GridView_VoteCountPercent.DataBind();
+        private void AddKommunerToDropDown()
+        {
+            var dt = new DataTable();
+            
+            var connStr = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+            using (var conn = new SqlConnection(connStr))
+            {
+                conn.Open();
+                var cmd = new SqlCommand("select * from kommuner ORDER BY kommune COLLATE Danish_Norwegian_CI_AS;", conn);
+                cmd.CommandType = CommandType.Text;
 
-            // Add values to site so that JavaScript can use it.
-            SetChartValues((from DataRow row in dt.Rows select new PartyData { Name = row["parti"].ToString(), Percent = (double)row["Percent"] }).ToArray());
+                var reader = cmd.ExecuteReader();
+                dt.Load(reader);
+                
+                reader.Close();
+                conn.Close();
+            }
+            
+            foreach (DataRow row in dt.Rows)
+            {
+                var item = new ListItem(row["Kommune"].ToString(), row["KID"].ToString());
+                kommunerDropDown.Items.Add(item);
+            }
+
+            kommunerDropDown.DataBind();
         }
 
         private static DataTable GetVoteCount()

@@ -1,11 +1,51 @@
 ﻿@use "abstracts/index" as *;
 
+.charts {
+    .controls {
+        display: flex;
+        gap: $gap-1;
+        background-color: var(--clr-primary);
+        border-radius: 9em;
+        padding: .3em;
+    }
+
+    select, .button {
+        background-color: transparent;
+        height: 100%;
+        margin: 0;
+        padding: .4em .7em;
+        border-radius: 9em;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        transition: translate 0.3s ease;
+
+        &:hover {
+            translate: 0 -2px;
+        }
+
+        &.selected, &:hover {
+            background-color: $clr-black-40;
+        }
+    }
+
+    //.custom-select,
+    select {
+        background-color: var(--clr-primary);
+        flex-grow: 1;
+        margin-left: $gap-2;
+
+        option {
+            background-color: var(--clr-primary);
+            font-size: .95rem;
+        }
+    }
+}
+
 .chart {
     &__container {
         display: flex;
         flex-direction: column;
         gap: $gap-2;
-        
+
         width: 100%;
     }
 
@@ -13,17 +53,86 @@
         background-color: steelblue;
         padding: 10px;
         border-radius: 10px;
-        
+
         text-align: right;
         transition: width .5s ease;
     }
-    
+
     &__party {
-        
+
     }
-    
+
     &__value {
-        
+
     }
 }
 
+//* {
+//    outline: 1px solid #ff0000a1;
+//}
+
+
+.custom-select {
+    position: relative;
+    margin: 0;
+    border-radius: 9rem;
+    padding-right: .8em;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    
+    
+    flex: 1;
+
+    select {
+        display: none;
+    }
+}
+
+.select-selected {
+    background-color: var(--clr-primary);
+    border-radius: inherit;
+
+    &:after {
+        position: absolute;
+        content: "";
+        top: 50%;
+        right: .5em;
+        border: 6px solid;
+        border-color: var(--clr-text) transparent transparent transparent;
+        transition: rotate .3s ease, top .3s ease;
+    }
+
+    &.select-arrow-active:after {
+        rotate: 180deg;
+        top: calc(50% - 6px);
+    }
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div, .select-selected {
+    padding: 8px 16px;
+    cursor: pointer;
+    user-select: none;
+    margin: 0;
+}
+
+/*style items (options):*/
+.select-items {
+    @include visible;
+    
+    position: absolute;
+    background-color: var(--clr-primary);
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    max-height: 60vh;
+    overflow: auto;
+}
+
+.select-hide {
+    @include hidden();
+}
+
+.select-items div:hover, .same-as-selected {
+    background-color: $clr-black-30;
+}

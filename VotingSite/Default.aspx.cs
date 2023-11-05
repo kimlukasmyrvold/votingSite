@@ -50,8 +50,6 @@ namespace VotingSite
                 jsonObj = new JavaScriptSerializer().Deserialize<dynamic>(json);
             }
 
-            var partiNamesFromDatabase = GetPartiNamesFromDatabase();
-
             foreach (var partiEntry in jsonObj)
             {
                 var partiId = int.Parse(partiEntry.Key);
@@ -62,8 +60,9 @@ namespace VotingSite
                     Description = partiEntry.Value["description"],
                     Side = partiEntry.Value["side"]
                 };
-                
-                if (partiEntry.Value.ContainsKey("disabled") && partiEntry.Value["disabled"] is bool && (bool)partiEntry.Value["disabled"]) continue;
+
+                if (partiEntry.Value.ContainsKey("disabled") && partiEntry.Value["disabled"] is bool &&
+                    (bool)partiEntry.Value["disabled"]) continue;
 
                 partierContainer.InnerHtml += $@"
                     <div class=""partier__item"" tabindex=""0"" data-id=""{partiId}"" data-side=""{parti.Side}"">
@@ -72,7 +71,7 @@ namespace VotingSite
                         </div>
                         <div class=""partier__content"">
                             <div class=""partier__name"">
-                                <p>{(partiNamesFromDatabase.TryGetValue(partiId, out string value) ? value : parti.FullName)}</p>
+                                <p>{parti.FullName}</p>
                                 <hr>
                             </div>
                             <div class=""partier__description"">
@@ -89,31 +88,6 @@ namespace VotingSite
                     </div>
                 ";
             }
-        }
-
-        private static Dictionary<int, string> GetPartiNamesFromDatabase()
-        {
-            var partiNames = new Dictionary<int, string>();
-
-            var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
-            using (var conn = new SqlConnection(connString))
-            {
-                conn.Open();
-                var cmd = new SqlCommand("SELECT PID, Parti FROM partier", conn);
-                cmd.CommandType = CommandType.Text;
-                var reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    var partiId = Convert.ToInt32(reader["PID"]);
-                    var partiName = reader["Parti"].ToString();
-                    partiNames.Add(partiId, partiName);
-                }
-
-                reader.Close();
-            }
-
-            return partiNames;
         }
 
 

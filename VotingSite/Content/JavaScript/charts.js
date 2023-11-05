@@ -1,38 +1,63 @@
-﻿const partyData = JSON.parse(document.querySelector("#MainContent_chartValues").value);
-partyData.sort((a, b) => parseFloat(b.Percent) - parseFloat(a.Percent));
+﻿function addToChart(option = "percent") {
+    const isEmpty = (chartContainer.innerHTML === "");
 
-const chartContainer = document.querySelector(".chart__container");
-const maxPercent = Math.max(...partyData.map(party => parseFloat(party.Percent)));
+    if (isEmpty) {
+        partyData.forEach(data => {
+            const item = document.createElement("div");
+            item.className = "item";
 
-partyData.forEach(party => {
-    const bar = document.createElement("div");
-    bar.className = "chart__bar";
-    bar.textContent = `${party.Name} (${party.Percent}%)`;
+            const bar = document.createElement("span");
+            bar.className = "bar";
 
-    const relativeWidth = (parseFloat(party.Percent) / maxPercent) * 100;
-    bar.style.width = relativeWidth + "%";
+            const party = document.createElement("div");
+            const partyImg = document.createElement("img");
+            party.className = "party";
+            partyImg.setAttribute("alt", `Parti logo til ${data.Name}`);
+            partyImg.setAttribute('src', `/Content/Images/PartyLogos/${data.Short}.png`);
+            party.appendChild(partyImg);
 
-    chartContainer.appendChild(bar);
-});
+            const value = document.createElement("span");
+            value.className = "value";
+            value.textContent = `${(option === "percent") ? data.Percent + "%" : data.Votes}`;
 
+            const relativeWidth = (parseFloat(data.Percent) / maxPercent) * 100;
+            bar.style.width = relativeWidth + "%";
 
-// const percent = document.querySelector(".charts .percent");
-// const votes = document.querySelector(".charts .votes");
+            item.appendChild(party);
+            item.appendChild(bar);
+            item.appendChild(value);
 
-const buttons = document.querySelectorAll(".charts .controls button");
-buttons.forEach(btn => {
-    btn.addEventListener("click", changeChartView);
-});
+            chartContainer.appendChild(item);
+            console.log("Appended")
+        });
+    } else {
+        const values = document.querySelectorAll(".value");
+        for (let i = 0; i < values.length; i++) {
+            values[i].textContent = `${(option === "percent") ? partyData[i].Percent + "%" : partyData[i].Votes}`;
+        }
+    }
+
+}
 
 function changeChartView(e) {
     e.preventDefault();
 
-    buttons.forEach(btn => {
+    document.querySelectorAll(".barChart .controls .button").forEach(btn => {
         btn.classList.remove("selected");
     });
 
-    this.classList.add("selected");
+    e.target.classList.add("selected");
+    addToChart(e.target.dataset.option);
 }
+
+const partyData = JSON.parse(document.querySelector(".barChartValues").value);
+partyData.sort((a, b) => parseFloat(b.Percent) - parseFloat(a.Percent));
+
+const chartContainer = document.querySelector(".barChart .container");
+const maxPercent = Math.max(...partyData.map(party => parseFloat(party.Percent)));
+
+clickListener(document.querySelectorAll(".barChart .controls .button"), changeChartView);
+addToChart();
 
 
 // !!!!!   Experimental code   !!!!! \\
@@ -64,7 +89,7 @@ for (i = 0; i < l; i++) {
         c.addEventListener("click", function (e) {
             /*when an item is clicked, update the original select box,
             and the selected item:*/
-            var y, i, k, s, h, sl, yl;
+            let y, i, k, s, h, sl, yl;
             s = this.parentNode.parentNode.getElementsByTagName("select")[0];
             sl = s.length;
             h = this.parentNode.previousSibling;
@@ -99,25 +124,23 @@ for (i = 0; i < l; i++) {
 function closeAllSelect(elmnt) {
     /*a function that will close all select boxes in the document,
     except the current select box:*/
-    let x, y, i, xl, yl, arrNo = [];
-    x = document.getElementsByClassName("select-items");
-    y = document.getElementsByClassName("select-selected");
-    xl = x.length;
-    yl = y.length;
-    for (i = 0; i < yl; i++) {
-        if (elmnt === y[i]) {
-            arrNo.push(i)
+    let arr = [];
+
+    let selected = document.querySelectorAll(".select-selected");
+    for (let i = 0; i < selected.length; i++) {
+        if (elmnt === selected[i]) {
+            arr.push(i)
         } else {
-            y[i].classList.remove("select-arrow-active");
+            selected[i].classList.remove("select-arrow-active");
         }
     }
-    for (i = 0; i < xl; i++) {
-        if (arrNo.indexOf(i)) {
-            x[i].classList.add("select-hide");
+
+    let items = document.querySelectorAll(".select-items");
+    for (let i = 0; i < items.length; i++) {
+        if (arr.indexOf(i)) {
+            items[i].classList.add("select-hide");
         }
     }
 }
 
-/*if the user clicks anywhere outside the select box,
-then close all select boxes:*/
 document.addEventListener("click", closeAllSelect);

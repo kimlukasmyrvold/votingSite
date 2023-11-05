@@ -1,71 +1,105 @@
 ﻿@use "abstracts/index" as *;
 
-.charts {
+.barChart {
     .controls {
         display: flex;
         gap: $gap-1;
         background-color: var(--clr-primary);
         border-radius: 9em;
         padding: .3em;
-    }
 
-    select, .button {
-        background-color: transparent;
-        height: 100%;
-        margin: 0;
-        padding: .4em .7em;
-        border-radius: 9em;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-        transition: translate 0.3s ease;
+        select, .button {
+            background-color: transparent;
+            height: 100%;
+            margin: 0;
+            padding: .4em .7em;
+            border-radius: 9em;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            transition: translate 0.3s ease;
 
-        &:hover {
-            translate: 0 -2px;
+            &:hover {
+                translate: 0 -2px;
+            }
+
+            &.selected, &:hover {
+                background-color: $clr-black-40;
+            }
         }
 
-        &.selected, &:hover {
-            background-color: $clr-black-40;
-        }
-    }
-
-    //.custom-select,
-    select {
-        background-color: var(--clr-primary);
-        flex-grow: 1;
-        margin-left: $gap-2;
-
-        option {
+        //.custom-select,
+        select {
             background-color: var(--clr-primary);
-            font-size: .95rem;
+            flex-grow: 1;
+            margin-left: $gap-2;
+
+            option {
+                background-color: var(--clr-primary);
+                font-size: .95rem;
+            }
         }
     }
-}
 
-.chart {
-    &__container {
+    .container {
         display: flex;
         flex-direction: column;
-        gap: $gap-2;
-
+        gap: $gap-5;
         width: 100%;
     }
 
-    &__bar {
-        background-color: steelblue;
-        padding: 10px;
+    .item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: $gap-2;
+        height: 1.8em;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            margin-top: 10px;
+            height: 1px;
+            border-radius: 10px;
+            background-color: $clr-seperator;
+        }
+    }
+
+    .bar {
+        background-color: var(--clr-primary);
         border-radius: 10px;
+        padding: 10px;
+        height: 100%;
+        //width: 1px !important;
+        margin: 0;
 
-        text-align: right;
-        transition: width .5s ease;
+        transition: width 1s ease;
     }
 
-    &__party {
+    .party {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 50px;
+        width: 50px;
+        margin: 0;
 
+        img {
+            margin: 0;
+            max-width: 40px;
+            max-height: 40px;
+            border-radius: 5px;
+        }
     }
 
-    &__value {
-
+    .value {
+        margin: 0;
+        font-weight: 700;
     }
 }
+
 
 //* {
 //    outline: 1px solid #ff0000a1;

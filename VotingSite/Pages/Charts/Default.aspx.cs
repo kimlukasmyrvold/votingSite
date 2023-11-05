@@ -13,6 +13,8 @@ namespace VotingSite.Pages.Charts
     public class PartyData
     {
         public string Name { get; set; }
+        public string Short { get; set; }
+        public string Votes { get; set; }
         public double Percent { get; set; }
     }
 
@@ -22,27 +24,35 @@ namespace VotingSite.Pages.Charts
         {
             if (Page.IsPostBack) return;
             AddKommunerToDropDown();
-            SetChartValues((from DataRow row in GetVoteCountPercent().Rows select new PartyData { Name = row["parti"].ToString(), Percent = (double)row["Percent"] }).ToArray());
+            SetChartValues((from DataRow row in GetVoteCount().Rows
+                select new PartyData
+                {
+                    Name = row["Parti"].ToString(),
+                    Short = row["Short"].ToString(),
+                    Votes = row["Votes"].ToString(),
+                    Percent = (double)row["Percent"]
+                }).ToArray());
         }
 
         private void AddKommunerToDropDown()
         {
             var dt = new DataTable();
-            
+
             var connStr = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
             using (var conn = new SqlConnection(connStr))
             {
                 conn.Open();
-                var cmd = new SqlCommand("select * from kommuner ORDER BY kommune COLLATE Danish_Norwegian_CI_AS;", conn);
+                var cmd = new SqlCommand("select * from kommuner ORDER BY kommune COLLATE Danish_Norwegian_CI_AS;",
+                    conn);
                 cmd.CommandType = CommandType.Text;
 
                 var reader = cmd.ExecuteReader();
                 dt.Load(reader);
-                
+
                 reader.Close();
                 conn.Close();
             }
-            
+
             foreach (DataRow row in dt.Rows)
             {
                 var item = new ListItem(row["Kommune"].ToString(), row["KID"].ToString());
@@ -70,12 +80,6 @@ namespace VotingSite.Pages.Charts
                 conn.Close();
             }
 
-            return dt;
-        }
-
-        private static DataTable GetVoteCountPercent()
-        {
-            var dt = GetVoteCount();
             var voteCount = dt.AsEnumerable().Sum(s => s.Field<int>("votes"));
             dt.Columns.Add("Percent", typeof(double));
 

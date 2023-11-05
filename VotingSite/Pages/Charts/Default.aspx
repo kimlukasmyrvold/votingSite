@@ -6,12 +6,12 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-    <div class="charts">
-        <asp:HiddenField ID="chartValues" runat="server"></asp:HiddenField>
+    <div class="barChart">
+        <input type="hidden" ID="chartValues" runat="server" class="barChartValues"/>
 
         <div class="controls">
-            <button class="button percent selected">%</button>
-            <button class="button votes">Stemmer</button>
+            <button class="button selected" data-option="percent">%</button>
+            <button class="button" data-option="votes">Stemmer</button>
             <div class="custom-select">
                 <asp:DropDownList ID="kommunerDropDown" runat="server">
                     <asp:ListItem Selected="True" Value="0">Alle kommuner</asp:ListItem>
@@ -19,9 +19,6 @@
             </div>
         </div>
 
-
-        <div class="chart">
-            <div class="chart__container"></div>
-        </div>
+        <div class="container"></div>
     </div>
 </asp:Content>

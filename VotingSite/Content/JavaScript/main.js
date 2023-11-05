@@ -60,6 +60,18 @@ function setTheme() {
 // *************************************
 
 
+// ======<   Adds eventListeners for click or Enter keypress   >======
+function clickListener(elements, functionCall, once = false) {
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].addEventListener("click", functionCall, {once: once});
+        elements[i].addEventListener("keydown", (e) => {
+            if (e.key !== "Enter") return;
+            functionCall(e);
+        }, {once: once});
+    }
+}
+
+
 // ======<   Removes querystring from URL   >======
 function removeQueryString() {
     let cleanURL = window.location.pathname;

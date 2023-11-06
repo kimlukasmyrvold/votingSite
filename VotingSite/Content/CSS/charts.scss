@@ -8,7 +8,7 @@
         border-radius: 9em;
         padding: .3em;
 
-        select, .button {
+        .button {
             background-color: transparent;
             height: 100%;
             margin: 0;
@@ -26,41 +26,36 @@
             }
         }
 
-        //.custom-select,
-        select {
-            background-color: var(--clr-primary);
-            flex-grow: 1;
-            margin-left: $gap-2;
-
-            option {
-                background-color: var(--clr-primary);
-                font-size: .95rem;
-            }
+        .custom_select {
+            margin-inline-start: $gap-2;
         }
     }
 
     .container {
         display: flex;
         flex-direction: column;
-        gap: $gap-5;
         width: 100%;
+        margin: 0 0 $gap-5;
     }
 
     .item {
+        $_gap: 20px;
+
         display: flex;
         flex-direction: row;
         align-items: center;
         gap: $gap-2;
-        height: 1.8em;
+        margin: $_gap 0;
+        height: 2em;
         position: relative;
 
-        &::after {
+        &:not(:last-child)::after {
             content: '';
             position: absolute;
             top: 100%;
             left: 0;
             right: 0;
-            margin-top: 10px;
+            margin-block: $_gap;
             height: 1px;
             border-radius: 10px;
             background-color: $clr-seperator;
@@ -72,7 +67,6 @@
         border-radius: 10px;
         padding: 10px;
         height: 100%;
-        //width: 1px !important;
         margin: 0;
 
         transition: width 1s ease;
@@ -106,13 +100,14 @@
 //}
 
 
-.custom-select {
+.custom_select {
     position: relative;
     display: flex;
     flex-grow: 1;
-    padding: 0 $gap-3;
-    margin: 0 0 0 $gap-2;
+    margin: 0;
+    padding: $gap-1 $gap-3;
     border-radius: 20px;
+    background-color: var(--clr-primary);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 
     select {
@@ -121,9 +116,11 @@
 
     .select-selected {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
         flex-grow: 1;
+        margin: 0;
+        border-radius: inherit;
         background-color: var(--clr-primary);
 
         &:after {
@@ -135,7 +132,7 @@
             transition: rotate .3s ease, translate .3s ease;
         }
 
-        &.select-arrow-active:after {
+        &.active:after {
             rotate: 180deg;
             translate: 0 -3px;
         }

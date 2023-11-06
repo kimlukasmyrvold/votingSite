@@ -28,7 +28,6 @@
             item.appendChild(value);
 
             chartContainer.appendChild(item);
-            console.log("Appended")
         });
     } else {
         const values = document.querySelectorAll(".value");
@@ -66,43 +65,40 @@ addToChart();
 
 // from  https://www.w3schools.com/howto/tryit.asp?filename=tryhow_custom_select
 
-let x, i, j, l, ll, selElmnt, a, b, c;
-/*look for any elements with the class "custom-select":*/
-x = document.querySelectorAll(".custom-select");
-l = x.length;
-for (i = 0; i < l; i++) {
-    selElmnt = x[i].getElementsByTagName("select")[0];
-    ll = selElmnt.length;
+let customSelect = document.querySelectorAll(".custom_select");
+
+for (let i = 0; i < customSelect.length; i++) {
+    let selElmnt = customSelect[i].querySelector("select");
     /*for each element, create a new DIV that will act as the selected item:*/
-    a = document.createElement("DIV");
+    let a = document.createElement("div");
     a.setAttribute("class", "select-selected");
     a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-    x[i].appendChild(a);
+    customSelect[i].appendChild(a);
     /*for each element, create a new DIV that will contain the option list:*/
-    b = document.createElement("DIV");
+    let b = document.createElement("div");
     b.setAttribute("class", "select-items select-hide");
-    for (j = 0; j < ll; j++) {
+    for (let j = 0; j < selElmnt.length; j++) {
         /*for each option in the original select element,
         create a new DIV that will act as an option item:*/
-        c = document.createElement("DIV");
+        let c = document.createElement("DIV");
         c.innerHTML = selElmnt.options[j].innerHTML;
-        c.addEventListener("click", function (e) {
+        c.addEventListener("click", (e) => {
             /*when an item is clicked, update the original select box,
             and the selected item:*/
-            let y, i, k, s, h, sl, yl;
-            s = this.parentNode.parentNode.querySelectorAll("select")[0];
-            sl = s.length;
-            h = this.parentNode.previousSibling;
-            for (i = 0; i < sl; i++) {
-                if (s.options[i].innerHTML === this.innerHTML) {
+            let y, yl;
+            let s = e.target.parentNode.parentNode.querySelector("select");
+            let sl = s.length;
+            let h = e.target.parentNode.previousSibling;
+            for (let i = 0; i < sl; i++) {
+                if (s.options[i].innerHTML === e.target.innerHTML) {
                     s.selectedIndex = i;
-                    h.innerHTML = this.innerHTML;
-                    y = this.parentNode.querySelectorAll(".same-as-selected");
+                    h.innerHTML = e.target.innerHTML;
+                    y = e.target.parentNode.querySelectorAll(".same-as-selected");
                     yl = y.length;
-                    for (k = 0; k < yl; k++) {
+                    for (let k = 0; k < yl; k++) {
                         y[k].removeAttribute("class");
                     }
-                    this.setAttribute("class", "same-as-selected");
+                    e.target.setAttribute("class", "same-as-selected");
                     break;
                 }
             }
@@ -110,28 +106,26 @@ for (i = 0; i < l; i++) {
         });
         b.appendChild(c);
     }
-    x[i].appendChild(b);
-    a.addEventListener("click", function (e) {
-        /*when the select box is clicked, close any other select boxes,
-        and open/close the current select box:*/
+    customSelect[i].appendChild(b);
+    
+    a.addEventListener("click", (e) => {
         e.stopPropagation();
-        closeAllSelect(this);
-        this.nextSibling.classList.toggle("select-hide");
-        this.classList.toggle("select-arrow-active");
+        
+        closeAllSelect(e.target);
+        e.target.nextSibling.classList.toggle("select-hide");
+        e.target.classList.toggle("active");
     });
 }
 
 function closeAllSelect(elmnt) {
-    /*a function that will close all select boxes in the document,
-    except the current select box:*/
     let arr = [];
 
     let selected = document.querySelectorAll(".select-selected");
     for (let i = 0; i < selected.length; i++) {
         if (elmnt === selected[i]) {
-            arr.push(i)
+            arr.push(i);
         } else {
-            selected[i].classList.remove("select-arrow-active");
+            selected[i].classList.remove("active");
         }
     }
 

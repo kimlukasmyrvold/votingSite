@@ -12,7 +12,7 @@
         <div class="controls">
             <button class="button selected" data-option="percent">%</button>
             <button class="button" data-option="votes">Stemmer</button>
-            <div class="custom-select">
+            <div class="custom_select">
                 <asp:DropDownList ID="kommunerDropDown" runat="server">
                     <asp:ListItem Selected="True" Value="0">Alle kommuner</asp:ListItem>
                 </asp:DropDownList>

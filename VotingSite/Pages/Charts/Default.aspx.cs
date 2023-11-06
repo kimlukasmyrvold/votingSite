@@ -24,8 +24,7 @@ namespace VotingSite.Pages.Charts
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Page.IsPostBack) return;
-            // AddKommunerToDropDown();
-            GetVotedKommuner();
+            AddKommunerToDropDown();
             SetChartValues((from DataRow row in GetVoteCount().Rows
                 select new PartyData
                 {
@@ -36,7 +35,7 @@ namespace VotingSite.Pages.Charts
                 }).ToArray());
         }
 
-        private void GetVotedKommuner()
+        private void AddKommunerToDropDown()
         {
             var dt = new DataTable();
 
@@ -65,33 +64,6 @@ namespace VotingSite.Pages.Charts
             kommunerDropDown.DataBind();
         }
 
-        private void AddKommunerToDropDown()
-        {
-            var dt = new DataTable();
-
-            var connStr = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
-            using (var conn = new SqlConnection(connStr))
-            {
-                conn.Open();
-                var cmd = new SqlCommand("select * from kommuner ORDER BY kommune COLLATE Danish_Norwegian_CI_AS;",
-                    conn);
-                cmd.CommandType = CommandType.Text;
-
-                var reader = cmd.ExecuteReader();
-                dt.Load(reader);
-
-                reader.Close();
-                conn.Close();
-            }
-
-            foreach (DataRow row in dt.Rows)
-            {
-                var item = new ListItem(row["Kommune"].ToString(), row["KID"].ToString());
-                kommunerDropDown.Items.Add(item);
-            }
-
-            kommunerDropDown.DataBind();
-        }
 
         private static DataTable GetVoteCount()
         {

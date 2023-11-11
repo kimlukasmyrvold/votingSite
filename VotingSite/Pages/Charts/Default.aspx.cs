@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.UI;
@@ -13,6 +11,8 @@ namespace VotingSite.Pages.Charts
 {
     public class PartyData
     {
+        public int Kid { get; set; }
+        public string Kommune { get; set; }
         public string Name { get; set; }
         public string Short { get; set; }
         public string Votes { get; set; }
@@ -25,14 +25,7 @@ namespace VotingSite.Pages.Charts
         {
             if (Page.IsPostBack) return;
             AddKommunerToDropDown();
-            SetChartValues((from DataRow row in GetVoteCount().Rows
-                select new PartyData
-                {
-                    Name = row["Parti"].ToString(),
-                    Short = row["Short"].ToString(),
-                    Votes = row["Votes"].ToString(),
-                    Percent = (double)row["Percent"]
-                }).ToArray());
+            SetChartValues();
         }
 
         private void AddKommunerToDropDown()
@@ -44,7 +37,7 @@ namespace VotingSite.Pages.Charts
             {
                 conn.Open();
                 var cmd = new SqlCommand(
-                    "select MIN(kommuner.kid) as kid, kommune from stemmer, kommuner where stemmer.kid = kommuner.kid group by kommune ORDER BY kommune COLLATE Danish_Norwegian_CI_AS;",
+                    "select stemmer.kid, kommune from stemmer, kommuner where stemmer.kid = kommuner.kid group by kommune, stemmer.kid ORDER BY kommune COLLATE Danish_Norwegian_CI_AS;",
                     conn);
                 cmd.CommandType = CommandType.Text;
 
@@ -64,7 +57,6 @@ namespace VotingSite.Pages.Charts
             kommunerDropDown.DataBind();
         }
 
-
         private static DataTable GetVoteCount()
         {
             var dt = new DataTable();
@@ -73,7 +65,7 @@ namespace VotingSite.Pages.Charts
             using (var conn = new SqlConnection(connStr))
             {
                 conn.Open();
-                var cmd = new SqlCommand("select * from VoteCountByParti;", conn);
+                var cmd = new SqlCommand("select * from VotesPerKommune order by votes desc;", conn);
                 cmd.CommandType = CommandType.Text;
 
                 var reader = cmd.ExecuteReader();
@@ -95,8 +87,19 @@ namespace VotingSite.Pages.Charts
             return dt;
         }
 
-        private void SetChartValues(IReadOnlyCollection<PartyData> values)
+        private void SetChartValues()
         {
+            var values = (from DataRow row in GetVoteCount().Rows
+                select new PartyData
+                {
+                    Kid = (int)row["Kid"],
+                    Kommune = row["Kommune"].ToString(),
+                    Name = row["Parti"].ToString(),
+                    Short = row["Short"].ToString(),
+                    Votes = row["Votes"].ToString(),
+                    Percent = (double)row["Percent"]
+                }).ToArray();
+
             var jsonArray = JsonConvert.SerializeObject(values);
             chartValues.Value = jsonArray;
         }

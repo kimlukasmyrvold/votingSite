@@ -14,7 +14,7 @@
             <button class="button" data-option="votes">Stemmer</button>
             <div class="custom_select">
                 <asp:DropDownList ID="kommunerDropDown" runat="server">
-                    <asp:ListItem Selected="True" Value="0">Alle kommuner</asp:ListItem>
+                    <asp:ListItem Value="0">Alle kommuner</asp:ListItem>
                 </asp:DropDownList>
             </div>
         </div>

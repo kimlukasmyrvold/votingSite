@@ -167,7 +167,7 @@
         @include hidden();
     }
 
-    .select-items div:hover, .same-as-selected {
+    .select-items div:hover, .selected {
         background-color: $clr-black-30;
     }
 }

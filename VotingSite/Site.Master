@@ -6,12 +6,13 @@
 <head runat="server">
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title><%: Page.Title %></title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+    <title><%: Page.Title %></title>
 
     <webopt:BundleReference runat="server" Path="~/Content/css"/>
-    <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
     <script src="/Content/JavaScript/main.js"></script>
+    
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
 </head>
 <body>
 <form runat="server">

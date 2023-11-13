@@ -1,8 +1,8 @@
-﻿function addToChart() {
+﻿function addToChart(data) {
     const selectedOptionBtn = document.querySelector(".barChart .controls .button.selected");
     const option = (selectedOptionBtn) ? selectedOptionBtn.dataset.option.toString() : "percent";
     const chartContainer = document.querySelector(".barChart .container");
-    const [partyData, maxPercent] = getPartyData();
+    const [partyData, maxPercent] = getPartyData(data);
     chartContainer.innerHTML = "";
 
     partyData.forEach(data => {
@@ -26,19 +26,16 @@
         const relativeWidth = (parseFloat(data.Percent) / maxPercent) * 100;
         bar.style.width = relativeWidth + "%";
 
-        item.appendChild(party);
-        item.appendChild(bar);
-        item.appendChild(value);
-
+        item.append(party, bar, value);
         chartContainer.appendChild(item);
     });
 }
 
-function getPartyData() {
+function getPartyData(data) {
     const selected = document.querySelector(".barChart .controls .custom_select .select-selected");
     const selectedValue = (selected) ? selected.dataset.kid : 0;
 
-    const rawPartyData = JSON.parse(document.querySelector(".barChartValues").value);
+    const rawPartyData = JSON.parse(data.d);
     const partyData = (selectedValue === 0 || selectedValue === "0") ? Object.values(mergePartyData(rawPartyData)) : filterByKommune(rawPartyData, selectedValue);
 
     partyData.sort((a, b) => parseFloat(b.Percent) - parseFloat(a.Percent));
@@ -74,11 +71,37 @@ function changeChartView(e) {
     });
 
     e.target.classList.add("selected");
-    addToChart(e.target.dataset.option);
+    updateChart();
 }
+
+
+function updateChart() {
+    $.ajax({
+        type: 'POST',
+        url: 'Default.aspx/GetChartData',
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (data) {
+            console.debug("Chart Updated!");
+            addToChart(data);
+        },
+        error: function (xhr, status, error) {
+            console.log('Error fetching data:');
+            console.log('Status:', status);
+            console.log('Error:', error);
+            console.log('Response Text:', xhr.responseText);
+        }
+    });
+}
+
+function randomMinute(max, min) {
+    return ((Math.floor(Math.random() * (max - min)) + min) * 60) * 1000;
+}
+
+setInterval(updateChart, randomMinute(8, 4));
 
 window.addEventListener("load", () => {
     clickListener(document.querySelectorAll(".barChart .controls .button"), changeChartView);
-    clickListener(document.querySelectorAll(".barChart .select-items div"), addToChart);
-    addToChart();
+    clickListener(document.querySelectorAll(".barChart .select-items div"), updateChart);
+    updateChart();
 });

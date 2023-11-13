@@ -2,7 +2,11 @@
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="/Content/CSS/home.css">
+    <link rel="stylesheet" href="/Content/CSS/charts.css">
+    
+    <script src="/Content/JavaScript/dist/jquery.min.js" defer></script>
     <script src="/Content/JavaScript/home.js" defer></script>
+    <script src="/Content/JavaScript/charts.js" defer></script>
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -11,7 +15,19 @@
     </div>
 
     <div id="results">
-        <%-- <p>Resultater:</p> --%>
+        <p class="title">Resultater</p>
+        <div class="barChart">
+            <div class="controls">
+                <button class="button selected" data-option="percent">%</button>
+                <button class="button" data-option="votes">Stemmer</button>
+                <div class="custom_select">
+                    <asp:DropDownList ID="kommunerDropDown" runat="server">
+                        <asp:ListItem Value="0">Alle kommuner</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+            </div>
+            <div class="container"></div>
+        </div>
     </div>
 </asp:Content>
 
@@ -84,16 +100,14 @@
             <p class="title">Takk for at du brukte stemmen din!</p>
             <p class="feedback">Din stemme ble sendt.</p>
             <p class="results">
-                <%-- <a href="#results">Se resultatene</a> --%>
-                <a href="~/Stemmer/" runat="server">Se resultatene</a>
+                <a href="#results">Se resultatene</a>
             </p>
         </div>
         <div class="container" data-visible="false" data-result="error">
             <p class="title">Error: <span id="errorMsg"></span></p>
             <p class="feedback">Din stemme ble ikke sendt.</p>
             <p class="results">
-                <%-- <a href="#results">Se resultatene</a> --%>
-                <a href="~/Stemmer/" runat="server">Se resultatene</a>
+                <a href="#results">Se resultatene</a>
             </p>
         </div>
     </div>

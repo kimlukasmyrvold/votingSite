@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Script.Serialization;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Newtonsoft.Json;
 
 namespace VotingSite
 {
@@ -34,6 +36,89 @@ namespace VotingSite
 
             AddPartierItems();
             GetFromFylker();
+            AddKommunerToDropDown();
+        }
+
+        private void AddKommunerToDropDown()
+        {
+            var dt = new DataTable();
+
+            var connStr = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+            using (var conn = new SqlConnection(connStr))
+            {
+                conn.Open();
+                var cmd = new SqlCommand(
+                    "select stemmer.kid, kommune from stemmer, kommuner where stemmer.kid = kommuner.kid group by kommune, stemmer.kid ORDER BY kommune COLLATE Danish_Norwegian_CI_AS;",
+                    conn);
+                cmd.CommandType = CommandType.Text;
+
+                var reader = cmd.ExecuteReader();
+                dt.Load(reader);
+
+                reader.Close();
+                conn.Close();
+            }
+
+            foreach (DataRow row in dt.Rows)
+            {
+                var item = new ListItem(row["Kommune"].ToString(), row["KID"].ToString());
+                kommunerDropDown.Items.Add(item);
+            }
+
+            kommunerDropDown.DataBind();
+        }
+
+        private static DataTable GetVoteCount()
+        {
+            var dt = new DataTable();
+
+            var connStr = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+            using (var conn = new SqlConnection(connStr))
+            {
+                conn.Open();
+                var cmd = new SqlCommand("select * from VotesPerKommune order by votes desc;", conn);
+                cmd.CommandType = CommandType.Text;
+
+                var reader = cmd.ExecuteReader();
+                dt.Load(reader);
+
+                reader.Close();
+                conn.Close();
+            }
+
+            var voteCount = dt.AsEnumerable().Sum(s => s.Field<int>("votes"));
+            dt.Columns.Add("Percent", typeof(double));
+
+            foreach (DataRow row in dt.Rows)
+            {
+                var percent = Convert.ToDouble(row["votes"]) / voteCount * 100.0;
+                row["Percent"] = percent.ToString("N1");
+            }
+
+            return dt;
+        }
+
+        private string GetChartValues()
+        {
+            var values = (from DataRow row in GetVoteCount().Rows
+                select new
+                {
+                    Kid = (int)row["Kid"],
+                    Kommune = row["Kommune"].ToString(),
+                    Name = row["Parti"].ToString(),
+                    Short = row["Short"].ToString(),
+                    Votes = row["Votes"].ToString(),
+                    Percent = (double)row["Percent"]
+                }).ToArray();
+
+            return JsonConvert.SerializeObject(values);
+        }
+
+        [WebMethod]
+        public static string GetChartData()
+        {
+            var defaultInstance = new Default();
+            return defaultInstance.GetChartValues();
         }
 
         // **********************************************

@@ -156,6 +156,7 @@
     <Content Include="Content\Images\PartyLogos\sv.png" />
     <Content Include="Content\Images\PartyLogos\v.png" />
     <Content Include="Content\JavaScript\charts.js" />
+    <Content Include="Content\JavaScript\dist\jquery.min.js" />
     <Content Include="Content\JavaScript\home.js" />
     <Content Include="Content\JavaScript\main.js" />
     <Content Include="Content\JavaScript\personer.js" />
@@ -163,12 +164,10 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Pages\Charts\Default.aspx" />
     <Content Include="Pages\Kommuner\Default.aspx" />
     <Content Include="Pages\Partier\Default.aspx" />
     <Content Include="Pages\Personer\Default.aspx" />
     <Content Include="Pages\Privacy\Default.aspx" />
-    <Content Include="Pages\Stemmer\Default.aspx" />
     <Content Include="Site.Master" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -192,13 +191,6 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Charts\Default.aspx.cs">
-      <SubType>ASPXCodeBehind</SubType>
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Charts\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Kommuner\Default.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -226,13 +218,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Pages\Privacy\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Stemmer\Default.aspx.cs">
-      <SubType>ASPXCodeBehind</SubType>
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Stemmer\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -11,7 +11,7 @@
 
     <webopt:BundleReference runat="server" Path="~/Content/css"/>
     <script src="/Content/JavaScript/main.js"></script>
-    
+
     <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
 </head>
 <body>
@@ -34,12 +34,6 @@
             <ul>
                 <li>
                     <a class="navbar__link" runat="server" href="~/">Hjemmeside</a>
-                </li>
-                <li>
-                    <a class="navbar__link" runat="server" href="~/Charts/">Charts</a>
-                </li>
-                <li>
-                    <a class="navbar__link" runat="server" href="~/Stemmer/">Stemmer</a>
                 </li>
                 <li>
                     <a class="navbar__link" runat="server" href="~/Kommuner/">Kommuner</a>

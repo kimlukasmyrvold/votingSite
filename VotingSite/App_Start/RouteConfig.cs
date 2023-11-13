@@ -11,11 +11,9 @@ namespace VotingSite
         public static void RegisterRoutes(RouteCollection routes)
         {
             var settings = new FriendlyUrlSettings();
-            settings.AutoRedirectMode = RedirectMode.Permanent;
+            settings.AutoRedirectMode = RedirectMode.Off;
             routes.EnableFriendlyUrls(settings);
 
-            routes.MapPageRoute("ChartsRoute", "Charts", "~/Pages/Charts/Default.aspx");
-            routes.MapPageRoute("StemmerRoute", "Stemmer", "~/Pages/Stemmer/Default.aspx");
             routes.MapPageRoute("KommunerRoute", "Kommuner", "~/Pages/Kommuner/Default.aspx");
             routes.MapPageRoute("PartierRoute", "Partier", "~/Pages/Partier/Default.aspx");
             routes.MapPageRoute("PersonerRoute", "Personer", "~/Pages/Personer/Default.aspx");

@@ -23,8 +23,13 @@ function openVoteModalFromCallback(parti) {
 // Function for opening the voting modal from callback.
 function openVoteModalFromCallbackResult(errorMsg) {
     makeModalVisible("#vote_result");
-    // const resultsLinks = document.querySelectorAll(".modal #vote_result .results a");
-    // resultsLinks.forEach(link => link.addEventListener("click", closeModal));
+
+    clickListener(document.querySelectorAll(".modal #vote_result .results a"), (e) => {
+        document.querySelector('#results').scrollIntoView({
+            behavior: 'smooth'
+        });
+        closeModal(e);
+    });
 
     if (errorMsg === "noError") {
         document.querySelector(".modal #vote_result [data-result=\"success\"]").dataset.visible = "true";

@@ -15,7 +15,6 @@
         justify-content: center;
         gap: $gap-2;
         flex-wrap: wrap;
-        isolation: isolate;
     }
 
     &__item {
@@ -84,7 +83,7 @@
     &__content {
         background-color: var(--clr-secondary);
         position: absolute;
-        z-index: 9;
+        z-index: 99;
         top: calc(100% + 10px);
         left: 0;
         width: 25em;
@@ -383,5 +382,16 @@
         &[data-visible="false"] {
             display: none;
         }
+    }
+}
+
+
+#results {
+    margin-block-start: 2.5em;
+    
+    .title {
+        font-size: $fs-500;
+        font-weight: 700;
+        margin-block: 1em .5em;
     }
 }

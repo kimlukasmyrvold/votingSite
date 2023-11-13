@@ -104,6 +104,7 @@ function addIcons() {
     });
 }
 
+
 /* Change all select lists that is contained within .custom_select to custom select dropdown.
    Part of the code is from: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_custom_select */
 function createCustomSelects() {
@@ -200,7 +201,4 @@ window.onload = () => {
     setTheme();
     document.querySelector('.navbar__links').addEventListener('mouseover', handleMouseEvents);
     document.querySelector('.navbar__links').addEventListener('mouseout', handleMouseEvents);
-    console.log("onload called!")
 }
-
-console.log("Main called!")

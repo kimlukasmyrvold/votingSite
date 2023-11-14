@@ -123,5 +123,12 @@
         "side": "",
         "color": "#",
         "disabled": true
+    },
+    "18": {
+        "name": "lib",
+        "fullName": "Liberalistene",
+        "description": "\n\nLiberalistene er et klassisk liberalistisk parti. Det innebærer at vi er tilhengere av en mer rendyrket form for liberalisme enn andre partier som bruker merkelappen «liberal».\n\nFor Liberalistene er frihet den viktigste og mest grunnleggende verdien. Vi ønsker et samfunn hvor respekt for enkeltmenneskets frihet, verdighet og selvråderett står sentralt. Hvert enkelt menneske er et mål I seg selv, og ikke et middel som politikere kan disponere for å oppnå bestemte samfunnsmessige målsetninger. Politikere er folkets tjenere, og ikke omvendt.\n\nAv dette følger det at Liberalistene vil jobbe for å maksimere handlefriheten til enkeltindividet – så lenge denne friheten ikke hindrer andre menneskers handlefrihet.\n",
+        "side": "right",
+        "color": "#49154a"
     }
 }

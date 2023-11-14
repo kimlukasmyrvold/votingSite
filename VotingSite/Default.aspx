@@ -10,14 +10,15 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <p class="title">Valg <span id="year" runat="server">2023</span></p>
+    <p class="heading">Valg <span id="year" runat="server">2023</span></p>
 
     <div class="partier">
+        <p>Trykk på de forskjellige partiene for å kunne lese mer om partiet eller stemme på det.</p>
         <div class="partier__container" id="partierContainer" runat="server"></div>
     </div>
 
     <div id="results">
-        <p class="title">Resultater</p>
+        <p class="title">Resultater:</p>
         <div class="barChart">
             <div class="controls">
                 <button class="button selected" data-option="percent">%</button>

@@ -3,13 +3,15 @@
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="/Content/CSS/home.css">
     <link rel="stylesheet" href="/Content/CSS/charts.css">
-    
+
     <script src="/Content/JavaScript/dist/jquery.min.js" defer></script>
     <script src="/Content/JavaScript/home.js" defer></script>
     <script src="/Content/JavaScript/charts.js" defer></script>
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <p class="title">Valg <span id="year" runat="server">2023</span></p>
+
     <div class="partier">
         <div class="partier__container" id="partierContainer" runat="server"></div>
     </div>

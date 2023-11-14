@@ -34,6 +34,8 @@ namespace VotingSite
                 return;
             }
 
+            year.InnerText = DateTime.Now.Year.ToString();
+
             AddPartierItems();
             GetFromFylker();
             AddKommunerToDropDown();

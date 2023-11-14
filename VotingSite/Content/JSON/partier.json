@@ -82,7 +82,7 @@
         "description": "Konservativt er et politisk parti som vektlegger kristen kulturarv, økonomisk liberalisme, og nasjonal suverenitet. De støtter verdier som nasjonalstaten, familien, billig energi, forsvar, og samarbeid med andre stater uten å avstå suverenitet. Partiet betoner betydningen av vitenskap, forskning og utdanning, mens de ønsker å begrense innvandring og opprettholde en balanse mellom en sterk stat og individuell frihet.",
         "side": "right",
         "color": "#2e316f",
-        "disabled": false
+        "disabled": true
     },
     "13": {
         "name": "pp",
@@ -90,7 +90,7 @@
         "description": "Pensjonistpartiet kjemper for å øke minstepensjonen i Norge, slik at de 150 000 minstepensjonistene kan ha et verdig liv. Partiet fokuserer også på å sikre kjøpekraften for uføre og pensjonister, som har opplevd en betydelig reduksjon de siste årene på grunn av underregulering. Pensjonistpartiet er uavhengig av de vanlige politiske blokkene og arbeider for å forhandle frem de beste løsningene for sine kjernevelgere.",
         "side": "center",
         "color": "#383256",
-        "disabled": false
+        "disabled": true
     },
     "14": {
         "name": "nml",
@@ -98,7 +98,7 @@
         "description": "Det handler om å stille krav til nasjonale myndigheter, men det handler også om å opptre ansvarlig og konstruktivt der vi er representert, slik at vi kan samarbeide og bygge opp et flertall for å få til gode løsninger for innbyggerne. Det handler om å samarbeide med de som har de samme målene som oss, både politisk og geografisk. Det som er bra for oss er bra for naboene våre, og omvendt. Hvis vi skal oppnå noe er vi nødt til å samarbeide, og det er slik vi vil arbeide i bystyret og på fylkestinget.",
         "side": "center",
         "color": "#338659",
-        "disabled": false
+        "disabled": true
     },
     "15": {
         "name": "",
@@ -130,5 +130,12 @@
         "description": "\n\nLiberalistene er et klassisk liberalistisk parti. Det innebærer at vi er tilhengere av en mer rendyrket form for liberalisme enn andre partier som bruker merkelappen «liberal».\n\nFor Liberalistene er frihet den viktigste og mest grunnleggende verdien. Vi ønsker et samfunn hvor respekt for enkeltmenneskets frihet, verdighet og selvråderett står sentralt. Hvert enkelt menneske er et mål I seg selv, og ikke et middel som politikere kan disponere for å oppnå bestemte samfunnsmessige målsetninger. Politikere er folkets tjenere, og ikke omvendt.\n\nAv dette følger det at Liberalistene vil jobbe for å maksimere handlefriheten til enkeltindividet – så lenge denne friheten ikke hindrer andre menneskers handlefrihet.\n",
         "side": "right",
         "color": "#49154a"
+    },
+    "19": {
+        "name": "ali",
+        "fullName": "Alliansen",
+        "description": "Et bredt nasjonalt folkeopprør har lenge ulmet i Norge mot statsminister Gro Harlem Brundtland (AP) & det politiske «establishments» svikefulle undertegning av EØS avtalen på Korfu 24. juni 1994. Dette skjedde på tross av det norske folks 2 x NEI til EU medlemskap såvel i 1972 og 1994. Juridiske eksperter har lenge hevdet at EØS-avtalen er i strid med Grunnloven. Den norske Grunnloven representerer en skriftlig samfunnskontrakt mellom de styrende og de styrte/borgerne. Kontrakten bygger på folkesuvereniteten, hentet fra prinsippene i Den store Franske revolusjon (1789).",
+        "side": "right",
+        "color": "#fc7b02"
     }
 }

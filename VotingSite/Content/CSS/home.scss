@@ -1,7 +1,6 @@
 @use "abstracts/index" as *;
 
 .partier {
-
     @mixin hover {
         opacity: 1;
         visibility: visible;
@@ -394,4 +393,10 @@
         font-weight: 700;
         margin-block: 1em .5em;
     }
+}
+
+
+.title {
+    font-size: $fs-500;
+    font-weight: 700;
 }

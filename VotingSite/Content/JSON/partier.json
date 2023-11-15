@@ -137,5 +137,12 @@
         "description": "Et bredt nasjonalt folkeopprør har lenge ulmet i Norge mot statsminister Gro Harlem Brundtland (AP) & det politiske «establishments» svikefulle undertegning av EØS avtalen på Korfu 24. juni 1994. Dette skjedde på tross av det norske folks 2 x NEI til EU medlemskap såvel i 1972 og 1994. Juridiske eksperter har lenge hevdet at EØS-avtalen er i strid med Grunnloven. Den norske Grunnloven representerer en skriftlig samfunnskontrakt mellom de styrende og de styrte/borgerne. Kontrakten bygger på folkesuvereniteten, hentet fra prinsippene i Den store Franske revolusjon (1789).",
         "side": "right",
         "color": "#fc7b02"
+    },
+    "20": {
+        "name": "nkp",
+        "fullName": "Norges Kommunistiske Parti",
+        "description": "Norges Kommunistiske Parti (NKP) er et kommunistisk politisk parti i Norge.\n\nPartiet ble opprettet da Det norske Arbeiderparti bestemte seg for å melde seg ut av Komintern i 1923.\n\nPartiets ungdomsorganisasjon var frem til 2006 Norges Kommunistiske Ungdomsforbund, men etter uenigheter og til slutt et rettslig oppgjør startet NKP en ny ungdomsorganisasjon, Ungkommunistene i Norge. ",
+        "side": "right",
+        "color": "#fc7b02"
     }
 }

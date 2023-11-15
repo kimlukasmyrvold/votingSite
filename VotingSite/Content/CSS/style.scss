@@ -73,8 +73,13 @@ main {
 }
 
 img {
-    width: auto;
-    max-height: 100%;
+    font-style: italic;
+    background-repeat: no-repeat;
+    background-size: cover;
+    shape-margin: $gap-2;
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
 }
 
 span.space {

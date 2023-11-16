@@ -22,7 +22,7 @@
             }
 
             &.selected, &:hover {
-                background-color: $clr-black-40;
+                background-color: var(--clr-background);
             }
         }
 

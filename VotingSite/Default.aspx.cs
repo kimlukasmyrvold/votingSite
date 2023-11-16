@@ -165,11 +165,7 @@ namespace VotingSite
                                 <p>{parti.Description}</p>
                             </div>
                             <div class=""partier__vote"">
-                                <!-- <button class=""voteBtn"" tabindex=""0"" data-id=""{partiId}"">Stem på parti</button> -->
-                                <div class=""button_container"">
-                                    <div class=""button voteBtn"" tabindex=""0"" data-id=""{partiId}"">Stem på parti</div>
-                                    <div class=""backdrop""></div>
-                                </div>
+                                <button class=""button voteBtn"" tabindex=""0"" data-id=""{partiId}"">Stem på parti</button>
                             </div>
                         </div>
                     </div>

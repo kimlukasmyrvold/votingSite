@@ -101,7 +101,7 @@ function randomMinute(max, min) {
 setInterval(updateChart, randomMinute(8, 4));
 
 window.addEventListener("load", () => {
-    clickListener(document.querySelectorAll(".barChart .controls .button"), changeChartView);
-    clickListener(document.querySelectorAll(".barChart .select-items div"), updateChart);
+    clickListener(".barChart .controls .button", changeChartView);
+    clickListener(".barChart .select-items div", updateChart);
     updateChart();
 });

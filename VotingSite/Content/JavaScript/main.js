@@ -61,7 +61,8 @@ function setTheme() {
 
 
 // ======<   Adds eventListeners for click or Enter keypress   >======
-function clickListener(elements, functionCall, once = false) {
+function clickListener(selector, functionCall, once = false) {
+    const elements = document.querySelectorAll(selector);
     for (let i = 0; i < elements.length; i++) {
         elements[i].addEventListener("click", functionCall, {once: once});
         elements[i].addEventListener("keydown", (e) => {

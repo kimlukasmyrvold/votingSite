@@ -24,7 +24,7 @@ function openVoteModalFromCallback(parti) {
 function openVoteModalFromCallbackResult(errorMsg) {
     makeModalVisible("#vote_result");
 
-    clickListener(document.querySelectorAll(".modal #vote_result .results a"), (e) => {
+    clickListener(".modal #vote_result .results a", (e) => {
         document.querySelector('#results').scrollIntoView({
             behavior: 'smooth'
         });
@@ -61,9 +61,9 @@ function closeModal(e) {
 }
 
 
-// ======<     Calling     >======
+// ======<     Submitting     >======
 
-// Calling the vote method in c#
+// Confirming vote
 async function callVoteMethod(e) {
     e.preventDefault();
 
@@ -75,18 +75,15 @@ async function callVoteMethod(e) {
     document.querySelector('.modal #vote_form').dataset.visible = "false";
     document.querySelector('.modal #vote_confirm').dataset.visible = "true";
 
-    const parti = sessionStorage.getItem('pid');
-
     // Displaying chosen party to user
+    const parti = sessionStorage.getItem('pid');
     document.querySelector(".modal #vote_confirm .parti_name").textContent = (await getPartiInfo(parti)).fullName;
-
-    const cancel = document.querySelector(".modal #vote_confirm #cancel");
-    const confirm = document.querySelector(".modal #vote_confirm #confirm");
-
-    cancel.addEventListener('click', closeModal);
-    confirm.addEventListener('click', voteConfirmed);
+    
+    clickListener(".modal #vote_confirm #cancel", closeModal);
+    clickListener(".modal #vote_confirm #confirm", voteConfirmed);
 }
 
+// Calling the vote method in c#
 function voteConfirmed(e) {
     e.preventDefault();
 

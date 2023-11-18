@@ -82,8 +82,11 @@ function updateChart() {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (data) {
-            console.debug("Chart Updated!");
             addToChart(data);
+            
+            const delay = randomMinute(8, 4);
+            setTimeout(updateChart, delay);
+            console.debug("Chart updated, next refresh in " + ((delay / 60) / 1000) + " minutes.");
         },
         error: function (xhr, status, error) {
             console.log('Error fetching data:');
@@ -97,8 +100,6 @@ function updateChart() {
 function randomMinute(max, min) {
     return ((Math.floor(Math.random() * (max - min)) + min) * 60) * 1000;
 }
-
-setInterval(updateChart, randomMinute(8, 4));
 
 window.addEventListener("load", () => {
     clickListener(".barChart .controls .button", changeChartView);

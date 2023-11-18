@@ -49,9 +49,14 @@
             <div class="personalInfo">
                 <div class="selectFylker">
                     <p>Velg Fylke</p>
-                    <asp:DropDownList ID="DropDownListFylker" runat="server" AutoPostBack="True" OnSelectedIndexChanged="GetFromKommuner_Click">
-                        <asp:ListItem Selected="True" Value="0" Disabled="true">Velg Fylke...</asp:ListItem>
-                    </asp:DropDownList>
+                    <div class="inputField">
+                        <asp:DropDownList ID="DropDownListFylker" runat="server" AutoPostBack="True" OnSelectedIndexChanged="GetFromKommuner_Click">
+                            <asp:ListItem Selected="True" Value="0" Disabled="true">Velg Fylke...</asp:ListItem>
+                        </asp:DropDownList>
+                        <div class="validBox">
+                            <span class="validFylke"></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="remains">
                     <div class="selectKommuner">

@@ -78,7 +78,7 @@ async function callVoteMethod(e) {
     // Displaying chosen party to user
     const parti = sessionStorage.getItem('pid');
     document.querySelector(".modal #vote_confirm .parti_name").textContent = (await getPartiInfo(parti)).fullName;
-    
+
     clickListener(".modal #vote_confirm #cancel", closeModal);
     clickListener(".modal #vote_confirm #confirm", voteConfirmed);
 }
@@ -102,6 +102,23 @@ function voteConfirmed(e) {
 // ***************************************
 
 function checkValues() {
+    // Checking if selected fylke is valid
+    function checkFylke() {
+        const fylkerList = document.querySelector('#vote_form #ModalContent_DropDownListFylker');
+        const value = fylkerList.value;
+        if (value !== "0") return true;
+
+        const validFylke = document.querySelector('#vote_form .personalInfo .validFylke');
+        validFylke.textContent = "Error, du må velge et fylke.";
+        validFylke.parentElement.classList.add('invalid');
+
+        setTimeout(() => {
+            validFylke.parentElement.classList.remove('invalid');
+        }, 5_000);
+
+        return false;
+    }
+    
     // Checking if a "Kommune" is selected
     function checkKommuner() {
         const kommunerList = document.querySelector('#vote_form #ModalContent_DropDownListKommuner');
@@ -120,7 +137,23 @@ function checkValues() {
         return false;
     }
 
-    return checkKommuner();
+    // Checking if fnum is valid
+    function checkFnum() {
+        const validFNum = document.querySelector('#vote_form .personalInfo .validFNum');
+        const FNumInput = document.querySelector('#vote_form .personalInfo #ModalContent_FNum');
+        
+        const testOk = /^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{2}\s?\d{5}$/.test(FNumInput.value);
+        validFNum.textContent = (testOk) ? '' : "Fødselsnummer er ugyldig.";
+        validFNum.parentElement.classList[testOk ? 'remove' : 'add']('invalid');
+
+        setTimeout(() => {
+            validFNum.parentElement.classList.remove('invalid');
+        }, 5_000);
+
+        return testOk;
+    }
+
+    return checkFylke() && checkKommuner() && checkFnum();
 }
 
 // Function for making modal visible

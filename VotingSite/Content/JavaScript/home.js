@@ -47,6 +47,8 @@ function openVoteModalFromCallbackResult(errorMsg) {
 function closeModal(e) {
     e.preventDefault();
 
+    location.reload(); // Lazy fix for unable to select same "fylke" after closing modal
+
     const modal = document.querySelector('.modal');
     modal.dataset.visible = "false";
 
@@ -118,7 +120,7 @@ function checkValues() {
 
         return false;
     }
-    
+
     // Checking if a "Kommune" is selected
     function checkKommuner() {
         const kommunerList = document.querySelector('#vote_form #ModalContent_DropDownListKommuner');
@@ -141,7 +143,7 @@ function checkValues() {
     function checkFnum() {
         const validFNum = document.querySelector('#vote_form .personalInfo .validFNum');
         const FNumInput = document.querySelector('#vote_form .personalInfo #ModalContent_FNum');
-        
+
         const testOk = /^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{2}\s?\d{5}$/.test(FNumInput.value);
         validFNum.textContent = (testOk) ? '' : "Fødselsnummer er ugyldig.";
         validFNum.parentElement.classList[testOk ? 'remove' : 'add']('invalid');

@@ -2,21 +2,21 @@
     "1": {
         "name": "ap",
         "fullName": "Arbeiderpartiet",
-        "description": "Arbeiderpartiets visjon er en rettferdig verden uten fattigdom og i fred, der menneskene er frie, likestilte og har innflytelse på sine liv. Alle mennesker er unike, uerstattelige og like mye verdt. Hver av oss skal ha muligheten til å leve gode liv, i små og store fellesskap. Vi vil ha et samfunn basert på frihet, solidaritet og like muligheter for alle. <span class=\"space\"></span> Vår ideologi, eller grunnsyn eller samfunnssyn om du vil, er sosialdemokrati. Vi bygger vår politikk på grunnverdiene frihet, likhet og solidaritet.",
+        "description": "Arbeiderpartiets visjon er en verden uten fattigdom og i fred, der alle er frie, likestilte, og har innflytelse på livene sine. Vi tror på sosialdemokrati, basert på frihet, likhet, og solidaritet.",
         "side": "left",
         "color": "#cf152d"
     },
     "2": {
         "name": "h",
         "fullName": "Høyre",
-        "description": "Høyre vil bygge samfunnet på tillit til enkeltmennesket. Hver enkelt skal ha størst mulig frihet til og ansvar for å forme sitt eget liv og sin egen fremtid basert på respekt for andre og for fellesskapet. <span class=\"space\"></span> Samfunnet består av mennesker med ulik kulturell bakgrunn. Høyre mener at mangfold og forskjellighet er en kilde til utveksling av ideer, fornyelse og kreativitet. Valgfrihet er en naturlig del av å kunne bestemme over eget liv.",
+        "description": "Høyre vil bygge samfunnet på tillit til enkeltmennesket med fokus på individuell frihet og ansvar. Vi vektlegger respekt for andre og fellesskapet, og ser mangfold som en kilde til ideer, fornyelse og kreativitet. Valgfrihet er en sentral del av å ha kontroll over sitt eget liv.",
         "side": "right",
         "color": "#257ce1"
     },
     "3": {
         "name": "sp",
         "fullName": "Senterpartiet",
-        "description": "Senterpartiet har som mål å legge vilkårene til rette for en harmonisk samfunnsutvikling. Et levende folkestyre, bygget på kristen og nasjonal grunn, er en forutsetning for folkets trivsel og landets fremgang. <span class=\"space\"></span> Individet og menneskeverdet skal være det sentrale i samfunnet og vises tillit i fellesskapet. De sosiale, kulturelle og økonomiske tiltak fra samfunnets side må ta sikte på å skape vekstvilkår og trivsel for alle uansett bosted eller yrke.",
+        "description": "Senterpartiet vil legge til rette for harmonisk samfunnsutvikling gjennom et levende folkestyre, forankret i kristne og nasjonale verdier. Målet er folkets trivsel og landets fremgang. Vi vektlegger individet og menneskeverdet som sentrale i samfunnet, med tillit til fellesskapet. Sosiale, kulturelle og økonomiske tiltak skal fremme vekst og trivsel for alle, uavhengig av bosted eller yrke.",
         "side": "center",
         "color": "#13964c"
     },
@@ -37,7 +37,7 @@
     "6": {
         "name": "r",
         "fullName": "Rødt",
-        "description": "Økte forskjeller og privatisering truer alt det arbeiderbevegelsen har bygget opp i Norge - trygghet, velferd og et sterkt fellesskap. Det gjør at makt og muligheter blir urettferdig fordelt. Folk sorteres etter postnummer og bankkonto. <span class=\"space\"></span> Samfunn bygget på samarbeid og likeverd er mer rettferdige enn samfunn basert på kapitalistisk konkurranse. Fordi fellesskap fungerer. Derfor er kampen mot forskjells-Norge Rødts aller viktigste sak.",
+        "description": "Økende forskjeller og privatisering truer arbeiderbevegelsens grunnverdier i Norge: trygghet, velferd og et sterkt fellesskap. Dette skaper urettferdig fordeling av makt og muligheter, der folk blir kategorisert etter postnummer og bankkonto. Vi mener at samfunn bygget på samarbeid og likeverd er rettferdigere enn de basert på kapitalistisk konkurranse. Rødt prioriterer kampen mot forskjells-Norge som vår aller viktigste sak.",
         "side": "left",
         "color": "#701d45"
     },
@@ -51,7 +51,7 @@
     "8": {
         "name": "mdg",
         "fullName": "Miljøpartiet De Grønne",
-        "description": "MDG er her for å stanseklima- og naturkrisa, med politikk som er bra for mennesker og miljø. <span class=\"space\"></span> Klima- og naturkrisen er den største urettferdigheten i vår tid. Kortsiktig populisme, økende forskjeller og miljøødeleggelser truer friheten og tryggheten mange av oss har tatt for gitt. Motgiften er grønn politikk - og grønne politikere, som forstår at en bedre verden er mulig. Det krever at vi våger å tenke nytt, lytter til fagkunnskap og samarbeider på tvers av grenser. <span class=\"space\"></span> I MDG har vi som utgangspunkt at mennesker ikke er hevet over naturen, men at vi er en del av den.",
+        "description": "MDG jobber for å stoppe klima- og naturkrisen gjennom bærekraftig politikk. Vi tror på grønn politikk som tar vare på mennesker og miljø. Med solidaritet som grunnprinsipp, engasjerer vi over 11 000 mennesker landet over for en bedre fremtid. Bli med oss i kampen for klima og miljø!",
         "side": "center",
         "color": "#8bc043"
     },
@@ -77,71 +77,23 @@
         "color": "#01b0cf"
     },
     "12": {
-        "name": "pdk",
-        "fullName": "Konservativt",
-        "description": "Konservativt er et politisk parti som vektlegger kristen kulturarv, økonomisk liberalisme, og nasjonal suverenitet. De støtter verdier som nasjonalstaten, familien, billig energi, forsvar, og samarbeid med andre stater uten å avstå suverenitet. Partiet betoner betydningen av vitenskap, forskning og utdanning, mens de ønsker å begrense innvandring og opprettholde en balanse mellom en sterk stat og individuell frihet.",
-        "side": "right",
-        "color": "#2e316f",
-        "disabled": true
-    },
-    "13": {
-        "name": "pp",
-        "fullName": "Pensjonistpartiet",
-        "description": "Pensjonistpartiet kjemper for å øke minstepensjonen i Norge, slik at de 150 000 minstepensjonistene kan ha et verdig liv. Partiet fokuserer også på å sikre kjøpekraften for uføre og pensjonister, som har opplevd en betydelig reduksjon de siste årene på grunn av underregulering. Pensjonistpartiet er uavhengig av de vanlige politiske blokkene og arbeider for å forhandle frem de beste løsningene for sine kjernevelgere.",
-        "side": "center",
-        "color": "#383256",
-        "disabled": true
-    },
-    "14": {
-        "name": "nml",
-        "fullName": "Nordmørslista",
-        "description": "Det handler om å stille krav til nasjonale myndigheter, men det handler også om å opptre ansvarlig og konstruktivt der vi er representert, slik at vi kan samarbeide og bygge opp et flertall for å få til gode løsninger for innbyggerne. Det handler om å samarbeide med de som har de samme målene som oss, både politisk og geografisk. Det som er bra for oss er bra for naboene våre, og omvendt. Hvis vi skal oppnå noe er vi nødt til å samarbeide, og det er slik vi vil arbeide i bystyret og på fylkestinget.",
-        "side": "center",
-        "color": "#338659",
-        "disabled": true
-    },
-    "15": {
-        "name": "",
-        "fullName": "Sunnmørslista",
-        "description": "",
-        "side": "",
-        "color": "#",
-        "disabled": true
-    },
-    "16": {
-        "name": "",
-        "fullName": "Nordkalottfolket",
-        "description": "",
-        "side": "",
-        "color": "#",
-        "disabled": true
-    },
-    "17": {
-        "name": "",
-        "fullName": "Bergenslisten",
-        "description": "",
-        "side": "",
-        "color": "#",
-        "disabled": true
-    },
-    "18": {
         "name": "lib",
         "fullName": "Liberalistene",
-        "description": "\n\nLiberalistene er et klassisk liberalistisk parti. Det innebærer at vi er tilhengere av en mer rendyrket form for liberalisme enn andre partier som bruker merkelappen «liberal».\n\nFor Liberalistene er frihet den viktigste og mest grunnleggende verdien. Vi ønsker et samfunn hvor respekt for enkeltmenneskets frihet, verdighet og selvråderett står sentralt. Hvert enkelt menneske er et mål I seg selv, og ikke et middel som politikere kan disponere for å oppnå bestemte samfunnsmessige målsetninger. Politikere er folkets tjenere, og ikke omvendt.\n\nAv dette følger det at Liberalistene vil jobbe for å maksimere handlefriheten til enkeltindividet – så lenge denne friheten ikke hindrer andre menneskers handlefrihet.\n",
+        "description": "Liberalistene er et klassisk liberalistisk parti som prioriterer frihet som den mest grunnleggende verdien. Vi ønsker et samfunn der enkeltmenneskets frihet, verdighet og selvbestemmelse respekteres. Hvert individ er et mål i seg selv, ikke et middel for politikere til å oppnå samfunnsmål. Vi ser politikere som folkets tjenere, og vi vil arbeide for å maksimere handlefriheten til hvert individ, så lenge det ikke begrenser andres frihet.",
         "side": "right",
         "color": "#49154a"
     },
-    "19": {
+    "13": {
         "name": "ali",
         "fullName": "Alliansen",
-        "description": "Et bredt nasjonalt folkeopprør har lenge ulmet i Norge mot statsminister Gro Harlem Brundtland (AP) & det politiske «establishments» svikefulle undertegning av EØS avtalen på Korfu 24. juni 1994. Dette skjedde på tross av det norske folks 2 x NEI til EU medlemskap såvel i 1972 og 1994. Juridiske eksperter har lenge hevdet at EØS-avtalen er i strid med Grunnloven. Den norske Grunnloven representerer en skriftlig samfunnskontrakt mellom de styrende og de styrte/borgerne. Kontrakten bygger på folkesuvereniteten, hentet fra prinsippene i Den store Franske revolusjon (1789).",
+        "description": "Et nasjonalt opprør i Norge mot statsminister Gro Harlem Brundtland og det politiske establishmentets undertegning av EØS-avtalen i strid med to folkeavstemninger mot EU-medlemskap. Juridiske eksperter mener avtalen bryter med Grunnloven, som bygger på prinsippene om folkesuverenitet fra Den franske revolusjonen.",
         "side": "right",
         "color": "#fc7b02"
     },
-    "20": {
+    "14": {
         "name": "nkp",
         "fullName": "Norges Kommunistiske Parti",
-        "description": "Norges Kommunistiske Parti (NKP) er et kommunistisk politisk parti i Norge.\n\nPartiet ble opprettet da Det norske Arbeiderparti bestemte seg for å melde seg ut av Komintern i 1923.\n\nPartiets ungdomsorganisasjon var frem til 2006 Norges Kommunistiske Ungdomsforbund, men etter uenigheter og til slutt et rettslig oppgjør startet NKP en ny ungdomsorganisasjon, Ungkommunistene i Norge. ",
+        "description": "Norges Kommunistiske Parti (NKP) er et kommunistisk politisk parti i Norge. Partiet ble opprettet da Det norske Arbeiderparti bestemte seg for å melde seg ut av Komintern i 1923. Partiets ungdomsorganisasjon var frem til 2006 Norges Kommunistiske Ungdomsforbund, men etter uenigheter og til slutt et rettslig oppgjør startet NKP en ny ungdomsorganisasjon, Ungkommunistene i Norge.",
         "side": "right",
         "color": "#fc7b02"
     }

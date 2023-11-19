@@ -33,10 +33,12 @@
 
 function getPartyData(data) {
     const selected = document.querySelector(".barChart .controls .custom_select .select-selected");
-    const selectedValue = (selected) ? selected.dataset.kid : 0;
+    const selectedValue = (selected) ? selected.dataset.kid : "0";
 
     const rawPartyData = JSON.parse(data.d);
-    const partyData = (selectedValue === 0 || selectedValue === "0") ? Object.values(mergePartyData(rawPartyData)) : filterByKommune(rawPartyData, selectedValue);
+    const partyData = (selectedValue === "0")
+        ? Object.values(mergePartyData(rawPartyData))
+        : filterByKommune(rawPartyData, selectedValue);
 
     partyData.sort((a, b) => parseFloat(b.Percent) - parseFloat(a.Percent));
     const maxPercent = Math.max(...partyData.map(party => parseFloat(party.Percent)));
@@ -83,7 +85,7 @@ function updateChart() {
         dataType: 'json',
         success: function (data) {
             addToChart(data);
-            
+
             const delay = randomMinute(8, 4);
             setTimeout(updateChart, delay);
             console.debug("Chart updated, next refresh in " + ((delay / 60) / 1000) + " minutes.");

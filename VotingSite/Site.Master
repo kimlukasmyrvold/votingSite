@@ -42,10 +42,7 @@
                     <a class="navbar__link" runat="server" href="~/Personer/">Personer</a>
                 </li>
                 <li>
-                    <a class="navbar__link" runat="server" href="~/Privacy/">Personvern</a>
-                </li>
-                <li>
-                    <a class="navbar__link" runat="server" href="~/Terms/">Vilkår</a>
+                    <a class="navbar__link" runat="server" href="~/Privacy-Terms/">Personvern og Vilkår</a>
                 </li>
             </ul>
         </nav>
@@ -71,10 +68,10 @@
             <div class="footer">
                 <ul>
                     <li>
-                        <a href="~/Privacy" runat="server">Personvern</a>
+                        <a href="~/Privacy-Terms#privacy" runat="server">Personvern</a>
                     </li>
                     <li>
-                        <a href="~/Terms" runat="server">Vilkår</a>
+                        <a href="~/Privacy-Terms#terms" runat="server">Vilkår</a>
                     </li>
                 </ul>
             </div>

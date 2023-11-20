@@ -213,6 +213,18 @@ hr {
     cursor: pointer;
 }
 
+.heading {
+    font-size: $fs-500;
+    font-weight: 700;
+    margin-block: $gap-3 $gap-1;
+}
+
+.subheading {
+    font-size: $fs-400;
+    font-weight: 600;
+    margin-block: $gap-3 $gap-1;
+}
+
 [data-visible="false"] {
     @include hidden();
 }
@@ -300,7 +312,7 @@ hr {
                 text-decoration: none;
                 position: relative;
                 transition: opacity .3s ease;
-                
+
                 &::after {
                     content: '';
                     display: block;
@@ -320,7 +332,7 @@ hr {
                 &:hover::after {
                     scale: 1;
                 }
-                
+
                 &:hover {
                     opacity: .8;
                 }

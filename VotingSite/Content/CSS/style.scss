@@ -213,6 +213,10 @@ hr {
     cursor: pointer;
 }
 
+[data-visible="false"] {
+    @include hidden();
+}
+
 
 // ======<   Modal styling   >======
 .modal {
@@ -236,12 +240,9 @@ hr {
         padding-block: .1em;
     }
 
-    &[data-visible="false"] {
-        display: none;
-    }
-
     &__container {
         display: flex;
+        flex-direction: column;
         position: relative;
         flex-grow: 1;
         width: 100%;
@@ -267,14 +268,62 @@ hr {
         }
 
         .close-icon {
-            position: absolute;
             $offset: .5em;
+            position: absolute;
             right: $offset;
             top: $offset;
             margin: 0;
 
             .icon-cross {
                 height: 1.75em;
+            }
+        }
+
+        .content {
+            flex: 1;
+        }
+
+        .footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 2.5rem;
+
+            ul {
+                display: flex;
+                flex-direction: row;
+                list-style: none;
+                gap: $gap-3;
+            }
+
+            a {
+                text-decoration: none;
+                position: relative;
+                transition: opacity .3s ease;
+                
+                &::after {
+                    content: '';
+                    display: block;
+                    background: var(--clr-accent);
+
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    left: 0;
+
+                    border-radius: 5px;
+                    height: 2px;
+                    scale: 0 1;
+                    transition: scale .3s ease;
+                }
+
+                &:hover::after {
+                    scale: 1;
+                }
+                
+                &:hover {
+                    opacity: .8;
+                }
             }
         }
     }

@@ -166,8 +166,7 @@
     <Content Include="Global.asax" />
     <Content Include="Pages\Kommuner\Default.aspx" />
     <Content Include="Pages\Personer\Default.aspx" />
-    <Content Include="Pages\Privacy\Default.aspx" />
-    <Content Include="Pages\Terms\Default.aspx" />
+    <Content Include="Pages\Privacy-Terms\Default.aspx" />
     <Content Include="Site.Master" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -180,7 +179,6 @@
     <Compile Include="404.aspx.designer.cs">
       <DependentUpon>404.aspx</DependentUpon>
     </Compile>
-    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -206,18 +204,11 @@
     <Compile Include="Pages\Personer\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Privacy\Default.aspx.cs">
+    <Compile Include="Pages\Privacy-Terms\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Privacy\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Terms\Default.aspx.cs">
-      <SubType>ASPXCodeBehind</SubType>
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Terms\Default.aspx.designer.cs">
+    <Compile Include="Pages\Privacy-Terms\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

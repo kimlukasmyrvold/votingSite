@@ -165,7 +165,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Pages\Kommuner\Default.aspx" />
-    <Content Include="Pages\Partier\Default.aspx" />
     <Content Include="Pages\Personer\Default.aspx" />
     <Content Include="Pages\Privacy\Default.aspx" />
     <Content Include="Site.Master" />
@@ -197,13 +196,6 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Kommuner\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Partier\Default.aspx.cs">
-      <SubType>ASPXCodeBehind</SubType>
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Partier\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Personer\Default.aspx.cs">

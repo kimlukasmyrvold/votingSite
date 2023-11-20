@@ -39,9 +39,6 @@
                     <a class="navbar__link" runat="server" href="~/Kommuner/">Kommuner</a>
                 </li>
                 <li>
-                    <a class="navbar__link" runat="server" href="~/Partier/">Partier</a>
-                </li>
-                <li>
                     <a class="navbar__link" runat="server" href="~/Personer/">Personer</a>
                 </li>
                 <li>

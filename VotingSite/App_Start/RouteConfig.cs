@@ -17,6 +17,7 @@ namespace VotingSite
             routes.MapPageRoute("KommunerRoute", "Kommuner", "~/Pages/Kommuner/Default.aspx");
             routes.MapPageRoute("PersonerRoute", "Personer", "~/Pages/Personer/Default.aspx");
             routes.MapPageRoute("PrivacyRoute", "Privacy", "~/Pages/Privacy/Default.aspx");
+            routes.MapPageRoute("TermsRoute", "Terms", "~/Pages/Terms/Default.aspx");
         }
     }
 }

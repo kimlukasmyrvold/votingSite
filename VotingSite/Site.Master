@@ -42,7 +42,10 @@
                     <a class="navbar__link" runat="server" href="~/Personer/">Personer</a>
                 </li>
                 <li>
-                    <a class="navbar__link" runat="server" href="~/Privacy/">Privacy</a>
+                    <a class="navbar__link" runat="server" href="~/Privacy/">Personvern</a>
+                </li>
+                <li>
+                    <a class="navbar__link" runat="server" href="~/Terms/">Vilkår</a>
                 </li>
             </ul>
         </nav>
@@ -62,7 +65,19 @@
             <div class="close-icon">
                 <svg class="icon-cross"></svg>
             </div>
-            <asp:ContentPlaceHolder ID="ModalContent" runat="server"></asp:ContentPlaceHolder>
+            <div class="content">
+                <asp:ContentPlaceHolder ID="ModalContent" runat="server"></asp:ContentPlaceHolder>
+            </div>
+            <div class="footer">
+                <ul>
+                    <li>
+                        <a href="~/Privacy" runat="server">Personvern</a>
+                    </li>
+                    <li>
+                        <a href="~/Terms" runat="server">Vilkår</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 

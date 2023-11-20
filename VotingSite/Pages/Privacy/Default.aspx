@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Privacy" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="VotingSite.Pages.Privacy.Default" %>
+﻿<%@ Page Title="Personvern" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="VotingSite.Pages.Privacy.Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>What we do with your data.</h1>

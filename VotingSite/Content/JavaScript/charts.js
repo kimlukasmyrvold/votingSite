@@ -29,6 +29,8 @@
         item.append(party, bar, value);
         chartContainer.appendChild(item);
     });
+
+    setWidthForValues();
 }
 
 function getPartyData(data) {
@@ -101,6 +103,22 @@ function updateChart() {
 
 function randomMinute(max, min) {
     return ((Math.floor(Math.random() * (max - min)) + min) * 60) * 1000;
+}
+
+// Make all values elements equal width
+function setWidthForValues() {
+    const values = document.querySelectorAll(".value");
+    let max = 0;
+
+    // get the max width
+    values.forEach(value => {
+        max = Math.max(max, value.offsetWidth);
+    });
+
+    // Add the width to all elements
+    values.forEach(value => {
+        value.style.width = `${max}px`;
+    });
 }
 
 window.addEventListener("load", () => {

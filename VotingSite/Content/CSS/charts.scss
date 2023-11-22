@@ -72,6 +72,18 @@
         transition: width 1s ease;
     }
 
+    .value {
+        display: flex;
+        align-items: center;
+        
+        height: 100%;
+        min-width: 5ch;
+
+        margin: 0;
+        font-size: $fs-200;
+        font-weight: 700;
+    }
+    
     .party {
         display: flex;
         justify-content: center;
@@ -87,13 +99,7 @@
             border-radius: 5px;
         }
     }
-
-    .value {
-        margin: 0;
-        font-weight: 700;
-    }
 }
-
 
 .custom_select {
     position: relative;

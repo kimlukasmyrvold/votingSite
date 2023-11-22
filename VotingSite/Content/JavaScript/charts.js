@@ -42,6 +42,12 @@ function getPartyData(data) {
         ? Object.values(mergePartyData(rawPartyData))
         : filterByKommune(rawPartyData, selectedValue);
 
+    const voteCount = partyData.reduce((sum, row) => sum + (parseInt(row.Votes) || 0), 0)
+    partyData.forEach(row => {
+        const percent = (row.Votes / voteCount) * 100.0;
+        row.Percent = percent.toFixed(1)
+    });
+
     partyData.sort((a, b) => parseFloat(b.Percent) - parseFloat(a.Percent));
     const maxPercent = Math.max(...partyData.map(party => parseFloat(party.Percent)));
 

@@ -88,15 +88,6 @@ namespace VotingSite
                 conn.Close();
             }
 
-            var voteCount = dt.AsEnumerable().Sum(s => s.Field<int>("votes"));
-            dt.Columns.Add("Percent", typeof(double));
-
-            foreach (DataRow row in dt.Rows)
-            {
-                var percent = Convert.ToDouble(row["votes"]) / voteCount * 100.0;
-                row["Percent"] = percent.ToString("N1");
-            }
-
             return dt;
         }
 
@@ -110,7 +101,6 @@ namespace VotingSite
                     Name = row["Parti"].ToString(),
                     Short = row["Short"].ToString(),
                     Votes = row["Votes"].ToString(),
-                    Percent = (double)row["Percent"]
                 }).ToArray();
 
             return JsonConvert.SerializeObject(values);

@@ -31,6 +31,10 @@
             </div>
             <div class="container"></div>
         </div>
+        
+        <div class="pieChart">
+            <div class="pie"></div>
+        </div>
     </div>
 </asp:Content>
 

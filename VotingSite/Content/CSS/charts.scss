@@ -75,7 +75,7 @@
     .value {
         display: flex;
         align-items: center;
-        
+
         height: 100%;
         min-width: 5ch;
 
@@ -83,7 +83,7 @@
         font-size: $fs-200;
         font-weight: 700;
     }
-    
+
     .party {
         display: flex;
         justify-content: center;
@@ -101,74 +101,13 @@
     }
 }
 
-.custom_select {
-    position: relative;
-    display: flex;
-    flex-grow: 1;
-    margin: 0;
-    padding: $gap-1 $gap-3;
-    border-radius: 20px;
-    background-color: var(--clr-primary);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 
-    select {
-        display: none;
-    }
+.pieChart {
 
-    .select-selected {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-grow: 1;
-        margin: 0;
-        border-radius: inherit;
-        background-color: var(--clr-primary);
-
-        &:after {
-            content: "";
-            display: flex;
-            translate: 0 3px;
-            border: 6px solid;
-            border-color: var(--clr-text) transparent transparent transparent;
-            transition: rotate .3s ease, translate .3s ease;
-        }
-
-        &.active:after {
-            rotate: 180deg;
-            translate: 0 -3px;
-        }
-    }
-
-    .select-items div, .select-selected {
-        cursor: pointer;
-        user-select: none;
-    }
-
-    .select-items {
-        @include visible;
-        left: 0;
-        right: 0;
-        top: 100%;
-        z-index: 99;
-        overflow: auto;
-        max-height: 60vh;
-        position: absolute;
-        border-radius: inherit;
-        margin-block-start: 3px;
-        background-color: var(--clr-primary);
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-
-        div {
-            margin: 0;
-            padding: .5em 1em;
-        }
-    }
-
-    .select-hide {
-        @include hidden();
-    }
-
-    .select-items div:hover, .selected {
-        background-color: $clr-black-30;
+    .pie {
+        border-radius: 9in;
+        aspect-ratio: 1;
+        width: 250px;
+        background: var(--clr-primary);
     }
 }

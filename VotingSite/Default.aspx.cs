@@ -91,7 +91,7 @@ namespace VotingSite
             return dt;
         }
 
-        private string GetChartValues()
+        private static string GetChartValues()
         {
             var values = (from DataRow row in GetVoteCount().Rows
                 select new
@@ -100,6 +100,7 @@ namespace VotingSite
                     Kommune = row["Kommune"].ToString(),
                     Name = row["Parti"].ToString(),
                     Short = row["Short"].ToString(),
+                    Color = row["Color"].ToString(),
                     Votes = row["Votes"].ToString(),
                 }).ToArray();
 
@@ -109,8 +110,7 @@ namespace VotingSite
         [WebMethod]
         public static string GetChartData()
         {
-            var defaultInstance = new Default();
-            return defaultInstance.GetChartValues();
+            return GetChartValues();
         }
 
         // **********************************************

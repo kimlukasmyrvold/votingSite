@@ -1,4 +1,8 @@
-﻿function addToChart(data) {
+﻿// ************************** \\
+// *   Code for bar chart   * \\
+// ************************** \\
+
+function addToChart(data) {
     const selectedOptionBtn = document.querySelector(".barChart .controls .button.selected");
     const option = (selectedOptionBtn) ? selectedOptionBtn.dataset.option.toString() : "percent";
     const chartContainer = document.querySelector(".barChart .container");
@@ -93,6 +97,7 @@ function updateChart() {
         dataType: 'json',
         success: function (data) {
             addToChart(data);
+            addToPieChart(data);
 
             const delay = randomMinute(8, 4);
             setTimeout(updateChart, delay);
@@ -126,6 +131,32 @@ function setWidthForValues() {
         value.style.width = `${max}px`;
     });
 }
+
+
+// ************************** \\
+// *   Code for pie chart   * \\
+// ************************** \\
+
+function addToPieChart(data) {
+    const pieChart = document.querySelector(".pieChart");
+    const pie = pieChart.querySelector(".pie");
+    const [partyData, _] = getPartyData(data);
+    pie.style = "";
+
+    let totalPercent = 0
+    const conicGradient = [];
+
+    partyData.forEach(data => {
+        const percent = parseFloat(data.Percent);
+        const color = data.Color;
+
+        conicGradient.push(`${color} ${totalPercent}% ${totalPercent + percent}%`);
+        totalPercent += percent;
+    });
+
+    pie.style.setProperty("background", `conic-gradient(${conicGradient.join(', ')})`);
+}
+
 
 window.addEventListener("load", () => {
     clickListener(".barChart .controls .button", changeChartView);

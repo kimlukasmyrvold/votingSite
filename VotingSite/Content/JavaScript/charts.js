@@ -140,6 +140,7 @@ function setWidthForValues() {
 function addToPieChart(data) {
     const pieChart = document.querySelector(".pieChart");
     const pie = pieChart.querySelector(".pie");
+    const pieLabels = pieChart.querySelector(".labels");
     const [partyData, _] = getPartyData(data);
     pie.style = "";
 
@@ -152,6 +153,22 @@ function addToPieChart(data) {
 
         conicGradient.push(`${color} ${totalPercent}% ${totalPercent + percent}%`);
         totalPercent += percent;
+
+
+        // Pie labels
+        const label = document.createElement("div");
+        label.classList.add("label");
+
+        const labelColor = document.createElement("div");
+        labelColor.classList.add("color");
+        labelColor.style.background = color;
+
+        const labelName = document.createElement("span");
+        labelName.classList.add("name");
+        labelName.textContent = data.Name;
+
+        label.append(labelColor, labelName);
+        pieLabels.append(label);
     });
 
     pie.style.setProperty("background", `conic-gradient(${conicGradient.join(', ')})`);

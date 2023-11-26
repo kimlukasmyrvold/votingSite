@@ -141,6 +141,8 @@
     <Content Include="Content\fonts\nunito\woff\nunito-v25-latin-italic.woff" />
     <Content Include="Content\fonts\nunito\woff\nunito-v25-latin-regular.woff" />
     <Content Include="Content\Images\icons.svg" />
+    <Content Include="Content\Images\Icons\barChart.svg" />
+    <Content Include="Content\Images\Icons\pieChart.svg" />
     <Content Include="Content\Images\PartyLogos\ali.png" />
     <Content Include="Content\Images\PartyLogos\ap.png" />
     <Content Include="Content\Images\PartyLogos\frp.png" />

@@ -139,13 +139,14 @@ function setWidthForValues() {
 
 function addToPieChart(data) {
     const pieChart = document.querySelector(".pieChart");
-    const pie = pieChart.querySelector(".pie");
     const pieLabels = pieChart.querySelector(".labels");
+    const pie = pieChart.querySelector(".pie");
     const [partyData, _] = getPartyData(data);
+    pieLabels.innerHTML = "";
     pie.style = "";
 
-    let totalPercent = 0
     const conicGradient = [];
+    let totalPercent = 0
 
     partyData.forEach(data => {
         const percent = parseFloat(data.Percent);

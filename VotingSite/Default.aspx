@@ -19,7 +19,7 @@
 
     <div id="results">
         <p class="title">Resultater:</p>
-        <div class="barChart">
+        <div class="barChart" id="barChart1">
             <div class="controls">
                 <button class="button selected" data-option="percent">%</button>
                 <button class="button" data-option="votes">Stemmer</button>
@@ -32,8 +32,9 @@
             <div class="container"></div>
         </div>
         
-        <div class="pieChart">
+        <div class="pieChart" id="pieChart1">
             <div class="pie"></div>
+            <div class="labels"></div>
         </div>
     </div>
 </asp:Content>

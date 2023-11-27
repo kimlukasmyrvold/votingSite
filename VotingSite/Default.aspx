@@ -10,7 +10,7 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <p class="heading">Valg <span id="year" runat="server"><%: DateTime.Now.Year %></span></p>
+    <p class="heading">Valg <%: DateTime.Now.Year %></p>
 
     <div class="partier">
         <p>Trykk på de forskjellige partiene for å kunne lese mer om partiet eller stemme på det.</p>

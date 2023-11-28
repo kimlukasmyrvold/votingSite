@@ -78,21 +78,14 @@
 
     <div class="modal" data-visible="false">
         <div class="modal__container">
-            <div class="close-icon">
+            <div class="close close-icon">
                 <svg class="icon-cross"></svg>
             </div>
             <div class="content">
                 <asp:ContentPlaceHolder ID="ModalContent" runat="server"></asp:ContentPlaceHolder>
             </div>
             <div class="footer">
-                <ul>
-                    <li>
-                        <a href="~/Privacy-Terms#privacy" runat="server">Personvern</a>
-                    </li>
-                    <li>
-                        <a href="~/Privacy-Terms#terms" runat="server">Vilkår</a>
-                    </li>
-                </ul>
+                <a href="~/Privacy-Terms" runat="server">Personvern og Vilkår</a>
             </div>
         </div>
     </div>

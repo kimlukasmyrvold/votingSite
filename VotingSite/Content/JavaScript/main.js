@@ -80,6 +80,44 @@ function removeQueryString() {
 }
 
 
+// ======<   Looks for changes in attributes   >====== \\
+function observeAttributeChange(selector, attribute, functionCall) {
+    const target = document.querySelector(selector);
+
+    const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+            if (!(mutation.type === "attributes" && mutation.attributeName === attribute)) return;
+            functionCall(target);
+        });
+    });
+
+    observer.observe(target, {attributes: true});
+}
+
+
+// ======<   Opens modal   >====== \\
+function openModal(selector) {
+    const modal = document.querySelector(".modal")
+    modal.dataset.visible = "true";
+
+    const modalContent = modal.querySelector(selector);
+    modalContent.dataset.visible = "true";
+}
+
+// ======<   Closes modal   >====== \\
+function closeModal(e) {
+    e.preventDefault();
+
+    const modal = document.querySelector(".modal")
+    modal.dataset.visible = "false";
+
+    const modalContents = document.querySelectorAll("[data-visible]");
+    modalContents.forEach(content => {
+        content.dataset.visible = "false";
+    });
+}
+
+
 // ======<   Adds icons to page from svg file   >======
 function addIcons() {
     // Loop trough every element with 'icon-' class
@@ -126,6 +164,9 @@ function createCustomSelects() {
         itemsContainer.setAttribute("class", "select-items select-hide");
 
         for (let j = 0; j < oldSelect.length; j++) {
+            // Skipping if option is disabled
+            if (oldSelect.options[j].disabled) continue;
+
             /*for each option in the original select element,
             create a new DIV that will act as an option item:*/
             let item = document.createElement("div");
@@ -202,4 +243,9 @@ window.onload = () => {
     setTheme();
     document.querySelector('.navbar__links').addEventListener('mouseover', handleMouseEvents);
     document.querySelector('.navbar__links').addEventListener('mouseout', handleMouseEvents);
+
+    clickListener(".modal .close", closeModal);
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal(e);
+    });
 }

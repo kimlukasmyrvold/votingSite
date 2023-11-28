@@ -281,6 +281,10 @@ hr {
     @include hidden();
 }
 
+[data-visible="true"] {
+    @include visible();
+}
+
 
 // ======<   Modal styling   >======
 .modal {
@@ -443,7 +447,7 @@ hr {
         left: 0;
         right: 0;
         top: 100%;
-        z-index: 99;
+        z-index: 9;
         overflow: auto;
         max-height: 60vh;
         position: absolute;
@@ -454,7 +458,7 @@ hr {
 
         div {
             margin: 0;
-            padding: .5em 1em;
+            padding: $gap-2 $gap-3;
         }
     }
 

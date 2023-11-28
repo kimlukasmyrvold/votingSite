@@ -1,11 +1,12 @@
 ﻿@mixin hidden {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity .3s ease, visibility .3s ease;
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    transition: opacity .3s ease, visibility .3s ease;
 }
 
 @mixin visible {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity .3s ease, visibility 0s ease;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .3s ease, visibility 0s ease;
 }

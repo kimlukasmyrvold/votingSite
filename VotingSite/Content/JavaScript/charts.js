@@ -3,8 +3,8 @@
 // ************************** \\
 
 function addToChart(data) {
-    const selectedOptionBtn = document.querySelector(".barChart .controls .button.selected");
-    const option = (selectedOptionBtn) ? selectedOptionBtn.dataset.option.toString() : "percent";
+    const selectedOptionBtn = getSelectedOption();
+    const option = selectedOptionBtn.dataset.option.toString();
     const chartContainer = document.querySelector(".barChart .container");
     const [partyData, maxPercent] = getPartyData(data);
     chartContainer.innerHTML = "";
@@ -75,6 +75,16 @@ function mergePartyData(partyData) {
 
 function filterByKommune(data, kid) {
     return data.filter(item => item.Kid === parseFloat(kid));
+}
+
+function getSelectedOption() {
+    const options = document.querySelectorAll(".barChart .controls .button");
+    const selected = () => {
+        return document.querySelector(".barChart .controls .button.selected");
+    };
+
+    if (!selected()) options[0].classList.add("selected");
+    return selected();
 }
 
 function changeChartView(e) {

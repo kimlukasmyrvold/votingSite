@@ -39,7 +39,7 @@ function addToChart(data) {
 
 function getPartyData(data) {
     const selected = document.querySelector(".barChart .controls .custom_select .select-selected");
-    const selectedValue = (selected) ? selected.dataset.kid : "0";
+    const selectedValue = (selected) ? selected.dataset.value : "0";
 
     const rawPartyData = JSON.parse(data.d);
     const partyData = (selectedValue === "0")
@@ -100,25 +100,13 @@ function changeChartView(e) {
 
 
 function updateChart() {
-    $.ajax({
-        type: 'POST',
-        url: 'Default.aspx/GetChartData',
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        success: function (data) {
-            addToChart(data);
-            addToPieChart(data);
+    ajax("Default.aspx/GetChartData", null, (data) => {
+        addToChart(data);
+        addToPieChart(data);
 
-            const delay = randomMinute(8, 4);
-            setTimeout(updateChart, delay);
-            console.debug("Chart updated, next refresh in " + ((delay / 60) / 1000) + " minutes.");
-        },
-        error: function (xhr, status, error) {
-            console.log('Error fetching data:');
-            console.log('Status:', status);
-            console.log('Error:', error);
-            console.log('Response Text:', xhr.responseText);
-        }
+        const delay = randomMinute(8, 4);
+        setTimeout(updateChart, delay);
+        console.debug("Chart updated, next refresh in " + ((delay / 60) / 1000) + " minutes.");
     });
 }
 

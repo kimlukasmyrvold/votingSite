@@ -10,7 +10,8 @@
     <title><%: Page.Title %></title>
 
     <webopt:BundleReference runat="server" Path="~/Content/css"/>
-    <script src="/Content/JavaScript/main.js"></script>
+    <script src="/Content/JavaScript/dist/jquery.min.js" defer></script>
+    <script src="/Content/JavaScript/main.js" defer></script>
 
     <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
 </head>

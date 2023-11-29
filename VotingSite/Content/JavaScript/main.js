@@ -80,6 +80,42 @@ function removeQueryString() {
 }
 
 
+// ======<    Custom AJAX function    >====== \\
+function ajax(url, data, functionCall) {
+    let retryAttempts = 0;
+
+    const defaultOptions = {
+        type: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            functionCall(response);
+        },
+        error: function (xhr, status, error) {
+            console.error('Error fetching data:');
+            console.error('Status:', status);
+            console.error('Error:', error);
+            console.error('Response Text:', xhr.responseText);
+
+            if (retryAttempts < 5) {
+                retryAttempts++;
+                console.log("Retrying AJAX request. Attemp:", retryAttempts);
+                $.ajax(ajaxOptions);
+            } else {
+                console.error("Maximum number of attempts reacher. Unable to complete AJAX request.");
+            }
+        }
+    }
+
+    const ajaxOptions = Object.assign({}, defaultOptions, {
+        url: url,
+        data: data !== null ? JSON.stringify(data) : undefined,
+    });
+
+    $.ajax(ajaxOptions);
+}
+
+
 // ======<   Looks for changes in attributes   >====== \\
 function observeAttributeChange(selector, attribute, functionCall) {
     const target = document.querySelector(selector);
@@ -144,10 +180,31 @@ function addIcons() {
 }
 
 
+// ======<      Add option to select list      >====== \\     
+function addOption(select, value, text) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.text = text;
+    select.add(option);
+}
+
+
 /* Change all select lists that is contained within .custom_select to custom select dropdown.
    Part of the code is from: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_custom_select */
-function createCustomSelects() {
-    let customSelect = document.querySelectorAll(".custom_select");
+function createCustomSelects(selector = null) {
+
+    const customSelect = (selector === null)
+        ? document.querySelectorAll(".custom_select")
+        : document.querySelectorAll(`${selector} .custom_select`);
+
+    if (selector !== null) {
+        const selectSelected = customSelect[0].querySelector(".select-selected");
+        if (selectSelected) selectSelected.remove();
+
+        const selectItems = customSelect[0].querySelector(".select-items");
+        if (selectItems) selectItems.remove();
+    }
+
 
     for (let i = 0; i < customSelect.length; i++) {
         let oldSelect = customSelect[i].querySelector("select");
@@ -155,8 +212,8 @@ function createCustomSelects() {
         /*for each element, create a new DIV that will act as the selected item:*/
         let selected = document.createElement("div");
         selected.setAttribute("class", "select-selected");
-        selected.textContent = oldSelect.options[oldSelect.selectedIndex].textContent;
-        selected.dataset.kid = oldSelect.options[oldSelect.selectedIndex].value;
+        selected.textContent = oldSelect.options[0].textContent;
+        selected.dataset.value = oldSelect.options[0].value;
         customSelect[i].appendChild(selected);
 
         /*for each element, create a new DIV that will contain the option list:*/
@@ -171,7 +228,7 @@ function createCustomSelects() {
             create a new DIV that will act as an option item:*/
             let item = document.createElement("div");
             item.textContent = oldSelect.options[j].textContent;
-            item.dataset.kid = oldSelect.options[j].value;
+            item.dataset.value = oldSelect.options[j].value;
 
             item.addEventListener("click", (e) => {
                 /*when an item is clicked, update the original select box,
@@ -180,10 +237,10 @@ function createCustomSelects() {
                 let selected = e.target.parentNode.previousSibling;
 
                 for (let i = 0; i < oldSelect.length; i++) {
-                    if (oldSelect.options[i].value === e.target.dataset.kid) {
+                    if (oldSelect.options[i].value === e.target.dataset.value) {
                         oldSelect.selectedIndex = i;
                         selected.textContent = e.target.textContent;
-                        selected.dataset.kid = e.target.dataset.kid;
+                        selected.dataset.value = e.target.dataset.value;
 
                         let selectedItem = e.target.parentNode.querySelectorAll(".selected");
                         for (let k = 0; k < selectedItem.length; k++) {

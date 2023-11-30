@@ -51,33 +51,6 @@ namespace VotingSite
         protected global::System.Web.UI.WebControls.DropDownList DropDownListKommuner;
 
         /// <summary>
-        /// FNum control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText FNum;
-
-        /// <summary>
-        /// hiddenDataField control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hiddenDataField;
-
-        /// <summary>
-        /// sendToStemmer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button sendToStemmer;
-
-        /// <summary>
         /// Master property.
         /// </summary>
         /// <remarks>

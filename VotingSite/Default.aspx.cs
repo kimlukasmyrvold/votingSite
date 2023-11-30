@@ -89,7 +89,8 @@ namespace VotingSite
             return dt;
         }
 
-        private static string GetChartValues()
+        [WebMethod]
+        public static string GetChartData()
         {
             var values = (from DataRow row in GetVoteCount().Rows
                 select new
@@ -103,12 +104,6 @@ namespace VotingSite
                 }).ToArray();
 
             return JsonConvert.SerializeObject(values);
-        }
-
-        [WebMethod]
-        public static string GetChartData()
-        {
-            return GetChartValues();
         }
 
         // **********************************************
@@ -190,34 +185,51 @@ namespace VotingSite
             DropDownListFylker.DataBind();
         }
 
+        // private static DataTable Foo()
+        // {
+        //     var dt = new DataTable();
+        //     var connStr = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+        //     using (var conn = new SqlConnection(connStr))
+        //     {
+        //         conn.Open();
+        //         // var cmd =
+        //         //     new SqlCommand(
+        //         //         "SELECT KID, Kommune from Kommuner, Fylker where Kommuner.FID = Fylker.FID and Fylker.FID=@fid order by Kommune COLLATE Danish_Norwegian_CI_AS",
+        //         //         conn);
+        //         var cmd =
+        //             new SqlCommand(
+        //                 "SELECT KID, Kommune from Kommuner, Fylker where Kommuner.FID = Fylker.FID order by Kommune COLLATE Danish_Norwegian_CI_AS",
+        //                 conn);
+        //         cmd.CommandType = CommandType.Text;
+        //     
+        //         // var param = new SqlParameter("@fid", SqlDbType.Int);
+        //         // param.Value = int.Parse(DropDownListFylker.SelectedValue);
+        //         // cmd.Parameters.Add(param);
+        //     
+        //         var reader = cmd.ExecuteReader();
+        //         dt.Load(reader);
+        //         reader.Close();
+        //         conn.Close();
+        //     }
+        //
+        //     return dt;
+        // }
 
-        // ***********************************************
-        // *    Adding kommuner from database to page    *
-        // ***********************************************
-        protected void GetFromKommuner_Click(object sender, EventArgs e)
+        [WebMethod]
+        public static string GetFromKommuner(int selectedFid)
         {
-            GetFromKommuner();
-        }
-
-        private void GetFromKommuner()
-        {
-            // Clear list to prevent duplicated values
-            DropDownListKommuner.Items.Clear();
-
-            // Get the values from database
-            var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
             var dt = new DataTable();
-            using (var conn = new SqlConnection(connString))
+            var connStr = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+            using (var conn = new SqlConnection(connStr))
             {
                 conn.Open();
-                var cmd =
-                    new SqlCommand(
-                        "SELECT KID, Kommune from Kommuner, Fylker where Kommuner.FID = Fylker.FID and Fylker.FID=@fid order by Kommune COLLATE Danish_Norwegian_CI_AS",
-                        conn);
+                var cmd = new SqlCommand(
+                    "SELECT KID, Kommune from Kommuner, Fylker where Kommuner.FID = Fylker.FID and Fylker.FID=@fid order by Kommune COLLATE Danish_Norwegian_CI_AS",
+                    conn);
                 cmd.CommandType = CommandType.Text;
 
                 var param = new SqlParameter("@fid", SqlDbType.Int);
-                param.Value = int.Parse(DropDownListFylker.SelectedValue);
+                param.Value = selectedFid;
                 cmd.Parameters.Add(param);
 
                 var reader = cmd.ExecuteReader();
@@ -226,28 +238,74 @@ namespace VotingSite
                 conn.Close();
             }
 
-            // Making the first row say "Velg Kommune..."
-            var firstRow = new ListItem("Velg Kommune...", "0");
-            DropDownListKommuner.Items.Add(firstRow);
+            var values = (from DataRow row in dt.Rows
+                select new
+                {
+                    Kid = (int)row["Kid"],
+                    Kommune = row["Kommune"].ToString(),
+                }).ToArray();
 
-            // Add the values to list
-            foreach (DataRow row in dt.Rows)
-            {
-                var item = new ListItem(row["Kommune"].ToString(), row["KID"].ToString());
-                DropDownListKommuner.Items.Add(item);
-            }
-
-            // Bind the values
-            DropDownListKommuner.DataBind();
-
-            // Calling JavaScript 
-            const string script = @"
-                document.addEventListener('DOMContentLoaded', () => {
-                    getFromKommuner_Callback();
-                });
-            ";
-            ScriptManager.RegisterStartupScript(this, GetType(), "callFunctions", script, true);
+            return JsonConvert.SerializeObject(values);
         }
+
+
+        // ***********************************************
+        // *    Adding kommuner from database to page    *
+        // ***********************************************
+        // protected void GetFromKommuner_Click(object sender, EventArgs e)
+        // {
+        //     GetFromKommuner();
+        // }
+
+        // private void GetFromKommuner()
+        // {
+        //     // Clear list to prevent duplicated values
+        //     DropDownListKommuner.Items.Clear();
+        //
+        //     // Get the values from database
+        //     var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+        //     var dt = new DataTable();
+        //     using (var conn = new SqlConnection(connString))
+        //     {
+        //         conn.Open();
+        //         var cmd =
+        //             new SqlCommand(
+        //                 "SELECT KID, Kommune from Kommuner, Fylker where Kommuner.FID = Fylker.FID and Fylker.FID=@fid order by Kommune COLLATE Danish_Norwegian_CI_AS",
+        //                 conn);
+        //         cmd.CommandType = CommandType.Text;
+        //
+        //         var param = new SqlParameter("@fid", SqlDbType.Int);
+        //         param.Value = int.Parse(DropDownListFylker.SelectedValue);
+        //         cmd.Parameters.Add(param);
+        //
+        //         var reader = cmd.ExecuteReader();
+        //         dt.Load(reader);
+        //         reader.Close();
+        //         conn.Close();
+        //     }
+        //
+        //     // Making the first row say "Velg Kommune..."
+        //     var firstRow = new ListItem("Velg Kommune...", "0");
+        //     DropDownListKommuner.Items.Add(firstRow);
+        //
+        //     // Add the values to list
+        //     foreach (DataRow row in dt.Rows)
+        //     {
+        //         var item = new ListItem(row["Kommune"].ToString(), row["KID"].ToString());
+        //         DropDownListKommuner.Items.Add(item);
+        //     }
+        //
+        //     // Bind the values
+        //     DropDownListKommuner.DataBind();
+        //
+        //     // Calling JavaScript 
+        //     const string script = @"
+        //         document.addEventListener('DOMContentLoaded', () => {
+        //             getFromKommuner_Callback();
+        //         });
+        //     ";
+        //     ScriptManager.RegisterStartupScript(this, GetType(), "callFunctions", script, true);
+        // }
 
 
         // ********************************
@@ -390,19 +448,19 @@ namespace VotingSite
         // ======<   Checking all values   >====== \\
         private (bool, string) CheckValues()
         {
-            var fnum = FNum.Value.Replace(" ", "");
+            // var fnum = FNum.Value.Replace(" ", "");
 
-            var (fnumOk, fnumError) = CheckFNum(fnum);
-            if (!fnumOk) return (false, fnumError);
+            // var (fnumOk, fnumError) = CheckFNum(fnum);
+            // if (!fnumOk) return (false, fnumError);
+            //
+            // var (votedOk, votedError) = CheckVoted(fnum);
+            // if (!votedOk) return (false, votedError);
+            //
+            // var (kommuneOk, kommuneError) = CheckKommune(fnum);
+            // if (!kommuneOk) return (false, kommuneError);
 
-            var (votedOk, votedError) = CheckVoted(fnum);
-            if (!votedOk) return (false, votedError);
-
-            var (kommuneOk, kommuneError) = CheckKommune(fnum);
-            if (!kommuneOk) return (false, kommuneError);
-
-            var (partiOk, partiError) = CheckParti(hiddenDataField.Value);
-            if (!partiOk) return (false, partiError);
+            // var (partiOk, partiError) = CheckParti(hiddenDataField.Value);
+            // if (!partiOk) return (false, partiError);
 
             return (true, "");
         }
@@ -423,7 +481,7 @@ namespace VotingSite
                 cmd.Parameters.Add(param);
 
                 param = new SqlParameter("@pid", SqlDbType.VarChar);
-                param.Value = hiddenDataField.Value;
+                // param.Value = hiddenDataField.Value;
                 cmd.Parameters.Add(param);
 
                 cmd.ExecuteNonQuery();
@@ -443,7 +501,7 @@ namespace VotingSite
                 cmd.CommandType = CommandType.Text;
 
                 var param = new SqlParameter("@FNum", SqlDbType.VarChar);
-                param.Value = FNum.Value.Replace(" ", "");
+                // param.Value = FNum.Value.Replace(" ", "");
                 cmd.Parameters.Add(param);
 
                 cmd.ExecuteNonQuery();
@@ -455,19 +513,46 @@ namespace VotingSite
         // *******************************************
         // *          Send vote to database          *
         // *******************************************
-        protected void SendToStemmer_Click(object sender, EventArgs e)
+
+        // protected void SendToStemmer_Click(object sender, EventArgs e)
+        // {
+        //     var (isOk, errorMsg) = CheckValues();
+        //
+        //     var script =
+        //         $"document.addEventListener('DOMContentLoaded', () => {{SendToStemmer_Click_Callback(\"{(isOk ? "noError" : errorMsg)}\");}});";
+        //     ScriptManager.RegisterStartupScript(this, GetType(), "callFunction", script, true);
+        //
+        //     if (!isOk) return;
+        //
+        //     SendToStemmer();
+        //     AddVotedToPerson();
+        //     Response.Redirect(Request.Url.AbsolutePath + "?r=moRe&er=noError");
+        // }
+
+        // private string SendToStemmer_Click()
+        // {
+        //     var (isOk, errorMsg) = CheckValues();
+        //     if (!isOk) return errorMsg;
+        //
+        //     SendToStemmer();
+        //     AddVotedToPerson();
+        //
+        //     return "noError";
+        // }
+
+        [WebMethod]
+        public string Vote()
         {
             var (isOk, errorMsg) = CheckValues();
-
-            var script =
-                $"document.addEventListener('DOMContentLoaded', () => {{SendToStemmer_Click_Callback(\"{(isOk ? "noError" : errorMsg)}\");}});";
-            ScriptManager.RegisterStartupScript(this, GetType(), "callFunction", script, true);
-
-            if (!isOk) return;
+            if (!isOk) return errorMsg;
 
             SendToStemmer();
             AddVotedToPerson();
-            Response.Redirect(Request.Url.AbsolutePath + "?r=moRe&er=noError");
+
+            return "noError";
+
+            // var defaultInstance = new Default();
+            // return defaultInstance.SendToStemmer_Click();
         }
     }
 }

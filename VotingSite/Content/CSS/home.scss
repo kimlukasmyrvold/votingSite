@@ -68,7 +68,7 @@
         margin: 0;
         filter: drop-shadow(0 0 10px $clr-black-50);
 
-        img {            
+        img {
             scale: .8;
             margin: 0;
             border-radius: 10px;
@@ -80,7 +80,7 @@
     &__content {
         background-color: var(--clr-secondary);
         position: absolute;
-        z-index: 99;
+        z-index: 10;
         top: calc(100% + 10px);
         left: 0;
         width: 25em;
@@ -129,7 +129,7 @@
             }
         }
     }
-    
+
     p {
         text-align: center;
         font-size: $fs-300;
@@ -146,10 +146,6 @@
     height: max-content;
     overflow: auto;
     margin: 0;
-
-    &[data-visible="false"] {
-        display: none;
-    }
 
     .container {
         display: flex;
@@ -177,6 +173,19 @@
         option {
             border-radius: 10px;
             font-size: calc($fs-200 / 1.2);
+        }
+    }
+    
+    .custom_select {
+        border-radius: 10px;
+        margin-block-end: $gap-3;
+
+        .select-items {
+            max-height: 20ch;
+            
+            div {
+                font-size: $fs-200;
+            }
         }
     }
 
@@ -247,18 +256,8 @@
             align-self: flex-start;
         }
 
-        .selectFylker {
+        & > div {
             width: 100%;
-        }
-
-        .remains {
-            display: none;
-            flex-direction: column;
-            width: 100%;
-
-            &.ready {
-                display: flex;
-            }
         }
 
         .inputField {
@@ -390,7 +389,7 @@
 
 #results {
     margin-block-start: 2.5em;
-    
+
     .title {
         font-size: $fs-400;
         font-weight: 600;

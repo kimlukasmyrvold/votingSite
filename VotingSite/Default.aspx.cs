@@ -13,29 +13,14 @@ using Newtonsoft.Json;
 
 namespace VotingSite
 {
-    public class Parti
-    {
-        public string Name { get; set; }
-        public string FullName { get; set; }
-        public string Description { get; set; }
-        public string Side { get; set; }
-        public bool Disabled { get; set; }
-    }
-
     public partial class Default : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ClientScript.RegisterClientScriptBlock(GetType(), "IsPostBack", "var isPostBack = false;", true);
+            if (Page.IsPostBack) return;
 
-            if (Page.IsPostBack)
-            {
-                ClientScript.RegisterClientScriptBlock(GetType(), "IsPostBack", "var isPostBack = true;", true);
-                return;
-            }
-
-            AddPartierItems();
-            GetFromFylker();
+            AddPartierToPage();
+            AddFylkerToDropdown();
             AddKommunerToDropDown();
         }
 
@@ -67,6 +52,7 @@ namespace VotingSite
 
             kommunerDropDown.DataBind();
         }
+
 
         private static DataTable GetVoteCount()
         {
@@ -106,49 +92,77 @@ namespace VotingSite
             return JsonConvert.SerializeObject(values);
         }
 
+
+        private static PartyInfo[] GetPartiInfo()
+        {
+            var dt = new DataTable();
+
+            var connStr = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
+            using (var conn = new SqlConnection(connStr))
+            {
+                conn.Open();
+                var cmd = new SqlCommand("select * from partier;", conn);
+                cmd.CommandType = CommandType.Text;
+
+                var reader = cmd.ExecuteReader();
+                dt.Load(reader);
+
+                reader.Close();
+                conn.Close();
+            }
+
+            var partier = (from DataRow row in dt.Rows
+                select new PartyInfo
+                {
+                    Pid = (int)row["PID"],
+                    Parti = row["Parti"].ToString(),
+                    Short = row["Short"].ToString(),
+                    Color = row["Color"].ToString(),
+                    Description = row["description"].ToString(),
+                    Side = (int)row["side"],
+                }).ToArray();
+
+            return partier;
+        }
+
+        public class PartyInfo
+        {
+            public int Pid { get; set; }
+            public string Parti { get; set; }
+            public string Short { get; set; }
+            public string Color { get; set; }
+            public string Description { get; set; }
+            public int Side { get; set; }
+        }
+
+        [WebMethod]
+        public static string GetPartiData()
+        {
+            return JsonConvert.SerializeObject(GetPartiInfo());
+        }
+
         // **********************************************
         // *         Adding the parties to page         *
         // **********************************************
-
-        private void AddPartierItems()
+        private void AddPartierToPage()
         {
-            var jsonFilePath = Server.MapPath("~/Content/JSON/partier.json");
-            dynamic jsonObj;
-            using (var r = new StreamReader(jsonFilePath))
+            foreach (var party in GetPartiInfo())
             {
-                var json = r.ReadToEnd();
-                jsonObj = new JavaScriptSerializer().Deserialize<dynamic>(json);
-            }
-
-            foreach (var partiEntry in jsonObj)
-            {
-                var partiId = int.Parse(partiEntry.Key);
-                var parti = new Parti
-                {
-                    Name = partiEntry.Value["name"],
-                    FullName = partiEntry.Value["fullName"],
-                    Description = partiEntry.Value["description"],
-                    Side = partiEntry.Value["side"]
-                };
-
-                if (partiEntry.Value.ContainsKey("disabled") && partiEntry.Value["disabled"] is bool &&
-                    (bool)partiEntry.Value["disabled"]) continue;
-
                 partierContainer.InnerHtml += $@"
-                    <div class=""partier__item"" tabindex=""0"" data-id=""{partiId}"" data-side=""{parti.Side}"">
+                    <div class=""partier__item"" tabindex=""0"" data-id=""{party.Pid}"" data-side=""{party.Side}"">
                         <div class=""partier__logo"">
-                            <img src=""/Content/Images/PartyLogos/{parti.Name}.png"" alt=""Parti logo"">
+                            <img src=""/Content/Images/PartyLogos/{party.Short}.png"" alt=""Parti logo"">
                         </div>
                         <div class=""partier__content"">
                             <div class=""partier__name"">
-                                <p>{parti.FullName}</p>
+                                <p>{party.Parti}</p>
                                 <hr>
                             </div>
                             <div class=""partier__description"">
-                                <p>{parti.Description}</p>
+                                <p>{party.Description}</p>
                             </div>
                             <div class=""partier__vote"">
-                                <button class=""button voteBtn"" tabindex=""0"" data-id=""{partiId}"">Stem på parti</button>
+                                <button class=""button voteBtn"" tabindex=""0"" data-id=""{party.Pid}"">Stem på parti</button>
                             </div>
                         </div>
                     </div>
@@ -160,7 +174,7 @@ namespace VotingSite
         // ***********************************************
         // *     Adding fylker from database to page     *
         // ***********************************************
-        private void GetFromFylker()
+        private void AddFylkerToDropdown()
         {
             var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
             var dt = new DataTable();
@@ -185,35 +199,6 @@ namespace VotingSite
             DropDownListFylker.DataBind();
         }
 
-        // private static DataTable Foo()
-        // {
-        //     var dt = new DataTable();
-        //     var connStr = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
-        //     using (var conn = new SqlConnection(connStr))
-        //     {
-        //         conn.Open();
-        //         // var cmd =
-        //         //     new SqlCommand(
-        //         //         "SELECT KID, Kommune from Kommuner, Fylker where Kommuner.FID = Fylker.FID and Fylker.FID=@fid order by Kommune COLLATE Danish_Norwegian_CI_AS",
-        //         //         conn);
-        //         var cmd =
-        //             new SqlCommand(
-        //                 "SELECT KID, Kommune from Kommuner, Fylker where Kommuner.FID = Fylker.FID order by Kommune COLLATE Danish_Norwegian_CI_AS",
-        //                 conn);
-        //         cmd.CommandType = CommandType.Text;
-        //     
-        //         // var param = new SqlParameter("@fid", SqlDbType.Int);
-        //         // param.Value = int.Parse(DropDownListFylker.SelectedValue);
-        //         // cmd.Parameters.Add(param);
-        //     
-        //         var reader = cmd.ExecuteReader();
-        //         dt.Load(reader);
-        //         reader.Close();
-        //         conn.Close();
-        //     }
-        //
-        //     return dt;
-        // }
 
         [WebMethod]
         public static string GetFromKommuner(int selectedFid)
@@ -249,65 +234,6 @@ namespace VotingSite
         }
 
 
-        // ***********************************************
-        // *    Adding kommuner from database to page    *
-        // ***********************************************
-        // protected void GetFromKommuner_Click(object sender, EventArgs e)
-        // {
-        //     GetFromKommuner();
-        // }
-
-        // private void GetFromKommuner()
-        // {
-        //     // Clear list to prevent duplicated values
-        //     DropDownListKommuner.Items.Clear();
-        //
-        //     // Get the values from database
-        //     var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
-        //     var dt = new DataTable();
-        //     using (var conn = new SqlConnection(connString))
-        //     {
-        //         conn.Open();
-        //         var cmd =
-        //             new SqlCommand(
-        //                 "SELECT KID, Kommune from Kommuner, Fylker where Kommuner.FID = Fylker.FID and Fylker.FID=@fid order by Kommune COLLATE Danish_Norwegian_CI_AS",
-        //                 conn);
-        //         cmd.CommandType = CommandType.Text;
-        //
-        //         var param = new SqlParameter("@fid", SqlDbType.Int);
-        //         param.Value = int.Parse(DropDownListFylker.SelectedValue);
-        //         cmd.Parameters.Add(param);
-        //
-        //         var reader = cmd.ExecuteReader();
-        //         dt.Load(reader);
-        //         reader.Close();
-        //         conn.Close();
-        //     }
-        //
-        //     // Making the first row say "Velg Kommune..."
-        //     var firstRow = new ListItem("Velg Kommune...", "0");
-        //     DropDownListKommuner.Items.Add(firstRow);
-        //
-        //     // Add the values to list
-        //     foreach (DataRow row in dt.Rows)
-        //     {
-        //         var item = new ListItem(row["Kommune"].ToString(), row["KID"].ToString());
-        //         DropDownListKommuner.Items.Add(item);
-        //     }
-        //
-        //     // Bind the values
-        //     DropDownListKommuner.DataBind();
-        //
-        //     // Calling JavaScript 
-        //     const string script = @"
-        //         document.addEventListener('DOMContentLoaded', () => {
-        //             getFromKommuner_Callback();
-        //         });
-        //     ";
-        //     ScriptManager.RegisterStartupScript(this, GetType(), "callFunctions", script, true);
-        // }
-
-
         // ********************************
         // *          Validation          *
         // ********************************
@@ -319,8 +245,8 @@ namespace VotingSite
             if (!Regex.IsMatch(fnum, @"^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{7}$"))
             {
                 return !Regex.IsMatch(fnum.Substring(0, 6), @"^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{2}")
-                    ? (false, "Dato på fødselsnummer er invalid.")
-                    : (false, "Fødselsnummer kan bare være tall og må være 11 karakter lang.");
+                    ? (false, "Dato på fødselsnummer er ugyldig.")
+                    : (false, "Fødselsnummer kan bare være tall og må være 11 karakterer lang.");
             }
 
             var fnumOk = false;
@@ -380,10 +306,10 @@ namespace VotingSite
         }
 
         // ======<   Checks if kommune is valid   >====== \\
-        private (bool, string) CheckKommune(string fNum)
+        private static (bool, string) CheckKommune(string fNum, string kommune)
         {
             var isOk = false;
-            if (int.Parse(DropDownListKommuner.SelectedValue) == 0) return (false, "Ingen Kommune Valgt");
+            if (int.Parse(kommune) == 0) return (false, "Ingen Kommune Valgt");
 
             var connString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
             using (var conn = new SqlConnection(connString))
@@ -397,7 +323,7 @@ namespace VotingSite
                 cmd.Parameters.Add(param);
 
                 param = new SqlParameter("@KID", SqlDbType.Int);
-                param.Value = int.Parse(DropDownListKommuner.SelectedValue);
+                param.Value = int.Parse(kommune);
                 cmd.Parameters.Add(param);
 
                 var reader = cmd.ExecuteReader();
@@ -446,27 +372,27 @@ namespace VotingSite
         }
 
         // ======<   Checking all values   >====== \\
-        private (bool, string) CheckValues()
+        private static (bool, string) CheckValues(VoteData jsonData)
         {
-            // var fnum = FNum.Value.Replace(" ", "");
+            var fnum = jsonData.Fnum;
 
-            // var (fnumOk, fnumError) = CheckFNum(fnum);
-            // if (!fnumOk) return (false, fnumError);
-            //
-            // var (votedOk, votedError) = CheckVoted(fnum);
-            // if (!votedOk) return (false, votedError);
-            //
-            // var (kommuneOk, kommuneError) = CheckKommune(fnum);
-            // if (!kommuneOk) return (false, kommuneError);
+            var (fnumOk, fnumError) = CheckFNum(fnum);
+            if (!fnumOk) return (false, fnumError);
 
-            // var (partiOk, partiError) = CheckParti(hiddenDataField.Value);
-            // if (!partiOk) return (false, partiError);
+            var (votedOk, votedError) = CheckVoted(fnum);
+            if (!votedOk) return (false, votedError);
+
+            var (kommuneOk, kommuneError) = CheckKommune(fnum, jsonData.Kommune);
+            if (!kommuneOk) return (false, kommuneError);
+
+            var (partiOk, partiError) = CheckParti(jsonData.Pid);
+            if (!partiOk) return (false, partiError);
 
             return (true, "");
         }
 
 
-        private void SendToStemmer()
+        private static void SendToStemmer(VoteData jsonData)
         {
             var connectionString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
             using (var conn = new SqlConnection(connectionString))
@@ -477,11 +403,11 @@ namespace VotingSite
                 cmd.CommandType = CommandType.Text;
 
                 var param = new SqlParameter("@kid", SqlDbType.Int);
-                param.Value = int.Parse(DropDownListKommuner.SelectedValue);
+                param.Value = int.Parse(jsonData.Kommune);
                 cmd.Parameters.Add(param);
 
                 param = new SqlParameter("@pid", SqlDbType.VarChar);
-                // param.Value = hiddenDataField.Value;
+                param.Value = jsonData.Pid;
                 cmd.Parameters.Add(param);
 
                 cmd.ExecuteNonQuery();
@@ -489,8 +415,7 @@ namespace VotingSite
             }
         }
 
-
-        private void AddVotedToPerson()
+        private static void AddVotedToPerson(VoteData jsonData)
         {
             var connectionString = ConfigurationManager.ConnectionStrings["ConnCms"].ConnectionString;
             using (var conn = new SqlConnection(connectionString))
@@ -501,7 +426,7 @@ namespace VotingSite
                 cmd.CommandType = CommandType.Text;
 
                 var param = new SqlParameter("@FNum", SqlDbType.VarChar);
-                // param.Value = FNum.Value.Replace(" ", "");
+                param.Value = jsonData.Fnum;
                 cmd.Parameters.Add(param);
 
                 cmd.ExecuteNonQuery();
@@ -510,49 +435,25 @@ namespace VotingSite
         }
 
 
-        // *******************************************
-        // *          Send vote to database          *
-        // *******************************************
-
-        // protected void SendToStemmer_Click(object sender, EventArgs e)
-        // {
-        //     var (isOk, errorMsg) = CheckValues();
-        //
-        //     var script =
-        //         $"document.addEventListener('DOMContentLoaded', () => {{SendToStemmer_Click_Callback(\"{(isOk ? "noError" : errorMsg)}\");}});";
-        //     ScriptManager.RegisterStartupScript(this, GetType(), "callFunction", script, true);
-        //
-        //     if (!isOk) return;
-        //
-        //     SendToStemmer();
-        //     AddVotedToPerson();
-        //     Response.Redirect(Request.Url.AbsolutePath + "?r=moRe&er=noError");
-        // }
-
-        // private string SendToStemmer_Click()
-        // {
-        //     var (isOk, errorMsg) = CheckValues();
-        //     if (!isOk) return errorMsg;
-        //
-        //     SendToStemmer();
-        //     AddVotedToPerson();
-        //
-        //     return "noError";
-        // }
+        public class VoteData
+        {
+            public string Pid { get; set; }
+            public string Fylke { get; set; }
+            public string Kommune { get; set; }
+            public string Fnum { get; set; }
+        }
 
         [WebMethod]
-        public string Vote()
+        public static (bool, string) Vote(string data)
         {
-            var (isOk, errorMsg) = CheckValues();
-            if (!isOk) return errorMsg;
+            var jsonData = JsonConvert.DeserializeObject<VoteData>(data);
+            var (isOk, errorMsg) = CheckValues(jsonData);
+            if (!isOk) return (false, errorMsg);
 
-            SendToStemmer();
-            AddVotedToPerson();
+            SendToStemmer(jsonData);
+            AddVotedToPerson(jsonData);
 
-            return "noError";
-
-            // var defaultInstance = new Default();
-            // return defaultInstance.SendToStemmer_Click();
+            return (true, "");
         }
     }
 }

@@ -38,20 +38,33 @@ function navbarButtons() {
     })
 }
 
-// Toggles theme and mode for site
-function toggleTheme() {
-    let theme = localStorage.getItem('theme');
-
-    if (!theme || theme === "dark") theme = "light"; else if (theme === "light") theme = "dark";
-
-    localStorage.setItem("theme", theme);
-    document.documentElement.dataset.theme = theme;
+function getTheme() {
+    const local = localStorage.getItem("theme");
+    return (local) ? local : (window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
 }
 
-function setTheme() {
-    const theme = localStorage.getItem("theme");
-    if (!theme) return;
+function setTheme(theme = getTheme()) {
     document.documentElement.dataset.theme = theme;
+    localStorage.setItem("theme", theme);
+}
+
+function toggleTheme(e) {
+    if (e) e.preventDefault();
+
+    let theme = getTheme();
+    switch (theme) {
+        case "dark":
+            theme = "light";
+            break;
+        case "light":
+            theme = "dark";
+            break;
+        default:
+            theme = "dark";
+            break;
+    }
+
+    setTheme(theme);
 }
 
 
@@ -59,10 +72,12 @@ function setTheme() {
 // *         Utility functions         *
 // *************************************
 
-
 // ======<   Adds eventListeners for click or Enter keypress   >======
 function clickListener(selector, functionCall, once = false) {
-    const elements = document.querySelectorAll(selector);
+    const elements = (typeof selector === "string")
+        ? document.querySelectorAll(selector)
+        : [selector];
+
     for (let i = 0; i < elements.length; i++) {
         elements[i].addEventListener("click", functionCall, {once: once});
         elements[i].addEventListener("keydown", (e) => {
@@ -135,9 +150,14 @@ function observeAttributeChange(selector, attribute, functionCall) {
 function openModal(selector) {
     const modal = document.querySelector(".modal")
     modal.dataset.visible = "true";
+    modal.focus();
 
-    const modalContent = modal.querySelector(selector);
-    modalContent.dataset.visible = "true";
+    modal.querySelectorAll(".modal__container .content > div").forEach(el => {
+        el.dataset.visible = "false";
+    });
+
+    modal.querySelector(selector).dataset.visible = "true";
+    disableScroll(document.documentElement);
 }
 
 // ======<   Closes modal   >====== \\
@@ -147,10 +167,13 @@ function closeModal(e) {
     const modal = document.querySelector(".modal")
     modal.dataset.visible = "false";
 
-    const modalContents = document.querySelectorAll("[data-visible]");
-    modalContents.forEach(content => {
+    document.querySelectorAll("[data-visible]").forEach(content => {
         content.dataset.visible = "false";
     });
+
+    document.querySelectorAll(".modal input").forEach(el => el.value = "");
+    enableScroll(document.documentElement);
+    createCustomSelects(".modal");
 }
 
 
@@ -169,10 +192,10 @@ function addIcons() {
         }
 
         // Adding attributes
-        e.setAttribute('focusable', "false");
-        e.setAttribute('aria-hidden', "true");
-        e.setAttribute('viewBox', '0 0 24 24');
-        e.setAttribute('height', '1.4em');
+        e.setAttribute("focusable", "false");
+        e.setAttribute("aria-hidden", "true");
+        e.setAttribute("viewBox", "0 0 24 24");
+        e.setAttribute("height", "1.4em");
 
         // Add the svg icon
         e.innerHTML = `<use xlink:href="/Content/Images/icons.svg#${icon}"></use>`;
@@ -189,34 +212,47 @@ function addOption(select, value, text) {
 }
 
 
-/* Change all select lists that is contained within .custom_select to custom select dropdown.
-   Part of the code is from: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_custom_select */
-function createCustomSelects(selector = null) {
+function disableScroll(selector) {
+    selector.classList.add("scrollDisabled");
+}
 
-    const customSelect = (selector === null)
+function enableScroll(selector) {
+    selector.classList.remove("scrollDisabled");
+}
+
+
+/**
+ * Change all select lists that is contained within .custom_select to custom select dropdown.
+ * Part of the code is from: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_custom_select
+ **/
+function createCustomSelects(selector = null) {
+    const customSelect = (null === selector)
         ? document.querySelectorAll(".custom_select")
         : document.querySelectorAll(`${selector} .custom_select`);
 
-    if (selector !== null) {
-        const selectSelected = customSelect[0].querySelector(".select-selected");
-        if (selectSelected) selectSelected.remove();
+    if (null !== selector) {
+        customSelect.forEach(select => {
+            const selectSelected = select.querySelector(".select-selected");
+            if (selectSelected) selectSelected.remove();
 
-        const selectItems = customSelect[0].querySelector(".select-items");
-        if (selectItems) selectItems.remove();
+            const selectItems = select.querySelector(".select-items");
+            if (selectItems) selectItems.remove();
+        });
     }
 
 
     for (let i = 0; i < customSelect.length; i++) {
-        let oldSelect = customSelect[i].querySelector("select");
+        const oldSelect = customSelect[i].querySelector("select");
 
-        /*for each element, create a new DIV that will act as the selected item:*/
-        let selected = document.createElement("div");
+        // create a new DIV that will act as the selected item
+        const selected = document.createElement("div");
         selected.setAttribute("class", "select-selected");
         selected.textContent = oldSelect.options[0].textContent;
         selected.dataset.value = oldSelect.options[0].value;
+        selected.tabIndex = 0;
         customSelect[i].appendChild(selected);
 
-        /*for each element, create a new DIV that will contain the option list:*/
+        // create a new DIV that will contain the option list
         let itemsContainer = document.createElement("div");
         itemsContainer.setAttribute("class", "select-items select-hide");
 
@@ -224,13 +260,15 @@ function createCustomSelects(selector = null) {
             // Skipping if option is disabled
             if (oldSelect.options[j].disabled) continue;
 
-            /*for each option in the original select element,
-            create a new DIV that will act as an option item:*/
+            /* for each option in the original select element,
+            create a new DIV that will act as an option item: */
             let item = document.createElement("div");
             item.textContent = oldSelect.options[j].textContent;
             item.dataset.value = oldSelect.options[j].value;
+            if (0 === j) item.classList.add("selected");
+            item.tabIndex = 0;
 
-            item.addEventListener("click", (e) => {
+            clickListener(item, (e) => {
                 /*when an item is clicked, update the original select box,
                 and the selected item:*/
                 let oldSelect = e.target.parentNode.parentNode.querySelector("select");
@@ -243,9 +281,7 @@ function createCustomSelects(selector = null) {
                         selected.dataset.value = e.target.dataset.value;
 
                         let selectedItem = e.target.parentNode.querySelectorAll(".selected");
-                        for (let k = 0; k < selectedItem.length; k++) {
-                            selectedItem[k].removeAttribute("class");
-                        }
+                        selectedItem.forEach(item => item.removeAttribute("class"));
                         e.target.setAttribute("class", "selected");
                         break;
                     }
@@ -255,7 +291,7 @@ function createCustomSelects(selector = null) {
         }
         customSelect[i].appendChild(itemsContainer);
 
-        selected.addEventListener("click", (e) => {
+        clickListener(selected, (e) => {
             e.stopPropagation();
 
             closeAllSelect(e.target);
@@ -304,5 +340,6 @@ window.onload = () => {
     clickListener(".modal .close", closeModal);
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") closeModal(e);
+        if (e.key.toLowerCase() === "t" && e.altKey) toggleTheme(e);
     });
 }

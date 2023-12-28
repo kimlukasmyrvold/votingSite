@@ -2,11 +2,13 @@
     opacity: 0;
     visibility: hidden;
     height: 0;
-    transition: opacity .3s ease, visibility .3s ease;
+    margin: 0 !important; // please don't look at this
+    transition: height .15s ease, opacity .3s ease, visibility .3s ease;
 }
 
 @mixin visible {
     opacity: 1;
     visibility: visible;
-    transition: opacity .3s ease, visibility 0s ease;
+    height: 100%;
+    transition: height .15s ease, opacity .3s ease, visibility 0s ease;
 }

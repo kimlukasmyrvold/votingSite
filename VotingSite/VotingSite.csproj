@@ -101,9 +101,9 @@
     <Content Include="Content\CSS\home.css" />
     <Content Include="Content\CSS\home.css.map" />
     <Content Include="Content\CSS\home.scss" />
-    <Content Include="Content\CSS\navbar.css" />
-    <Content Include="Content\CSS\navbar.css.map" />
-    <Content Include="Content\CSS\navbar.scss" />
+    <Content Include="Content\CSS\index.css" />
+    <Content Include="Content\CSS\index.css.map" />
+    <Content Include="Content\CSS\index.scss" />
     <Content Include="Content\CSS\style.css" />
     <Content Include="Content\CSS\style.css.map" />
     <Content Include="Content\CSS\style.scss" />
@@ -141,8 +141,6 @@
     <Content Include="Content\fonts\nunito\woff\nunito-v25-latin-italic.woff" />
     <Content Include="Content\fonts\nunito\woff\nunito-v25-latin-regular.woff" />
     <Content Include="Content\Images\icons.svg" />
-    <Content Include="Content\Images\Icons\barChart.svg" />
-    <Content Include="Content\Images\Icons\pieChart.svg" />
     <Content Include="Content\Images\PartyLogos\ali.png" />
     <Content Include="Content\Images\PartyLogos\ap.png" />
     <Content Include="Content\Images\PartyLogos\frp.png" />
@@ -162,7 +160,6 @@
     <Content Include="Content\JavaScript\home.js" />
     <Content Include="Content\JavaScript\main.js" />
     <Content Include="Content\JavaScript\personer.js" />
-    <Content Include="Content\JSON\partier.json" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

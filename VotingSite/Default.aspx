@@ -18,22 +18,35 @@
 
     <div id="results">
         <p class="title">Resultater:</p>
-        <div class="barChart" id="barChart1">
-            <div class="controls">
-                <button class="button" data-option="percent">%</button>
-                <button class="button" data-option="votes">Stemmer</button>
-                <div class="custom_select">
-                    <asp:DropDownList ID="kommunerDropDown" runat="server">
-                        <asp:ListItem Value="0">Alle kommuner</asp:ListItem>
-                    </asp:DropDownList>
+
+        <div class="chart" id="voteResults">
+            <div class="chart__settings">
+                <div class="chart__settings__type">
+                    <button class="button" data-option="bar">
+                        <svg class="icon-chartBar"></svg>
+                    </button>
+                    <button class="button" data-option="pie">
+                        <svg class="icon-chartPie"></svg>
+                    </button>
+                </div>
+
+                <div class="chart__settings__options">
+                    <button class="button" data-option="percent">%</button>
+                    <button class="button" data-option="votes">Stemmer</button>
+                </div>
+
+                <div class="chart__settings__region">
+                    <div class="custom_select">
+                        <asp:DropDownList ID="kommunerDropDown" runat="server">
+                            <asp:ListItem Value="0">Alle kommuner</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
                 </div>
             </div>
-            <div class="container"></div>
-        </div>
 
-        <div class="pieChart" id="pieChart1">
-            <div class="pie"></div>
-            <div class="labels"></div>
+            <div class="chart__container">
+                <div class="chart__container__content" data-chartType=""></div>
+            </div>
         </div>
     </div>
 </asp:Content>
@@ -51,7 +64,7 @@
 
             <div class="personalInfo">
                 <div class="selectFylke">
-                    <p>Velg Fylke</p>
+                    <p class="label">Velg Fylke</p>
                     <div class="inputField">
                         <div class="custom_select">
                             <asp:DropDownList ID="DropDownListFylker" runat="server">
@@ -65,7 +78,7 @@
                 </div>
 
                 <div class="selectKommune" data-visible="false">
-                    <p>Velg Kommune</p>
+                    <p class="label">Velg Kommune</p>
                     <div class="inputField">
                         <div class="custom_select">
                             <asp:DropDownList ID="DropDownListKommuner" runat="server">
@@ -79,7 +92,7 @@
                 </div>
 
                 <div class="enterFnum" data-visible="false">
-                    <label for="FNum">Fødselsnummer:</label>
+                    <p class="label">Fødselsnummer:</p>
                     <div class="inputField">
                         <input type="text" id="FNum" name="Fødselsnummer" maxlength="11" placeholder="11 sifre..." required title="Fødselsnummer" pattern="(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{2}\s?\d{5}"/>
                         <div class="validBox">

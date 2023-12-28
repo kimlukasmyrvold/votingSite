@@ -1,19 +1,25 @@
 ﻿@use "abstracts/index" as *;
 
-.barChart {
-    .controls {
+.chart {
+    &__settings {
         display: flex;
-        gap: $gap-1;
+        gap: $gap-5;
+        flex-wrap: wrap;
+
         background-color: var(--clr-primary);
-        border-radius: 9em;
+        border-radius: 25px;
+
         padding: .3em;
+        margin: 0;
 
         .button {
-            background-color: transparent;
             height: 100%;
-            margin: 0;
             padding: .4em .7em;
-            border-radius: 9em;
+            margin: 0;
+
+            border-radius: 25px;
+            white-space: nowrap;
+
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
             transition: translate 0.3s ease;
 
@@ -21,126 +27,176 @@
                 translate: 0 -2px;
             }
 
-            &.selected, &:hover {
-                background-color: var(--clr-background);
+            &.selected,
+            &:hover {
+                background-color: var(--clr-background75);
+            }
+
+            svg {
+                pointer-events: none;
             }
         }
 
-        .custom_select {
-            margin-inline-start: $gap-2;
-        }
-    }
-
-    .container {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        margin: 0 0 $gap-5;
-    }
-
-    .item {
-        $_gap: 20px;
-
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: $gap-2;
-        margin: $_gap 0;
-        height: 2em;
-        position: relative;
-
-        &:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            margin-block: $_gap;
-            height: 1px;
-            border-radius: 10px;
-            background-color: $clr-seperator;
-        }
-    }
-
-    .bar {
-        background-color: var(--clr-primary);
-        border-radius: 10px;
-        padding: 10px;
-        height: 100%;
-        margin: 0;
-
-        transition: width 1s ease;
-    }
-
-    .value {
-        display: flex;
-        align-items: center;
-
-        height: 100%;
-        min-width: 5ch;
-
-        margin: 0;
-        font-size: $fs-200;
-        font-weight: 700;
-    }
-
-    .party {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-width: 50px;
-        width: 50px;
-        margin: 0;
-
-        img {
+        &__type,
+        &__options,
+        &__region {
+            display: flex;
+            gap: $gap-2;
             margin: 0;
-            max-width: 40px;
-            max-height: 40px;
-            border-radius: 5px;
+        }
+
+        &__region {
+            flex-grow: 1;
         }
     }
-}
 
+    &__container {
+        margin: $gap-3;
+        container-type: inline-size;
 
-.pieChart {
-    display: flex;
-    flex-wrap: wrap;
-    gap: $gap-8;
-
-
-    .pie {
-        background: var(--clr-primary);
-        border-radius: 9in;
-
-        aspect-ratio: 1;
-        
-        max-width: 250px;
-        max-height: 250px;
-        
-        width: 100%;
-        height: auto;
+        &__content {
+            margin: 0;
+            width: 100%;
+        }
     }
 
-    .labels {
+
+    // ======<   Bar Chart Styling   >====== \\
+    [data-charttype="bar"] {
+        $_gap: $gap-8;
+
         display: flex;
         flex-direction: column;
-        flex-flow: row wrap;
-        gap: $gap-3;
+        gap: $_gap;
+
+        .item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: $gap-2;
+            margin: 0;
+            height: 2em;
+            position: relative;
+
+            &:not(:last-child)::after {
+                content: '';
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                margin-top: calc($_gap / 2);
+                height: 1px;
+                border-radius: 10px;
+                background-color: $clr-seperator;
+            }
+        }
+
+        .bar {
+            background-color: var(--clr-primary);
+            border-radius: 10px;
+            padding: 10px;
+            height: 100%;
+            margin: 0;
+
+            transition: width 1s ease;
+        }
+
+        .value {
+            display: flex;
+            align-items: center;
+
+            height: 100%;
+            min-width: 5ch;
+
+            margin: 0;
+            font-size: $fs-200;
+            font-weight: 700;
+        }
+
+        .party {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 50px;
+            width: 50px;
+            margin: 0;
+
+            img {
+                margin: 0;
+                max-width: 40px;
+                max-height: 40px;
+                border-radius: 5px;
+            }
+        }
     }
 
-    .label {
-        display: flex;
-        align-items: center;
-        gap: $gap-2;
-        margin: 0 $gap-3 0 0;
-    }
 
-    .color {
-        background-color: var(--clr-primary);
-        border-radius: 9in;
+    // ======<   Pie Chart Styling   >====== \\
+    [data-charttype="pie"] {
+        $_pieSize: 250px;
 
-        aspect-ratio: 1;
-        height: 25px;
-        width: 25px;
+        display: grid;
+        grid-template-columns: $_pieSize 1fr;
+        gap: $gap-8;
+
+        .pieContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            
+            .pie {
+                background: var(--clr-primary);
+                border-radius: 9in;
+
+                aspect-ratio: 1;
+                margin: 0;
+
+                max-width: $_pieSize;
+                max-height: $_pieSize;
+
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .labels {
+            display: flex;
+            flex-flow: row wrap;
+            gap: $gap-8;
+            margin: 0;
+        }
+
+        .label {
+            display: flex;
+            align-items: center;
+            gap: $gap-2;
+            margin: 0;
+
+        }
+
+        .color {
+            background-color: var(--clr-primary);
+            border-radius: 9in;
+
+            aspect-ratio: 1;
+            height: 25px;
+            width: 25px;
+        }
+        
+        .name {
+        }
+
+        .value::before {
+            content: '-';
+            margin-right: $gap-2;
+            opacity: .8;
+        }
+
+        .color,
+        .name,
+        .value {
+            margin: 0;
+        }
     }
 }

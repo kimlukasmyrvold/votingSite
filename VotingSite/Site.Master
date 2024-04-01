@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 
-<html lang="no" data-pagename="<%: Page.Title %>">
+<html lang="no" data-pagename="<%: Page.Title %>" style="background: #1a1a1a">
 <head runat="server">
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -16,6 +16,7 @@
     <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
 </head>
 <body>
+
 <noscript>
     <svg height="32px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path fill="#f1a500" d="M22.25,17.55,14.63,3.71a3,3,0,0,0-5.26,0L1.75,17.55A3,3,0,0,0,4.38,22H19.62a3,3,0,0,0,2.63-4.45ZM12,18a1,1,0,1,1,1-1A1,1,0,0,1,12,18Zm1-5a1,1,0,0,1-2,0V9a1,1,0,0,1,2,0Z"/>
@@ -24,10 +25,10 @@
     <br>
     <em>You must enable JavaScript to view this website, change this in your browser settings.</em>
     <style>
-            [class*="icon-"] {
-                display: none
+            [class*=" icon-"], [class^="icon-"] {
+                display: none;
             }
-        </style>
+    </style>
 </noscript>
 
 <form runat="server">

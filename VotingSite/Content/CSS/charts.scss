@@ -161,9 +161,9 @@
         }
 
         .labels {
-            display: flex;
-            flex-flow: row wrap;
-            gap: $gap-8;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(var(--_width, 340px), 1fr));
+            gap: $gap-1 $gap-2;
             margin: 0;
         }
 
@@ -172,7 +172,6 @@
             align-items: center;
             gap: $gap-2;
             margin: 0;
-
         }
 
         .color {
@@ -182,9 +181,6 @@
             aspect-ratio: 1;
             height: 25px;
             width: 25px;
-        }
-        
-        .name {
         }
 
         .value::before {

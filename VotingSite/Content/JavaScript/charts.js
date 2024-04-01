@@ -14,7 +14,7 @@ function getPartyData(data) {
         row.Percent = percent.toFixed(1);
     });
 
-    partyData.sort((a, b) => parseFloat(b.Percent) - parseFloat(a.Percent));
+    partyData.sort((a, b) => parseFloat(b.Votes) - parseFloat(a.Votes));
     return partyData;
 }
 
